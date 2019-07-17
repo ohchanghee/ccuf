@@ -81,6 +81,13 @@ height: 100%;
 .thumbnails::-webkit-scrollbar { 
     display: none; 
 }
+
+@media(max-width:500px){
+	.thumbnails{
+		margin-left:0.5rem;
+		margin-right:0.5rem;
+	}
+}
 </style>
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
