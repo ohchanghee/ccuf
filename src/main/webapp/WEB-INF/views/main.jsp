@@ -695,7 +695,7 @@ label, #menu{
     </div>
     
     
-	<jsp:include page = "/headNfoot/footer.jsp"/> 
+	<jsp:include page = "headNfoot/footer.jsp"/> 
 	
 <script>
 var modal = document.getElementById('loginModal');
