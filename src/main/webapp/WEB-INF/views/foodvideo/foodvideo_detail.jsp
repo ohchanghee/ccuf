@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.solrecipe.recipe.foodvideo.FoodVideoVO"%>
 <%
-	// 영상을 iframe으로 띄워주기 위해, videoId를 받아온다.
-	String videoId = "0hYm1QOJZeo";
-	if(request.getParameter("videoId")!=null){
-		videoId = request.getParameter("videoId");
-	}
+
+	FoodVideoVO fvVO = (FoodVideoVO)request.getAttribute("fvVO");
+	ArrayList<FoodVideoVO> playList = (ArrayList)request.getAttribute("playList");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -88,11 +88,12 @@ height: 100%;
 		margin-right:0.5rem;
 	}
 }
+
 </style>
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
 // ----------------추천영상목록을 띄우는 로직
-$(document).ready(function(){
+/* $(document).ready(function(){
 var thumbnails = document.getElementById("thumbnails"); 
 // 플레이리스트 아이디들
 var x = "PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr,PLoABXt5mipg4vsOpJb0Aeldlj3A6xq4jQ,PLoABXt5mipg4lPwTJdH3Bv_4NRZHIhAQK";
@@ -119,7 +120,7 @@ var playlistIds = x.split(',');
 			}
 		);
 	}
-});
+}); */
 </script>
 </head> 
 <body>
@@ -146,20 +147,16 @@ var playlistIds = x.split(',');
 				<!-- 좌측 상단 -->
 				<div class="col-md-12">
 					<div class="vWrapper">
-						<iframe width="560" height="315" src="https://www.youtube.com/embed/<%=videoId %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/<%=fvVO.getVideo_id() %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 				</div>	
 				
 				<!-- 좌측 하단 -->
 				<div class="col-md-12 vContent">
 				<br><br>
-					<h1>강식당2 비빔국수 레시피 (백종원표)</h1> &nbsp; &nbsp; <i class="far fa-star" style="font-size:1.5rem;" title="찜하기"></i><i class="fas fa-star" style="font-size:1.5rem;" title="이미 찜 된 영상입니다."></i>
+					<h1><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; <i class="far fa-star" style="font-size:1.5rem;" title="찜하기"></i><i class="fas fa-star" style="font-size:1.5rem;" title="이미 찜 된 영상입니다."></i>
 					<p><br>
-					강식당2 비빔국수 만드는 방법 (백종원표)<br> 
-	 				- 프로그램명: 강식당2<br> 
-	 				- 회차: 5<br> 
-	 				- 방영일: 2019.06.28.<br> 
-	 				- 방송사: tvN<br></p>
+					<%=fvVO.getVideo_content() %>
 	 				<br><br>
 				</div>
 			</div>
@@ -171,10 +168,23 @@ var playlistIds = x.split(',');
 				<!--
 				<div class="col-md-12 thumbnailcontainer">
 					<a href="#"><img class="thumbnail" src="http://img.youtube.com/vi/V0Vg2WtcXxU/0.jpg"></a>
-					<br>&lt;누구보다 맛있는 오징어짬뽕&gt;
+					<br>누구보다 맛있는 오징어짬뽕
 					<br><hr>
 				</div> 
 				-->
+				<%
+					for (int i=0; i<playList.size(); i++){
+				%>
+				<div class="col-md-12 thumbnailcontainer">
+					<a href="/foodvideo_detail?fvVO=<%=playList.get(i) %>">
+						<img class="thumbnail" src="<%=playList.get(i).getVideo_thumbnail() %>">
+					</a>
+					<br><%=playList.get(i).getVideo_title() %>
+					<br><hr>
+				</div>
+				<%
+					}
+				%>		
 			</div>
 		</div>
 		<div class="row" style="height:3rem;"></div>
