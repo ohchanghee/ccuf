@@ -9,28 +9,28 @@
 
 <title>레시피관리</title>
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/css/jquery-ui.css">
-<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/magnific-popup.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
 
-<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
 
-<link rel="stylesheet" href="resources/css/aos.css">
+<link rel="stylesheet" href="../resources/css/aos.css">
 
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="../resources/css/style.css">
 <!-- MetisMenu CSS -->
-<link href="resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="../resources/css/metisMenu.min.css" rel="stylesheet">
 
 
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
 	rel="stylesheet">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
-<script type="text/javascript" src="resources/js/jquery.tablesorter.min.js"></script>
-<!-- <script src="resources/js/jquery-3.3.1.min.js"></script> -->
-<script src="resources/js/jquery-ui.js"></script>
+<script type="text/javascript" src="../resources/js/jquery.tablesorter.min.js"></script>
+<!-- <script src="../resources/js/jquery-3.3.1.min.js"></script> -->
+<script src="../resources/js/jquery-ui.js"></script>
 <script>
 
 $(document).ready(function(){ 
@@ -126,7 +126,7 @@ $(document).ready(function(){
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="admin_index.jsp" ><img src="img/admin/admin_logo.png" width="10%"/></a>
+              <a href="admin_index.jsp" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
             </div>
          </div>
        </div>
@@ -144,7 +144,7 @@ $(document).ready(function(){
 				<form id="searchText" method="post">
 					
 					<span class="icon">
-						<input  TYPE="IMAGE" id="search_icon" src="img/main/search.png" value="Submit" >
+						<input  TYPE="IMAGE" id="search_icon" src="../img/main/search.png" value="Submit" >
 					</span>
 					<input id="search" name="search">
 				</form>

@@ -1,110 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Drag and Drop Table Columns</title>
-<style>
-table {
-    font-size: 11px;
-    border-collapse:collapse; 
-    border:1px solid
-}
-table td, table th {
-    border:1px solid;
-    padding: 3px;
-}
- 
-.dragging {
-    background:#eee; 
-    color:#000
-}
-
-.hovering {
-    background:#ccc; 
-    color:#555
-}
-</style>    
-<script>
-// just mouse actions
-window.onload = function() {
-    var head = document.getElementsByTagName("th");
-    for (i=0; i<head.length; i++) {
-        head[i].onselectstart = function() { return false }
-        head[i].onmousedown = mousedown;
-        head[i].onmouseover = mouseover;
-        head[i].onmouseout = mouseout;
-        head[i].onmouseup   = mouseup;
-    }    
-}
-
-var dragTD = null;
-function mousedown(ev){
-    dragTD = this;
-    this.className = "dragging"
-}
-
-function mouseover(ev){
-    if (dragTD === null) { return;}
-    this.className = "hovering"
-}
-
-function mouseout(ev){
-    if (dragTD === null) { return;}
-    this.className = ""
-}
-
-function mouseup(ev){
-    this.className = ""
-    dragTD.className = ""
-    dragTD = null;
-}
-
-</script>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
-<table id="tableOne">
-    <thead>
-        <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-            <th>Column 3</th>
-            <th>Column 4</th>
-            <th>Column 5</th>
-            <th>Column 6</th>
-            <th>Column 7</th>
-            <th>Column 8</th>
-            <th>Column 9</th>
-            <th>Column 10</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>data 1</td>
-            <td>data 2</td>
-            <td>data 3</td>
-            <td>data 4</td>
-            <td>data 5</td>
-            <td>data 6</td>
-            <td>data 7</td>
-            <td>data 8</td>
-            <td>data 9</td>
-            <td>data 10</td>
-        </tr>
-        <tr>
-            <td>data 1</td>
-            <td>data 2</td>
-            <td>data 3</td>
-            <td>data 4</td>
-            <td>data 5</td>
-            <td>data 6</td>
-            <td>data 7</td>
-            <td>data 8</td>
-            <td>data 9</td>
-            <td>data 10</td>
-        </tr>
-    </tbody>
-</table>
- 
+  <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+  <div id="naver_id_login"></div>
+  <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+  <script type="text/javascript">
+  	var naver_id_login = new naver_id_login("evUgZt2XmwphcjWKvj2K", "YOUR_CALLBACK_URL");
+  	var state = naver_id_login.getUniqState();
+  	naver_id_login.setButton("white", 2,40);
+  	naver_id_login.setDomain("YOUR_SERVICE_URL");
+  	naver_id_login.setState(state);
+  	naver_id_login.setPopup();
+  	naver_id_login.init_naver_id_login();
+  </script>
+
 </body>
 </html>

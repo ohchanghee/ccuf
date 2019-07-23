@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import = "com.solrecipe.recipe.user.domain.*" %>
+<%
+MemberVO member = (MemberVO)request.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,9 +101,9 @@ div.update_btn
 		          
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
 		            <div class="block-heading-1">
-		            	<a href="#table2">	
+		            	
 		              <a href="myPage_recipegram.jsp" id="myrecipegram"><h4 class="my">레시피그램</h4></a>
-		              </a>
+		             
 		            </div>
 		          </div>
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
@@ -128,7 +132,7 @@ div.update_btn
 	<div class="content pt-5 pb-5">
 		<div style="float: left; width: 50%; padding-left:25%">
 			<div class="col-sm-10 col-md-10" align="center">
-					<img src="img/user/base_user.png" width="200"
+					<img src="../img/user/base_user.png" width="200"
 						style="margin-top: 30px;" class="img-circle" />
 				</div>
 
@@ -139,7 +143,8 @@ div.update_btn
 				<form action="" method="post">
 					
                   	<div class="form_sign_up_group pt-5 pl-5">
-                  	<div class="font-size-30 pb-3 text-left">KingGodSoo
+                  	<div class="font-size-22 pb-3 text-left ">
+                  		<sec:authentication property="principal.username"/> 
 					</div>
                      
 							 <label
@@ -168,13 +173,13 @@ div.update_btn
                   	
                      
                      <label for="sign_pwd"><span class="font-size-15">비 밀 번 호</span>
-                     <input type="password" class="form-control" id="sign_password" placeholder="원하는 암호를 입력하세요.."></label><br>
+                     <input type="password" class="form-control" id="sign_password" placeholder="암호를 입력하세요.."></label><br>
                      
                      <label for="sign_pwdcheck"><span class="font-size-15">비밀번호확인</span>
-                     <input type="password" class="form-control" id="sign_password_check" placeholder="원하는 암호를 다시 입력해주세요.."></label><br>  
+                     <input type="password" class="form-control" id="sign_password_check" placeholder="암호를 다시 입력해주세요.."></label><br>  
                     
                     <label for="sign_nickname"><span class="font-size-15">닉 네 임</span>
-                     			<input type="text" class="form-control" id="sign_nickname" placeholder="닉네임을 입력해주세요.."> </label><br>
+                     			<input type="text" class="form-control" id="sign_nickname" placeholder="닉네임을 입력해주세요.." value="${member.user_nickname }"> </label><br>
                      		 
                      
                      <label for="sign_name"><span class="font-size-15">이&emsp;&emsp;름</span>

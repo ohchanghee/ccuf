@@ -6,39 +6,42 @@
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
-			<!--  뷰(jsp)와 관련없는 빈 설정에 사용, servlet-context.xml은 뷰(jsp)와 관련된 빈설정에 사용 -->
-
-
-	<!-- Hikari Config -->
-	  <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-	     <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-	     <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"></property>
-	     <property name="username" value="scott"></property>
-	     <property name="password" value="1234"></property>
-	  </bean>
-	     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-	     <constructor-arg ref="hikariConfig"/>
-	  </bean>   
-
-
-	<!-- dataSource라는 이름의 빈 객체 생성. DB 연결에 사용.ㅣ -->
-<!-- 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="oracle.jdbc.OracleDriver" />
-		아래의 부분은 오라클 버전이나 계정에 따라 다르게 적는다.
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-		<property name="username" value="scott" />
-		<property name="password" value="1234" />
-	</bean> -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:49161:xe"></property>
+		<property name="username" value="solrecipe"></property>
+		<property name="password" value="solrecipe"></property>
+	</bean>	
+	
+	<!-- HikariCP configuration -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource"></property>
 		
 		<property name="typeAliasesPackage" value="com.solrecipe.recipe" />
 	</bean>
-		
-	<mybatis-spring:scan base-package="com.solrecipe.recipe"/>
+	
+	<bean id="userService" class="com.solrecipe.recipe.user.service.UserServiceImpl">
+		<!-- <beans:property name="javaMailSender" ref="javaMailSender"></beans:property> -->
+	</bean> 
+	
+	
+
+
+
+	
+	<mybatis-spring:scan base-package="com.solrecipe.recipe"/> 
+	
+	<!-- <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+      <property name="mapperInterface" value="com.solrecipe.recipe.user.mapper.UserMapper"/>
+      <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+   </bean>
+	 -->
+	
 	
 </beans>

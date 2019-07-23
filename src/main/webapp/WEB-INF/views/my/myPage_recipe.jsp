@@ -9,16 +9,16 @@
 
 <title>My Page</title>
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/css/jquery-ui.css">
-<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="resources/css/aos.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/magnific-popup.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="../resources/css/aos.css">
+<link rel="stylesheet" href="../resources/css/style.css">
 <!-- MetisMenu CSS -->
-<link href="resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="../resources/css/metisMenu.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/d2c6942021.js"></script>
@@ -111,17 +111,17 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="resources/js/jquery-ui.js"></script>
-<script src="resources/js/popper.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/owl.carousel.min.js"></script>
-<script src="resources/js/jquery.magnific-popup.min.js"></script>
-<script src="resources/js/jquery.sticky.js"></script>
-<script src="resources/js/jquery.waypoints.min.js"></script>
-<script src="resources/js/jquery.animateNumber.min.js"></script>
-<script src="resources/js/aos.js"></script>
-<script src="resources/js/main.js"></script>
+<script src="../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../resources/js/jquery-ui.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
+<script src="../resources/js/owl.carousel.min.js"></script>
+<script src="../resources/js/jquery.magnific-popup.min.js"></script>
+<script src="../resources/js/jquery.sticky.js"></script>
+<script src="../resources/js/jquery.waypoints.min.js"></script>
+<script src="../resources/js/jquery.animateNumber.min.js"></script>
+<script src="../resources/js/aos.js"></script>
+<script src="../resources/js/main.js"></script>
 
 
 <jsp:include page = "../headNfoot/header.jsp"/>   
@@ -180,7 +180,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
     			
          		<form name="form" id="form" action="" method="post" enctype="multipart/form-data" autocomplete="off">
     				<div class="mainImg mb-2 mt-4" style="height:25.0rem;border:1px dashed #65737e; text-align:center">
-           					<img src = "img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
+           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
           				</div>
            		
            					<input type="file" id="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
@@ -192,7 +192,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
            	<div class="col-12 text-right">
-		        		<img src="img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
 		        		<i class="fas fa-times fa-2x recipe_delete"></i>
 		        	</div>
            	<div class="rounded text-center">
@@ -224,7 +224,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
     			
          		<form name="form" id="form" action="" method="post" enctype="multipart/form-data" autocomplete="off">
     				<div class="mainImg mb-2 mt-4" style="height:25.0rem;border:1px dashed #65737e; text-align:center">
-           					<img src = "img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
+           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
           				</div>
            		
            					<input type="file" id="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
@@ -236,7 +236,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
            	<div class="col-12 text-right">
-		        		<img src="img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
 		        		<i class="fas fa-times fa-2x recipe_delete"></i>
 		        	</div>
            	<div class="rounded text-center">
@@ -269,19 +269,19 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
     			
          		<form name="form" id="form" action="" method="post" enctype="multipart/form-data" autocomplete="off">
     				<div class="mainImg mb-2 mt-4" style="height:25.0rem;border:1px dashed #65737e; text-align:center">
-           					<img src = "img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
+           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" > <!-- 이미지버튼으로 파일첨부  -->
           				</div>
            		
            					<input type="file" id="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
            		
-   
+           			
            		</form>
            		</div>
            		
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
            	<div class="col-12 text-right">
-		        		<img src="img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipe_update" style="width:5%; margin-top:-4%;"/>
 		        		<i class="fas fa-times fa-2x recipe_delete"></i>
 		        	</div>
            	<div class="rounded text-center">

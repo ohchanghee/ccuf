@@ -9,16 +9,16 @@
 
 <title>My Page</title>
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/css/jquery-ui.css">
-<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="resources/css/aos.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/magnific-popup.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="../resources/css/aos.css">
+<link rel="stylesheet" href="../resources/css/style.css">
 <!-- MetisMenu CSS -->
-<link href="resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="../resources/css/metisMenu.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/d2c6942021.js"></script>
@@ -120,17 +120,17 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="resources/js/jquery-ui.js"></script>
-<script src="resources/js/popper.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/owl.carousel.min.js"></script>
-<script src="resources/js/jquery.magnific-popup.min.js"></script>
-<script src="resources/js/jquery.sticky.js"></script>
-<script src="resources/js/jquery.waypoints.min.js"></script>
-<script src="resources/js/jquery.animateNumber.min.js"></script>
-<script src="resources/js/aos.js"></script>
-<script src="resources/js/main.js"></script>
+<script src="../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../resources/js/jquery-ui.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
+<script src="../resources/js/owl.carousel.min.js"></script>
+<script src="../resources/js/jquery.magnific-popup.min.js"></script>
+<script src="../resources/js/jquery.sticky.js"></script>
+<script src="../resources/js/jquery.waypoints.min.js"></script>
+<script src="../resources/js/jquery.animateNumber.min.js"></script>
+<script src="../resources/js/aos.js"></script>
+<script src="../resources/js/main.js"></script>
 
 <jsp:include page = "../headNfoot/header.jsp"/>   
 
@@ -190,13 +190,13 @@
 					<!-- The slideshow -->
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
-							<img src="img/recipegram/images3.jpg" alt="">
+							<img src="../img/recipegram/images3.jpg" alt="">
 						</div>
 						<div class="carousel-item">
-							<img src="img/recipegram/30000617971_500.jpg">
+							<img src="../img/recipegram/30000617971_500.jpg">
 						</div>
 						<div class="carousel-item">
-							<img src="img/recipegram/images.jpg">
+							<img src="../img/recipegram/images.jpg">
 						</div>
 					</div>
 
@@ -212,7 +212,7 @@
 
 				<div class="col-md-6" style="padding-left: 1.5%;">
 					<div class="col-12 mb-4 text-right">
-		        		<img src="img/user/recipegram_update.png" class="mr-2 recipegram_update" style="width:5%; margin-top:-4%;"/>
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipegram_update" style="width:5%; margin-top:-4%;"/>
 		        		<i class="fas fa-times fa-2x recipegram_delete"></i>
 		        	</div>
 					<div class="col-md-10 col-sm-12 col-xs-12">
@@ -231,9 +231,9 @@
 						</div>
 					</div>
 					<div class="col-md-10 favorite" style="margin-top: 15%;">
-						<img src="img/recipegram/favorite.png" style="width: 1.8rem;"
+						<img src="../img/recipegram/favorite.png" style="width: 1.8rem;"
 							onclick="ChangeImage()" name="favorite">&nbsp; <img
-							src="img/recipegram/add.png" style="width: 1.8rem;">
+							src="../img/recipegram/add.png" style="width: 1.8rem;">
 					</div>
 
 					<div class="row col-md-12">
@@ -301,13 +301,13 @@
 					<!-- The slideshow -->
 					<div class="carousel-inner" role="listbox">
 						<div class="carousel-item active">
-							<img src="img/recipegram/images3.jpg" alt="">
+							<img src="../img/recipegram/images3.jpg" alt="">
 						</div>
 						<div class="carousel-item">
-							<img src="img/recipegram/30000617971_500.jpg">
+							<img src="../img/recipegram/30000617971_500.jpg">
 						</div>
 						<div class="carousel-item">
-							<img src="img/recipegram/images.jpg">
+							<img src="../img/recipegram/images.jpg">
 						</div>
 					</div>
 
@@ -323,7 +323,7 @@
 
 				<div class="col-md-6" style="padding-left: 1.5%;">
 					<div class="col-12 mb-4 text-right">
-		        		<img src="img/user/recipegram_update.png" class="mr-2 recipegram_update" style="width:5%; margin-top:-4%;"/>
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipegram_update" style="width:5%; margin-top:-4%;"/>
 		        		<i class="fas fa-times fa-2x recipegram_delete"></i>
 		        	</div>
 					<div class="col-md-10 col-sm-12 col-xs-12">
@@ -342,9 +342,9 @@
 						</div>
 					</div>
 					<div class="col-md-10 favorite" style="margin-top: 15%;">
-						<img src="img/recipegram/favorite.png" style="width: 1.8rem;"
+						<img src="../img/recipegram/favorite.png" style="width: 1.8rem;"
 							onclick="ChangeImage()" name="favorite">&nbsp; <img
-							src="img/recipegram/add.png" style="width: 1.8rem;">
+							src="../img/recipegram/add.png" style="width: 1.8rem;">
 					</div>
 
 					<div class="row col-md-12">
@@ -408,11 +408,11 @@ $('.recipegram_delete').tooltip({title:"삭제",placement:"bottom"});
 		var su = 0;
 		function ChangeImage() {
 			if (state == 0) {
-				document.favorite.src = "img/recipegram/favorite.png"
+				document.favorite.src = "../img/recipegram/favorite.png"
 				su++;
 				state = 1;
 			} else {
-				document.favorite.src = "img/recipegram/hearts.png"
+				document.favorite.src = "../img/recipegram/hearts.png"
 				su--;
 				state = 0;
 			}

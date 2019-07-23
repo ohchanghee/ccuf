@@ -9,28 +9,28 @@
 
 <title>레시피추가</title>
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/css/jquery-ui.css">
-<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/magnific-popup.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
 
-<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
 
-<link rel="stylesheet" href="resources/css/aos.css">
+<link rel="stylesheet" href="../resources/css/aos.css">
 
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="../resources/css/style.css">
 <!-- MetisMenu CSS -->
-<link href="resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="../resources/css/metisMenu.min.css" rel="stylesheet">
 
 
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
 	rel="stylesheet">
 	
-<script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="resources/js/jquery.tablednd.js"></script>
+<script src="../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../resources/js/jquery.tablednd.js"></script>
 
-<script src="resources/js/jquery-ui.js"></script>
+<script src="../resources/js/jquery-ui.js"></script>
 <script >
 function getThumbnailPrivew(html, $target) {
     if (html.files && html.files[0]) {
@@ -74,10 +74,10 @@ function insRow() {
   var frmTag = "<input class='cooking_txt' type='text' name='add_txt' placeholder='조리순서를 입력하세요 ...' >";
   
   var frmTag1 = "<div id='add_img"+count+"' style='height:150%; border-color:#65737e; text-align:center'>";
-  frmTag1 += '<img src = "img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
+  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
   frmTag1 += "</div>";
   
-  var frmTag2 = "<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow();' src='img/admin/admin_delete.png'/>";
+  var frmTag2 = "<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow();' src='../img/admin/admin_delete.png'/>";
   var frmTag3 = '<input type="file" id="img'+count+'" style="display:none;"  onchange="cooking_getThumbnailPrivew(this,$(\'#add_img'+count+'\'))">';
 
   
@@ -232,7 +232,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="admin_index.jsp" ><img src="img/admin/admin_logo.png" width="10%"/></a>
+              <a href="admin_index.jsp" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
             </div>
          </div>
        </div>
@@ -258,7 +258,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
     			
          		<form name="form" id="form" action="" method="post" enctype="multipart/form-data" autocomplete="off">
     				<div id="mainimg_1" class="mb-5" style="height:25.0rem;border:1px solid #FFD7BE; text-align:center">
-           					<img src = "img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
+           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
           				</div>
            		
            					<input type="file" id="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
@@ -311,7 +311,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 			              	<input class="cooking_txt" type="text" name="add_txt" placeholder="조리순서를 입력하세요 ...">	</td>
 			              <td style="width:4%">
 			              	<div id="add_img2"  style="height:150%; border-color:#65737e; text-align:center; padding-top:70%;" >		
-           						<img src = "img/admin/admin_plus.png" id="add_img2"style="width:4.5rem;" onclick="document.getElementById('img2').click();"> <!-- 이미지버튼으로 파일첨부  -->
+           						<img src = "../img/admin/admin_plus.png" id="add_img2"style="width:4.5rem;" onclick="document.getElementById('img2').click();"> <!-- 이미지버튼으로 파일첨부  -->
            					</div>
            				</td>
            				<td style="width:4%;">

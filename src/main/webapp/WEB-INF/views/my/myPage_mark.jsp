@@ -18,14 +18,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Page</title>
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/magnific-popup.css">
-<link rel="stylesheet" href="resources/css/jquery-ui.css">
-<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="resources/css/aos.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/magnific-popup.css">
+<link rel="stylesheet" href="../resources/css/jquery-ui.css">
+<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="../resources/css/aos.css">
+<link rel="stylesheet" href="../resources/css/style.css">
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 
 <style>
@@ -122,17 +122,17 @@ body{
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<script src="resources/js/jquery-3.3.1.min.js"></script>
-<script src="resources/js/jquery-ui.js"></script>
-<script src="resources/js/popper.min.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script src="resources/js/owl.carousel.min.js"></script>
-<script src="resources/js/jquery.magnific-popup.min.js"></script>
-<script src="resources/js/jquery.sticky.js"></script>
-<script src="resources/js/jquery.waypoints.min.js"></script>
-<script src="resources/js/jquery.animateNumber.min.js"></script>
-<script src="resources/js/aos.js"></script>
-<script src="resources/js/main.js"></script>
+<script src="../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../resources/js/jquery-ui.js"></script>
+<script src="../resources/js/popper.min.js"></script>
+<script src="../resources/js/bootstrap.min.js"></script>
+<script src="../resources/js/owl.carousel.min.js"></script>
+<script src="../resources/js/jquery.magnific-popup.min.js"></script>
+<script src="../resources/js/jquery.sticky.js"></script>
+<script src="../resources/js/jquery.waypoints.min.js"></script>
+<script src="../resources/js/jquery.animateNumber.min.js"></script>
+<script src="../resources/js/aos.js"></script>
+<script src="../resources/js/main.js"></script>
 <script src="https://kit.fontawesome.com/d2c6942021.js"></script>
 
 <jsp:include page = "../headNfoot/header.jsp"/> 
@@ -190,7 +190,7 @@ body{
 						<div class="each">
 							<span class="deleteBtn"><i class="fas fa-times"></i></span>
 							<div class="rWrapper">
-								<img src="img/main/mainimg4">
+								<img src="../img/main/mainimg4">
 							</div>
 							<h5><%=i %> 번째 블럭</h5>
 						</div>
