@@ -4,10 +4,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.solrecipe.recipe.foodvideo.FoodVideoVO"%>
 <%
-
 	FoodVideoVO fvVO = (FoodVideoVO)request.getAttribute("fvVO");
-	ArrayList<FoodVideoVO> playList = (ArrayList)request.getAttribute("playList");
-
+//	ArrayList<FoodVideoVO> playList = (ArrayList)request.getAttribute("playList");
 %>
 <!DOCTYPE html>
 <html>
@@ -77,11 +75,26 @@ width: 100%;
 height: 100%;
 }
 
-/* 추천영상 스크롤바 없애기 */
-.thumbnails::-webkit-scrollbar { 
-    display: none; 
+/* 썸네일 스크롤바 */
+.thumbnails::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F8F9FA;
 }
 
+.thumbnails::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.thumbnails::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #FFD7BE;
+}
+
+/* 반응형 */
 @media(max-width:500px){
 	.thumbnails{
 		margin-left:0.5rem;
@@ -92,8 +105,16 @@ height: 100%;
 </style>
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script>
+// 추천영상 클릭시
+function goDetail(video_num){
+	location.href="foodvideo_detail?video_num="+video_num;
+}
+	
+
+
 // ----------------추천영상목록을 띄우는 로직
-/* $(document).ready(function(){
+/* 
+$(document).ready(function(){
 var thumbnails = document.getElementById("thumbnails"); 
 // 플레이리스트 아이디들
 var x = "PLoABXt5mipg6mIdGKBuJlv5tmQFAQ3OYr,PLoABXt5mipg4vsOpJb0Aeldlj3A6xq4jQ,PLoABXt5mipg4lPwTJdH3Bv_4NRZHIhAQK";
@@ -120,8 +141,11 @@ var playlistIds = x.split(',');
 			}
 		);
 	}
-}); */
+});
+*/
+
 </script>
+
 </head> 
 <body>
 <script src="resources/js/jquery-ui.js"></script>
@@ -154,9 +178,10 @@ var playlistIds = x.split(',');
 				<!-- 좌측 하단 -->
 				<div class="col-md-12 vContent">
 				<br><br>
-					<h1><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; <i class="far fa-star" style="font-size:1.5rem;" title="찜하기"></i><i class="fas fa-star" style="font-size:1.5rem;" title="이미 찜 된 영상입니다."></i>
+					<h1 style="color:#FFC69F;"><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; <i class="far fa-star" style="font-size:1.5rem;" title="찜하기"></i><i class="fas fa-star" style="font-size:1.5rem;" title="이미 찜 된 영상입니다."></i>
 					<p><br>
 					<%=fvVO.getVideo_content() %>
+				
 	 				<br><br>
 				</div>
 			</div>
@@ -164,27 +189,13 @@ var playlistIds = x.split(',');
 			<!-- 1행 우측 부분 -->
 			<div class="col-md-2 thumbnails pt-3" id="thumbnails">
 				<div style="text-align:center;"><h4 style="color:#FFD7BE;">이런 영상은 어때요?</h4><br></div>
-				<!-- 단일 썸네일 부분 -->
-				<!--
-				<div class="col-md-12 thumbnailcontainer">
-					<a href="#"><img class="thumbnail" src="http://img.youtube.com/vi/V0Vg2WtcXxU/0.jpg"></a>
-					<br>누구보다 맛있는 오징어짬뽕
+				<c:forEach var="fvVO" items="${playList }">
+					<div class="col-md-12 thumbnailcontainer">
+						<a href='javascript:goDetail("${fvVO.video_num }")'><img class="thumbnail" src="${fvVO.video_thumbnail }"></a>
+					<br>${fvVO.video_title }
 					<br><hr>
-				</div> 
-				-->
-				<%
-					for (int i=0; i<playList.size(); i++){
-				%>
-				<div class="col-md-12 thumbnailcontainer">
-					<a href="/foodvideo_detail?fvVO=<%=playList.get(i) %>">
-						<img class="thumbnail" src="<%=playList.get(i).getVideo_thumbnail() %>">
-					</a>
-					<br><%=playList.get(i).getVideo_title() %>
-					<br><hr>
-				</div>
-				<%
-					}
-				%>		
+					</div>
+				</c:forEach> 
 			</div>
 		</div>
 		<div class="row" style="height:3rem;"></div>
@@ -193,5 +204,61 @@ var playlistIds = x.split(',');
 	
 	<jsp:include page="../headNfoot/footer.jsp"/>
 
+<script>
+
+//무한스크롤 구현
+var thumbnails = document.getElementsByClassName("thumbnails")[0];
+    
+var startNum=5;
+$(".thumbnails").scroll(function() {
+	var maxHeight = thumbnails.scrollHeight;
+	var currentScroll = thumbnails.clientHeight + thumbnails.scrollTop;
+	if (maxHeight <= currentScroll) {
+		$.ajax({
+			type:"POST",
+			url:"/getMorePlaylist",
+			data:{"startNum":startNum, "playList":"<%=fvVO.getVideo_playlist() %>"},
+			dataType:"json",
+			success: function(data){
+				 $.each(data, function(index, item){
+					$(".thumbnails").append("<div class='col-md-12 thumbnailcontainer'>"
+						+"<a href='javascript:goDetail("+item.video_num+")'>"
+						+"<img class='thumbnail' src='"+item.video_thumbnail+"'></a>"
+						+"<br>"+item.video_title
+						+"<br><hr>"
+						+"</div>"
+					);
+	             });
+			}
+		});
+		startNum += 5;
+	};
+});
+
+
+<%-- 
+var startNum=5;
+
+	$(".thumbnails").scroll(function() {
+	var maxHeight = thumbnails.scrollHeight;
+	var currentScroll = thumbnails.clientHeight + thumbnails.scrollTop;
+		if (maxHeight <= currentScroll+50) {
+			
+			for(k=startNum; k<startNum+5; k++){
+	 			$(".thumbnails").append("<div class='col-md-12 thumbnailcontainer'>");
+		 		$(".thumbnails").append("<a href='javascript:goDetail(<%=playList.get(k).getVideo_num()%>)'>");
+		 		$(".thumbnails").append("<img class='thumbnail' src=<%=playList.get(k).getVideo_thumbnail() %>></a>");
+		 		$(".thumbnails").append("<br><%=playList.get(k).getVideo_title() %>");
+		 		$(".thumbnails").append("<br><hr>");
+		 		$(".thumbnails").append("</div>");
+ 			
+			};
+	 		startNum += 5;
+	 		System.out.println(startNum);
+	}
+})
+ --%>
+
+ </script>
 </body>
 </html>

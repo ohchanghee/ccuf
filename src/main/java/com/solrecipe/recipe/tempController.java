@@ -6,14 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class tempController {
 
-   @RequestMapping("/change_index")
-   public String change_index() {
-      return "change_index";
-   }
-   @RequestMapping("/with_index")
-   public String with_index() {
-      return "with_index";
-   }
    @RequestMapping("/foodvideo_detail")
    public String foodvideo_detail() {
       return "foodvideo/foodvideo_detail";

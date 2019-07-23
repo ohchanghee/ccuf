@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solrecipe.recipe.foodvideo.FoodVideoMapper">
+	<resultMap type="FoodVideoVO" id="fvResultMap">
+		<result property="video_num" column="video_num" />
+		<result property="video_id" column="video_id" />
+		<result property="video_playlist" column="video_playlist" />
+		<result property="video_title" column="video_title" />
+		<result property="video_content" column="video_content" />
+		<result property="video_thumbnail" column="video_thumbnail" />
+		<result property="firstdate" column="firstdate" />
+		<result property="video_mark_cnt" column="video_mark_cnt" />
+	</resultMap>
+
+	<select id="getBestList" resultMap="fvResultMap">
+		select video_num, video_title, video_thumbnail, rownum from (select * from food_video_tb order by video_mark_cnt desc)
+		where rownum <![CDATA[<=]]> 6
+	</select>
+	<select id="getNewList" resultMap="fvResultMap">
+		select video_num, video_title, video_thumbnail, firstdate, rownum from (select * from food_video_tb order by firstdate desc)
+		where rownum <![CDATA[<=]]> 9
+	</select>
+	<select id="getMoreNewlist" resultMap="fvResultMap">
+		select * from 
+			(select video_num, video_title, video_thumbnail, firstdate, rownum r from 
+				(select * from food_video_tb order by firstdate desc)
+			)
+		where r > #{startNum} and r <![CDATA[<=]]> #{startNum}+6
+	</select>
+	<select id="getFVO" resultMap="fvResultMap">
+		select * from food_video_tb where video_num = #{video_num}
+	</select>
+	<select id="getPlayList" resultMap="fvResultMap">
+		select video_num, video_title, video_thumbnail,  rownum from (select * from food_video_tb where video_playlist = #{playList, jdbcType=VARCHAR} order by firstdate desc)
+		where rownum<![CDATA[<=]]> 5
+	</select>
+	<select id="getMorePlaylist" resultMap="fvResultMap">
+		select * from 
+			(select video_num, video_title, video_thumbnail, rownum r from
+				(select * from food_video_tb where video_playlist = #{playList, jdbcType=VARCHAR} order by firstdate desc)
+			)
+		where r > #{startNum} and r<![CDATA[<=]]> #{startNum}+5
+	</select>
+	<select id="getListWithSearch" resultMap="fvResultMap">
+		<![CDATA[
+		select video_num, video_title, video_thumbnail, firstdate, rownum from (
+		select * from food_video_tb where video_title like '%'||#{recipe_search}||'%' or video_content like '%'||#{recipe_search}||'%'
+		)where rownum <= 9 order by firstdate desc
+		]]>
+	</select>
+	<select id="getMoreSearchlist" resultMap="fvResultMap">
+		<![CDATA[
+		select video_num, video_title, video_thumbnail, firstdate, r from (
+		select video_num, video_title, video_thumbnail, firstdate, rownum r from food_video_tb where video_title like '%'||#{cri_search}||'%' or video_content like '%'||#{cri_search}||'%'
+		)where r > #{startNum} and r <= #{startNum}+6 order by firstdate desc
+		]]>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
