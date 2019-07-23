@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.solrecipe</groupId>
 	<artifactId>recipe</artifactId>
-	<name>solrecipe</name>
+	<name>SolRecipe</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
