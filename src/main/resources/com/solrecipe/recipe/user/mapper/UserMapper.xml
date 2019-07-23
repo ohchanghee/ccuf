@@ -77,7 +77,13 @@
 		select count(*) from user_tb where user_username=#{user_username}
 	</select>
 	
-	<select id="getUser" parameterType="String" resultMap="MemberResultMap">
-		select * from user_detail_tb where MEMBER_ID=#{member_id, jdbcType=VARCHAR}
+	<select id="getUser" parameterType="String" resultMap="memberMap">
+		SELECT 
+			mem.user_num, mem.user_username, user_name, user_nickname, user_intro, user_img
+		FROM 
+			user_tb mem 
+						LEFT OUTER JOIN user_detail_tb det on mem.user_num=det.user_num 
+		WHERE mem.user_username = #{user_username}
+		
 	</select>
 </mapper>
