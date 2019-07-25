@@ -32,7 +32,7 @@
 	
 	
 
-
+	<bean id="recipeService" class="com.solrecipe.recipe.recipe.RecipeService"></bean>
 
 	
 	<mybatis-spring:scan base-package="com.solrecipe.recipe"/> 
