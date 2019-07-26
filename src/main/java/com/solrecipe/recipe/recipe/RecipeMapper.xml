@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.solrecipe.recipe.recipe.RecipeMapper">
+	<resultMap type="Recipe_basicVO" id="basic_info">
+		<result property="recipe_num" column="recipe_num"/>
+		<result property="recipe_title" column="recipe_title"/>
+		<result property="recipe_img" column="recipe_img"/>
+		<result property="firstdate" column="firstdate"/>
+		<result property="updatedate" column="updatedate"/>
+		<result property="recipe_food_main" column="recipe_food_main"/>
+		<result property="recipe_food_suv" column="recipe_food_suv"/>
+		<result property="excel" column="excel"/>
+	</resultMap>
+	
+	<resultMap type="Recipe_CookingVO" id="cooking_info">
+		<result property="recipe_num" column="recipe_num"/>
+		<result property="cooking_num" column="cooking_num"/>
+		<result property="cooking_content" column="cooking_content"/>
+		<result property="cooking_img" column="cooking_img"/>
+	</resultMap>
+	
+
+	
+	<select id="getRecipeNum" resultType="long">
+		select nvl(max(recipe_num),0)+1 from recipe_basic_tb
+	</select>
+	
+	<select id="getAll_RECIPE_EXCEL" resultMap="basic_info">
+		select * from EXCEL_RECIPE_BASIC_TB order by recipe_num desc
+	</select>
+
+	
+
+
+	<select id="getAll_RECIPE" resultMap="basic_info">
+		select * from RECIPE_BASIC_TB order by recipe_num desc
+	</select>
+	
+	
+	<!-- XML에서 레시피 검색하기 -->
+	<select id="searchEXCEL_RECIPE" resultMap="basic_info">
+		select RECIPE_NUM,RECIPE_TITLE,RECIPE_IMG,FIRSTDATE,UPDATEDATE,RECIPE_FOOD_MAIN,RECIPE_FOOD_SUV,EXCEL from 
+		<choose>
+			<when test="ingredients.length != 0">
+				(select RECIPE_NUM,RECIPE_TITLE,RECIPE_IMG,FIRSTDATE,UPDATEDATE,RECIPE_FOOD_MAIN,RECIPE_FOOD_SUV,EXCEL,
+				regexp_count(recipe_food_main,
+				<foreach collection="ingredients" item="item" separator="||'|'||">
+					#{item}||','
+				</foreach>
+			<![CDATA[  ) count from EXCEL_RECIPE_BASIC_TB) where count > 0 order by count desc, recipe_num desc ]]>
+			</when>
+			<!-- 만약 자료가 비어있는 배열이면 전체 검색을 한다. -->
+			<otherwise>
+			 EXCEL_RECIPE_BASIC_TB order by recipe_num desc
+			</otherwise>
+			
+		</choose>
+	</select>
+	
+	<!-- 레시피 검색하기 -->
+	<select id="search_RECIPE" resultMap="basic_info">
+		select RECIPE_NUM,RECIPE_TITLE,RECIPE_IMG,FIRSTDATE,UPDATEDATE,RECIPE_FOOD_MAIN,RECIPE_FOOD_SUV,EXCEL from 
+		<choose>
+			<when test="ingredients.length != 0">
+				(select RECIPE_NUM,RECIPE_TITLE,RECIPE_IMG,FIRSTDATE,UPDATEDATE,RECIPE_FOOD_MAIN,RECIPE_FOOD_SUV,EXCEL,
+				regexp_count(recipe_food_main,
+				<foreach collection="ingredients" item="item" separator="||'|'||">
+					#{item}||','
+				</foreach>
+			<![CDATA[  ) count from RECIPE_BASIC_TB) where count > 0 order by count desc, recipe_num desc ]]>
+			</when>
+			<!-- 만약 자료가 비어있는 배열이면 전체 검색을 한다. -->
+			<otherwise>
+			 RECIPE_BASIC_TB order by recipe_num desc
+			</otherwise>
+			
+		</choose>
+	</select>
+	
+	
+	
+	<!-- recipe_basic_tb에 넣어야할 값들 : RECIPE_NUM, RECIPE_TITLE, RECIPE_IMG, FIRSTDATE, UPDATEDATE, RECIPE_FOOD_MAIN, RECIPE_FOOD_SUV,EXCEL -->
+	<insert id="insertRecipe">
+		
+		insert into recipe_basic_tb 
+		values(#{recipe_num},#{recipe_title},#{recipe_img},sysdate,sysdate,#{recipe_food_main},#{recipe_food_suv},#{excel})
+		
+	</insert>
+	
+	
+	<!-- recipe_cooking_tb에 넣어야할 값들: RECIPE_NUM,COOKING_NUM,COOKING_CONTENT,COOKING_IMG -->
+	<insert id="insertCooking">
+		
+		insert into recipe_cooking_tb 
+		values(#{recipe_num},#{cooking_num},#{cooking_content},#{cooking_img})
+		
+	</insert>
+	
+	<select id="getRecipeDetail" resultMap="basic_info">
+		select * from 
+		<choose>
+			<when test="excel==1">	
+				EXCEL_RECIPE_BASIC_TB  
+			</when>
+			<otherwise>
+				RECIPE_BASIC_TB 
+			</otherwise>
+		</choose>
+		where recipe_num = #{recipe_num}
+	</select>
+	
+	
+	<select id="getCookingDetail" resultMap="cooking_info">
+		select recipe_num,cooking_num,cooking_content,cooking_img  from 
+		<choose>
+			<when test="excel==1">	
+				EXCEL_RECIPE_COOKING_TB  
+			</when>
+			<otherwise>
+				RECIPE_COOKING_TB 
+			</otherwise>
+		</choose>
+		where recipe_num = #{recipe_num} order by cooking_num
+	</select>
+	
+	
+</mapper>
