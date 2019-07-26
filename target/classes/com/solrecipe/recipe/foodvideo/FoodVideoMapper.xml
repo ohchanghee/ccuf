@@ -25,8 +25,9 @@
 		select * from 
 			(select video_num, video_title, video_thumbnail, firstdate, rownum r from 
 				(select * from food_video_tb order by firstdate desc)
+			where rownum <![CDATA[<=]]> #{startNum}+6
 			)
-		where r > #{startNum} and r <![CDATA[<=]]> #{startNum}+6
+		where r > #{startNum}
 	</select>
 	<select id="getFVO" resultMap="fvResultMap">
 		select * from food_video_tb where video_num = #{video_num}
@@ -39,21 +40,30 @@
 		select * from 
 			(select video_num, video_title, video_thumbnail, rownum r from
 				(select * from food_video_tb where video_playlist = #{playList, jdbcType=VARCHAR} order by firstdate desc)
+			where rownum <![CDATA[<=]]> #{startNum}+5
 			)
-		where r > #{startNum} and r<![CDATA[<=]]> #{startNum}+5
+		where r > #{startNum}
 	</select>
 	<select id="getListWithSearch" resultMap="fvResultMap">
 		<![CDATA[
 		select video_num, video_title, video_thumbnail, firstdate, rownum from (
-		select * from food_video_tb where video_title like '%'||#{recipe_search}||'%' or video_content like '%'||#{recipe_search}||'%'
-		)where rownum <= 9 order by firstdate desc
+			select * from food_video_tb where video_title like '%'||#{recipe_search}||'%' or video_content like '%'||#{recipe_search}||'%'
+			order by firstdate desc
+			)
+		where rownum <= 9
 		]]>
 	</select>
 	<select id="getMoreSearchlist" resultMap="fvResultMap">
 		<![CDATA[
 		select video_num, video_title, video_thumbnail, firstdate, r from (
-		select video_num, video_title, video_thumbnail, firstdate, rownum r from food_video_tb where video_title like '%'||#{cri_search}||'%' or video_content like '%'||#{cri_search}||'%'
-		)where r > #{startNum} and r <= #{startNum}+6 order by firstdate desc
+			select video_num, video_title, video_thumbnail, firstdate, rownum r from	(
+				select * from food_video_tb
+				where video_title like '%'||#{cri_search}||'%' or video_content like '%'||#{cri_search}||'%'
+				order by firstdate desc
+				)
+			where r <= #{startNum}+6
+			)
+		where r > #{startNum}
 		]]>
 	</select>
 </mapper>
