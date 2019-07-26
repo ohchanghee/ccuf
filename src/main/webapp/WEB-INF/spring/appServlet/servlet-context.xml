@@ -4,7 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -28,7 +30,17 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- websocket에 사용할 핸들러 객체 생성 -->	
+ 	<beans:bean id="echoHandler" class="com.solrecipe.recipe.chat.EchoHandler" /> 
 	
+	<websocket:handlers> 
+		<!-- websocket을 사용할 url 설정 -->
+		<websocket:mapping handler="echoHandler" path="/echo"/> 
+		<websocket:handshake-interceptors>
+			<!-- Httpsession의 정보를 websocket에서 생성된 WebSocketSession 로 가져와 사용하고자 할 때 사용. -->
+			<beans:bean class="com.solrecipe.recipe.chat.HandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
 	
 	<context:component-scan base-package="com.solrecipe.recipe" />
 	

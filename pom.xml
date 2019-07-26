@@ -179,14 +179,6 @@
 			<version>1.2</version>
 		</dependency>
 
-		<!-- Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -257,7 +249,22 @@
             <version>4.5.2</version>
         </dependency>
 
-
+		<!-- websocket 기능 추가 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+    		<artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency> 
+		<!-- Provided Websocket API, beacause tomcat has its own implementation -->
+		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+    		<artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+    		<scope>provided</scope>
+		</dependency>
+		
 
 	</dependencies>
 	<build>
