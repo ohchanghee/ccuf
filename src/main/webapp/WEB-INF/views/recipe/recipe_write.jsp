@@ -122,6 +122,10 @@ function frmCheck()
 	
 	var s1 = new FormData($('form#form')[0]);
 	var s2 = new FormData($('form#cooking')[0]); 
+	var csrfHeaderName ="${_csrf.headerName}"; 
+	var csrfTokenValue="${_csrf.token}";
+
+	           
 	for(var s of s2.entries()){	//이클립스에서는 오류가 뜨는데 전혀 문제 없는 코드다.
 	   if(s.includes('add_txt')) {
 	      s1.append('add_txt',s[1]);
@@ -137,6 +141,9 @@ function frmCheck()
         processData : false,
         contentType : false,
         type : 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        },
         success : function(response) {
            console.log('got response');
            console.log(response);
@@ -150,7 +157,7 @@ function frmCheck()
      });
 	
  }
- 
+
 
 function cooking_getThumbnailPrivew(html, $target) {
     if (html.files && html.files[0]) {
