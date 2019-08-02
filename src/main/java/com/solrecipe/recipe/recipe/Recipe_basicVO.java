@@ -1,6 +1,6 @@
 package com.solrecipe.recipe.recipe;
 
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.Data;
 
