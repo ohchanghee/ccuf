@@ -44,14 +44,9 @@
 
 	<bean id="recipeService" class="com.solrecipe.recipe.recipe.RecipeService"></bean>
 
+	<bean id="chatService" class="com.solrecipe.recipe.chat.ChatServiceImpl"></bean>
 	
 	<mybatis-spring:scan base-package="com.solrecipe.recipe"/> 
-	
-	<!-- <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-      <property name="mapperInterface" value="com.solrecipe.recipe.user.mapper.UserMapper"/>
-      <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-   </bean>
-	 -->
-	
+		
 	
 </beans>
