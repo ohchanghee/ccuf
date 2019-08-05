@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solrecipe.recipe.admin.AdminMapper">
+	<resultMap type="FoodVideoVO" id="fvResultMap">
+		<result property="video_num" column="video_num" />
+		<result property="video_id" column="video_id" />
+		<result property="video_playlist" column="video_playlist" />
+		<result property="video_title" column="video_title" />
+		<result property="video_content" column="video_content" />
+		<result property="video_thumbnail" column="video_thumbnail" />
+		<result property="firstdate" column="firstdate" />
+		<result property="video_mark_cnt" column="video_mark_cnt" />
+	</resultMap>
+	
+	<resultMap type="Recipe_basicVO" id="recipeResultMap">
+		<result property="recipe_num" column="recipe_num" />
+		<result property="recipe_title" column="recipe_title" />
+		<result property="updatedate" column="updatedate" />
+	</resultMap>
+	
+		
+	<select id="getTotalCnt" resultType="int">
+		select count(*) from 
+		<choose>
+		    <when test='whichPage.equals("fv")'>
+		       food_video_tb
+		    </when>
+		   	<when test='whichPage.equals("recipe")'>
+		   		(select * from RECIPE_BASIC_TB union all select * from EXCEL_RECIPE_BASIC_TB)
+		    </when>
+  		</choose>
+	</select>
+	
+	<select id="getSearchedCnt" resultType="int">
+		select count(*) from 
+		<choose>
+		    <when test='whichPage.equals("fv")'>
+		       food_video_tb
+		       where video_title like '%'||#{keyword}||'%' or video_content like '%'||#{keyword}||'%' or video_num like '%'||#{keyword}||'%'
+		    </when>
+		    <when test='whichPage.equals("recipe")'>
+		       (select * from RECIPE_BASIC_TB union all select * from EXCEL_RECIPE_BASIC_TB)
+		       where recipe_title like '%'||#{keyword}||'%' or recipe_num like '%'||#{keyword}||'%'
+		    </when>
+  		</choose>
+	</select>
+	
+	<!-- 직접 만든 레시피가 시간순으로 정렬되서 먼저 배치, 그 다음으로 엑셀 레시피가 정렬되서 배치 -->
+	<select id="getRecipeList" resultMap="recipeResultMap">
+		select * 
+		from (select  RECIPE_NUM, RECIPE_TITLE, UPDATEDATE, EXCEL, rownum r
+			from (select * 
+					from (SELECT * FROM RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+                	
+                	UNION ALL
+                	
+                	select *
+                	from (SELECT * FROM EXCEL_RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+                	)
+            where rownum <![CDATA[<= ]]> #{startNum}+15
+            )
+		where r > #{startNum}
+	</select>
+	
+	<select id="getSearchedRecipeList" resultMap="recipeResultMap">
+		select * 
+		from (select  RECIPE_NUM, RECIPE_TITLE, UPDATEDATE, EXCEL, rownum r
+			from (select * 
+					from (select * 
+								from (SELECT * FROM RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+			                	
+			                	UNION ALL
+			                	
+			                	select *
+			                	from (SELECT * FROM EXCEL_RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+                			)
+                	where recipe_title like '%'||#{keyword}||'%' or recipe_num like '%'||#{keyword}||'%'
+                	)
+            where rownum <![CDATA[<= ]]> #{startNum}+15
+            )
+		where
+			r > #{startNum}
+	</select>
+	
+	<delete id="deleteRecipeBasic">
+		delete 
+		from 
+		<choose>
+		    <when test='excel == 0'>
+		       recipe_basic_tb
+		    </when>
+		    <when test='excel == 1'>
+		       excel_recipe_basic_tb
+		    </when>
+  		</choose>
+		       where recipe_num = #{recipe_num}
+	</delete>
+	
+	<delete id="deleteRecipeCooking">
+		delete 
+		from 
+		<choose>
+		    <when test='excel == 0'>
+		       recipe_cooking_tb
+		    </when>
+		    <when test='excel == 1'>
+		       excel_recipe_cooking_tb
+		    </when>
+  		</choose>
+		       where recipe_num = #{recipe_num}
+	</delete>
+	
+	<select id="getFoodVideoList" resultMap="fvResultMap">
+		select * 
+		from (select  video_num, video_title, firstdate, video_mark_cnt, rownum r
+			from (select * 
+					from food_video_tb
+                	order by firstdate desc
+                	)
+            where rownum <![CDATA[<= ]]> #{startNum}+15
+            )
+		where
+			r > #{startNum}
+	</select>
+	
+	<select id="getSearchedFoodVideoList" resultMap="fvResultMap">
+		select * 
+		from (select  video_num, video_title, firstdate, video_mark_cnt, rownum r
+			from (select * 
+					from food_video_tb
+					where video_title like '%'||#{keyword}||'%' or video_num like '%'||#{keyword}||'%'
+                	order by firstdate desc
+                	)
+            where rownum <![CDATA[<= ]]> #{startNum}+15
+            )
+		where
+			r > #{startNum}
+	</select>
+	
+	<delete id="deleteFoodVideo">
+		delete from food_video_tb where video_num=#{videoNum}
+	</delete>
+</mapper>
