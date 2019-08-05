@@ -30,8 +30,6 @@ public class ChatMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private ChatMapper mapper;
 	
-	@Autowired
-	private TransactionTemplate transactionTemplate; 
 	
 	@Autowired
 	private PlatformTransactionManager manager;
