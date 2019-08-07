@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
@@ -23,9 +26,15 @@ public class RecipeController {
 	@Autowired
 	private RecipeService service; 
 	
-	@RequestMapping("/recipe_index")
-	public String goToIndex() {
+	@RequestMapping(value = "/recipe_index", method = RequestMethod.GET)
+	public String goToIndex_get() {
 		return "recipe/recipe_index";
+	}
+	
+	@RequestMapping(value = "/recipe_index", method = RequestMethod.POST)
+	public String goToIndex_post(@RequestParam(value = "recipe_search",required = false) String recipe_search, RedirectAttributes rttr) {
+		rttr.addFlashAttribute("MainSearch",recipe_search);
+		return "redirect:/recipe_index";
 	}
 	
 	@RequestMapping("/recipe_write")

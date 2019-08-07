@@ -397,7 +397,7 @@ label#menu_label, #menu{
                   <li><a href="#foodvideo-section" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
                   <li><a href="#recipegram-section" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
                   <li><a href="#salething-section" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
-                  <li><a href="chat/change_chat.jsp" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
+                  <li><a href="/change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
                   
                   
 					
@@ -487,7 +487,7 @@ label#menu_label, #menu{
       
                 <!-- <span class="icon"><img src="img/main/search.png" /></span>
                 <input type="text" id="recipe_search" /> -->
-               <form id="searchText" method="post">
+               <form id="searchText" method="post" action="/recipe_index">
 					<!-- <input type="submit" id="search_btn" name="search_btn" >
 					<span class="icon"><img src="img/main/search.png" /></span> -->
 		
@@ -498,6 +498,7 @@ label#menu_label, #menu{
 					</span>
 					<label for="recipe_search">지금은 <%=ran_ph %> time!!!</label>
 					<input id="recipe_search" name="recipe_search">
+					<input type="hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
 				</form>
             </div>
           </div>

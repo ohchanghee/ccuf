@@ -141,4 +141,54 @@
 	<delete id="deleteFoodVideo">
 		delete from food_video_tb where video_num=#{videoNum}
 	</delete>
+	
+	
+	
+	
+	
+	
+	<select id="getChatRoomList" resultType="com.solrecipe.recipe.chat.AdminChatRoomVO">
+		select chatroom_num,chat_address,user_num,chat_title,firstdate,user_nickname,type from (
+			select chatroom_num,chat_address,user_num,chat_title,firstdate,user_nickname,type, rownum rn from (
+			select  a.chatroom_num,a.chat_address,a.user_num,a.chat_title,a.firstdate,b.user_nickname,type from
+			(
+			
+				(select chatroom_num,chat_address,user_num,chat_title,chat_status,firstdate,type from change_tb z1 inner JOIN (select '물물교환' as type from dual) z2 ON 1=1)
+				    UNION ALL
+				(select chatroom_num,chat_address,user_num,chat_title,chat_status,firstdate,type from with_tb y1 inner JOIN (select '공동구매' as type from dual) y2 ON 1=1)
+			
+			) a INNER JOIN USER_DETAIL_TB b ON a.user_num = b.user_num  where a.chat_status = 0 
+			
+		order by a.firstdate desc ) where rownum <![CDATA[<= ]]> #{startNum}+15 ) where rn > #{startNum} 
+		<if test="keyword != null and !keyword.equals('')">
+			and REGEXP_LIKE(chat_title, #{keyword})
+		</if>
+	</select>
+	
+	<select id="getChatRoomCnt" resultType="int">
+		select count(*) from (
+			(select chatroom_num,chat_address,user_num,chat_title,chat_status,firstdate,type from change_tb z1 inner JOIN (select '물물교환' as type from dual) z2 ON 1=1)
+			    UNION ALL
+			(select chatroom_num,chat_address,user_num,chat_title,chat_status,firstdate,type from with_tb y1 inner JOIN (select '공동구매' as type from dual) y2 ON 1=1)
+		) where chat_status = 0 
+		<if test="keyword != null and !keyword.equals('')">
+			and REGEXP_LIKE(chat_title, #{keyword})
+		</if>
+	</select>
+	
+	<select id="getChattingList" resultType="com.solrecipe.recipe.chat.AdminChatVO">
+		select a.CHAT_CONTENT,a.USER_NUM,b.user_nickname from
+		(
+			(select CHATROOM_NUM,CHAT_CONTENT,USER_NUM,firstdate,type from change_chat_tb z1 inner JOIN (select '물물교환' as type from dual) z2 ON 1=1)
+			    UNION ALL
+			(select CHATROOM_NUM,CHAT_CONTENT,USER_NUM,firstdate,type from with_chat_tb y1 inner JOIN (select '공동구매' as type from dual) y2 ON 1=1)
+		) a inner join user_detail_tb b ON a.user_num = b.user_num  
+		where chatroom_num = #{chatroom_num} order by a.firstdate
+	</select>
+	
+	<delete id="deleteChatRoom">
+		delete from <choose><when test='type.equals("물물교환")'>change_tb</when><when test='type.eqauls("공동구매")'>with_tb</when></choose> 
+		where chatroom_num = #{chatroom_num}
+	</delete>
+	
 </mapper>

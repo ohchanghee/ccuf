@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <head>
 
 
@@ -22,6 +22,8 @@
 
 <body>
 
+<!-- 수정 사항: <div class="modal-body" id="chatting_contents">  , id 속성 추가 -->
+
 <div id="chattingModal" class="modal chatModal" >
 		
  		
@@ -32,17 +34,18 @@
 				<div class="container-fluid pt-5">
 					<div class="topRow">
 						<div class="col-md-11" style="margin-top:-4%;">	
-							<h4 style="margin-left:5%;">(3/5)감자 교환하실분~</h4>
+							<h4 style="margin-left:5%;" id="ChattingRoomTitle"></h4>
 						</div>
 					</div>
 					
 					<!-- row 크기가 정해져야 한다. -->
 					<div class="row midRow" style="height:550px;">
 						<div class="col-md-9 modal-body-wrapper">
-						<div class="modal-body">
+						<div class="modal-body" id="chatting_contents">
 							<form role="form" method = "get" action="#">
-							<fieldset>
-						<div class="form-group other">
+							<fieldset id="chattingArea">
+						
+						<!-- <div class="form-group other">
 							<label for="user1_nickname">연정쓰</label> 
 							<textarea class="form-control mb-2"  id="user1_nickname" name = "user3_nickname" style="width:80%;" readonly>
 ㅎㅇ
@@ -103,12 +106,12 @@
 							<textarea class="form-control mb-2"  id="user1_nickname" name = "user3_nickname" style="width:80%;" readonly>
 ㅎㅇ
 							</textarea>
-							<textarea class="form-control mb-2"  id="user1_nickname" name = "user3_nickname" style="width:80%;" readonly>
+							<textarea class="form-control mb-2"   id="user1_nickname" name = "user3_nickname" style="width:80%;" readonly>
 ㅎㅇ
 							</textarea>
  
 						</div>
-												
+								 -->				
 						
 						</fieldset>
 						</form>
@@ -118,13 +121,8 @@
 						<h4 style="text-align:center;">참여자 목록</h4>
 						<hr style="border-top:2px solid #FFD7BE;">
 						<br>
-						<table style="display:block;">
-							<tr class="rwd" style="font-size:15px; display:none;">
-								<td  style="color:#FFC69F">연정쓰</td>
-								<td>&nbsp; 아람쓰</td>
-								<td>&nbsp; 갠수</td>
-							</tr>
-							<tr class="norwd" style="font-size:20px;">
+						<table style="display:block;" id="userList">
+							<!-- <tr class="norwd" style="font-size:20px;">
 								<td style="color:#FFC69F">
 									연정쓰
 								</td>
@@ -138,7 +136,7 @@
 								<td>
 									갠수
 								</td>
-							</tr>
+							</tr> -->
 						</table>
 					</div>
 					</div>

@@ -151,7 +151,7 @@
 			<div class="row align-items-center justify-content-center">
 	            <div class="col-sm-12 col-lg-7 text-center search">
 	                  <span class="icon"> <input TYPE="IMAGE" id="search_icon" src="img/main/search.png" value="Submit">
-	                  </span> <input id="recipe_search" name="recipe_search" placeholder="search" style="margin-left: 0px;">
+	                  </span> <input id="recipe_search" name="recipe_search" placeholder="search" style="margin-left: 0px;" value='${MainSearch}'>
 	               
 	            </div>
 	         </div>
@@ -234,6 +234,7 @@
 <!-- 	<script src="/resources/js/jquery-migrate-3.0.1.min.js"></script> -->
 	
 	<script>
+	
 	
 	
 	//레시피 한개를 추가할 때 생기는 일이 함축되어 있는 
@@ -368,21 +369,27 @@
 		//나중에 index화면에서 검색을 땅 치고 온 것에 대해서는 별도의 작업을 할 것이다
 		//jsp의 $를 사용해서 model에 저장된 값을 읽어 올 것이다. $(document).ready 밖에 둔다.
 		
+		//만약 검색을 해서 가져온 데이터면 잠시 모든 데이터를 가져오는 것을 멈춘다.
 		$.ajax({
-     	    type      : 'GET',
-     	    url:'/rest/getAllRecipe',
-     	    dataType:"json",
-     	    success     : function(data) {
-     	        console.log(data);   
-     	        search_result = data;
-     	        Show = recipe_loop(data);
-     	        Show();
-     	    },
-     	    error       : function(request, status, error) {
-     	        alert(error);
-     	    }
-     	});
-		
+               type      : 'GET',
+               url:'/rest/getAllRecipe',
+               dataType:"json",
+               success     : function(data) {
+                 var MainSearch = '${MainSearch}';
+                 if(MainSearch) {
+                    $('#search_icon').click();
+                 } else {
+                      console.log(data);   
+                      search_result = data;
+                      Show = recipe_loop(data);
+                      Show();
+                 }
+               },
+               error       : function(request, status, error) {
+                   alert(error);
+               }
+           });
+			
 		//=================================== 맨 위의 헤더 아이콘에 마우스 대면 툴팁이 뜬다 ====================================//
 		
 		 
@@ -422,7 +429,6 @@
 				search(memoCollect());
 	    	}
 	    }	
-	    
 	    
 	    
 	    //=============================== 검색 관련 ===================================//
@@ -483,7 +489,7 @@
 			
 			if(e.which === 13){ //검색차에서 엔터를 치는 경우
 	          
-				var recipe_search = $('#recipe_search');
+				/* var recipe_search = $('#recipe_search');
 				var ingsMemo = memoCollect();//현재 메모장에 적혀있는 재료를 읽어온다
 	  			
 				var search_value = recipe_search.val(); //검색창에 있는 재료를 읽어온다.
@@ -499,14 +505,6 @@
 					return;
 				}		
 				
-				/* 
-				// 만약 검색바에 적은 재료가 현재 내가 DB나 JSON의 재료 목록에 존재하지 않으면 내용이 들어가지 못하게 함
-				if(!exist_ings.includes(search_value)) {
-					
-					alert('존재하지 않는 재료입니다.');  
-					return;
-				}
-				 */
 				// 메모에 현재 내가 검색하고자 하는 재료가 이미 있는 경우 이것을 중복으로 생각하고 경고창을 날린다.
 				if(ingsMemo.length !== 0) {
 					// ※주의: [].includes('값')도 false다
@@ -525,8 +523,8 @@
 				
 				
 				console.log(memoCollect());
-				search(memoCollect());
-				
+				search(memoCollect()); */
+				$('#search_icon').click();
 				
 			}//end of if(e.which === 13)
 		});
@@ -545,7 +543,11 @@
 			}
 		 });
     
+	
+		
 	});
+	
+	
 	
   </script>
 </body>

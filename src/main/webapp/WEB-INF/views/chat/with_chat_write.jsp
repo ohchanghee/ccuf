@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -52,6 +54,11 @@
 	margin-left:80%;
 }
 
+#address input{
+  position: relative !important;
+  top: 7px;
+}
+
 </style>
 
 </head>
@@ -61,11 +68,21 @@
 <div id="chatWriteModal" class="chatWriteModal" >
 	<div class="chatWrite-modal-content block-heading-1">
 		<span class="close" id="closeWrite"><i class="fas fa-times fa-2x"></i></span>
-			<form>
+			
+			<!-- 수정: form에 id,method 추가 -->
+			<form id="chatRoomForm" action="/makeChatRoom" method="POST" accept-charset="utf-8">
+			
+			<sec:authorize access="isAuthenticated()">
+			<input type="hidden" name="user_num" value='<sec:authentication property="principal.member.user_num"/>'> 		
+			</sec:authorize>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			
+			<!-- 수정: Change인지 With인지 구별하기 위함, 0이면 CHANGE_TB , 1이면 WITH_TB에 insert -->
+			<input type="hidden" name="select" value="1"/>
 			<table class="chatWrite-body">
 				<tr>
 					<td colspan="2" style="text-align:center; font-size:2.5rem; color:#FFC69F;">
-						&nbsp; 공동구매 채팅방 개설
+						&nbsp; 물물교환 채팅방 개설
 					</td>
 					
 				</tr>
@@ -75,8 +92,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
-						<input type="text" placeholder="읍, 면, 동 단위로 입력 후 검색">
+					<td id="address">
+						<!-- 수정: name = "chat_address"  추가-->
+						<input type="text" id="chat_address" name="chat_address" placeholder="읍, 면, 동 단위로 입력 후 검색" autocomplete="off">
 					</td>
 					<td>
 						<span class="searchBtn"><img src="img/main/search.png" id="searchIcon"></span>
@@ -89,13 +107,16 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="text" placeholder="방 제목을 입력하세요" maxlength="20">
+						<!-- 수정: name = "chat_title"  추가-->
+						<input type="text" name="chat_title" placeholder="방 제목을 입력하세요" maxlength="20">
 					</td>
 				</tr>
 				<tr>
 					<td  class="eachRow">
 						&nbsp; &nbsp; 인원
-						<select>
+						
+						<!-- 수정: name="chat_maxmember" 추가 -->
+						<select name="chat_maxmember">
 	    					<option value="2">2명</option>
 	    					<option value="3">3명</option>
 	    					<option value="4">4명</option>
@@ -107,7 +128,7 @@
 				</tr>
 			</table>
 				<span>
-					<input type="submit" class="btn btn-primary btn-xs writeBtn" value="개설하기">
+					<input type="submit" id="createBtn" class="btn btn-primary btn-xs writeBtn" value="개설하기">
 				</span>
 			</form>
 <!-- 		<div class="container chatWrite-body">

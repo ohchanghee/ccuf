@@ -272,7 +272,27 @@
     		<scope>provided</scope>
 		</dependency>
 		
-
+		<!-- 19.07.31 -->
+		<!-- stomp 사용하기 위한 추가 라이브러리 -> spring-messaging, sockJS, stomp -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/sockjs-client -->
+	      <dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>sockjs-client</artifactId>
+		  <version>1.1.2</version>
+	      </dependency>
+	      <!-- https://mvnrepository.com/artifact/org.webjars/stomp-websocket -->
+	      <dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>stomp-websocket</artifactId>
+		  <version>2.3.3-1</version>
+	      </dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
