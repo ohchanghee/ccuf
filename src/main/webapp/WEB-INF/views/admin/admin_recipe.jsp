@@ -194,6 +194,9 @@ if ("${isModified}" != null && "${isModified}" > 1)
 				 			번 호
 				 		</th>
 				 		<th>
+				 			닉네임
+				 		</th>
+				 		<th>
 				 			제 목
 				 		</th>
 				 		<th>
@@ -214,15 +217,32 @@ if ("${isModified}" != null && "${isModified}" > 1)
 						 			${recipeVO.recipe_num}
 						 		</td>
 						 		<td>
+						 			<c:choose>
+							 			<c:when test="${recipeVO.user_num eq 1}">
+							 				${recipeVO.memberVO.user_nickname}
+							 			</c:when>
+							 			<c:otherwise>
+							 				<a href="#">${recipeVO.memberVO.user_nickname}</a>
+							 			</c:otherwise>
+							 		</c:choose>
+						 		</td>
+						 		<td>
 						 			<a href="/recipe_detail/${recipeVO.excel }/${recipeVO.recipe_num }">${recipeVO.recipe_title}</a>
 						 		</td>
 						 		<td>
 						 			${recipeVO.updatedate}
 						 		</td>
 						 		<td>
-					 				<a href="javascript:modifyRecipe(${recipeVO.excel },${recipeVO.recipe_num })">
+						 		<c:choose>
+						 			<c:when test="${recipeVO.user_num eq 1}">
+						 				<a href="javascript:modifyRecipe(${recipeVO.excel },${recipeVO.recipe_num })">
+							 			수정
+							 			</a>
+						 			</c:when>
+						 			<c:otherwise>
 						 				수정
-						 			</a>
+						 			</c:otherwise>
+						 		</c:choose>
 						 		</td>
 						 		<td>
 						 			<a href="javascript:deleteRecipe(${recipeVO.excel },${recipeVO.recipe_num })">
@@ -360,6 +380,11 @@ function deleteRecipe(excel, recipe_num){
 	 }else{   //취소
 		return false;
 	 }
+}
+
+// 수정 함수
+function modifyRecipe(excel, recipe_num){
+	location.href="admin_recipe_modify?excel="+excel+"&recipe_num="+recipe_num;
 }
 
 </script>      

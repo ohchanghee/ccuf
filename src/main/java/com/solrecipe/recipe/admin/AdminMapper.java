@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
-import com.solrecipe.recipe.chat.ChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 

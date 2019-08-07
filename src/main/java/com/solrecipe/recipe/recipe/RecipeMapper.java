@@ -20,6 +20,10 @@ public interface RecipeMapper {
 	
 	public int insertCooking(Recipe_CookingVO cooking);
 	
+	public int modifyRecipe(Recipe_basicVO basic);
+	
+	public int deleteCooking(long recipe_num, int excel);
+	
 	public Recipe_basicVO getRecipeDetail(@Param("recipe_num") Long recipe_num,@Param("excel") Integer excel);
 	
 	public List<Recipe_CookingVO> getCookingDetail(@Param("recipe_num") Long recipe_num,@Param("excel") Integer excel);

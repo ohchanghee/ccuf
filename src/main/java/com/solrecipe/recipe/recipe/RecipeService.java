@@ -42,7 +42,14 @@ public class RecipeService {
 	public int insertCooking(Recipe_CookingVO cooking) {
 		return mapper.insertCooking(cooking);
 	}
+
+	public int modifyRecipe(Recipe_basicVO basic) {
+		return mapper.modifyRecipe(basic);
+	}
 	
+	public int deleteCooking(long recipe_num, int excel) {
+		return mapper.deleteCooking(recipe_num, excel);
+	}
 	public Recipe_basicVO getRecipeDetail(Long recipe_num,Integer excel) {
 			
 		Recipe_basicVO vo = mapper.getRecipeDetail(recipe_num, excel);

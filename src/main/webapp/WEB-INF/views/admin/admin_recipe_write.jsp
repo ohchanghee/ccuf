@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +75,7 @@ function insRow() {
   var frmTag = "<input class='cooking_txt' type='text' name='add_txt' placeholder='조리순서를 입력하세요 ...' >";
   
   var frmTag1 = "<div id='add_img"+count+"' style='height:150%; border-color:#65737e; text-align:center'>";
-  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
+  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'' + count+'\').click();\">';
   frmTag1 += "</div>";
   
   var frmTag2 = "<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow();' src='../img/admin/admin_delete.png'/>";
@@ -309,7 +310,9 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
            	<div class="rounded">
-    			
+           	<!-- 추가 -> user_num도 넘겨줌. -->
+           	<sec:authentication var="user_num" property="principal.member.user_num"/>
+    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
            		<input id="cooking_title" name="cooking_title" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
            		<textarea id="cooking_main" name="cooking_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;"></textarea>
            		<textarea id="cooking_sub"  name="cooking_sub" placeholder="추가 재료를 입력하세요 ..."style="width:100%;"></textarea>

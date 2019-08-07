@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.solrecipe.recipe.admin.AdminMapper">
+	<resultMap type="memberVO" id="memberResultMap">
+		<result property="user_num" column="user_num"/>
+		<result property="user_nickname" column="user_nickname"/>
+	</resultMap>
 	<resultMap type="FoodVideoVO" id="fvResultMap">
 		<result property="video_num" column="video_num" />
 		<result property="video_id" column="video_id" />
@@ -17,6 +21,9 @@
 		<result property="recipe_num" column="recipe_num" />
 		<result property="recipe_title" column="recipe_title" />
 		<result property="updatedate" column="updatedate" />
+		<result property="user_num" column="user_num" />
+		<result property="excel" column="excel" />
+		<collection property="memberVO" resultMap="memberResultMap"/>
 	</resultMap>
 	
 		
@@ -46,17 +53,20 @@
   		</choose>
 	</select>
 	
+	<!-- recipe_basic_tb를 user_tb, user_detail_tb와 join, 동일하게 excel_recipe_basic_tb도 join 한 후에 두 select문을 union -->
 	<!-- 직접 만든 레시피가 시간순으로 정렬되서 먼저 배치, 그 다음으로 엑셀 레시피가 정렬되서 배치 -->
 	<select id="getRecipeList" resultMap="recipeResultMap">
 		select * 
-		from (select  RECIPE_NUM, RECIPE_TITLE, UPDATEDATE, EXCEL, rownum r
+		from (select  RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, UPDATEDATE, EXCEL, rownum r
 			from (select * 
-					from (SELECT * FROM RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+					from (SELECT E.RECIPE_NUM, E.RECIPE_TITLE, E.USER_NUM, D.USER_NICKNAME, E.UPDATEDATE, E.EXCEL
+                		FROM RECIPE_BASIC_TB E, USER_TB U, USER_DETAIL_TB D WHERE E.USER_NUM = U.USER_NUM AND U.USER_NUM = D.USER_NUM ORDER BY E.UPDATEDATE DESC)
                 	
                 	UNION ALL
                 	
                 	select *
-                	from (SELECT * FROM EXCEL_RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
+                	from (SELECT E.RECIPE_NUM, E.RECIPE_TITLE, E.USER_NUM, D.USER_NICKNAME, E.UPDATEDATE, E.EXCEL
+                		FROM EXCEL_RECIPE_BASIC_TB E, USER_TB U, USER_DETAIL_TB D WHERE E.USER_NUM = U.USER_NUM AND U.USER_NUM = D.USER_NUM ORDER BY E.UPDATEDATE DESC)
                 	)
             where rownum <![CDATA[<= ]]> #{startNum}+15
             )
@@ -65,17 +75,19 @@
 	
 	<select id="getSearchedRecipeList" resultMap="recipeResultMap">
 		select * 
-		from (select  RECIPE_NUM, RECIPE_TITLE, UPDATEDATE, EXCEL, rownum r
+		from (select  RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, UPDATEDATE, EXCEL, rownum r
 			from (select * 
 					from (select * 
-								from (SELECT * FROM RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
-			                	
-			                	UNION ALL
-			                	
-			                	select *
-			                	from (SELECT * FROM EXCEL_RECIPE_BASIC_TB ORDER BY UPDATEDATE DESC)
-                			)
-                	where recipe_title like '%'||#{keyword}||'%' or recipe_num like '%'||#{keyword}||'%'
+							from (SELECT E.RECIPE_NUM, E.RECIPE_TITLE, E.USER_NUM, D.USER_NICKNAME, E.UPDATEDATE, E.EXCEL
+		                		FROM RECIPE_BASIC_TB E, USER_TB U, USER_DETAIL_TB D WHERE E.USER_NUM = U.USER_NUM AND U.USER_NUM = D.USER_NUM ORDER BY E.UPDATEDATE DESC)
+		                	
+		                	UNION ALL
+		                	
+		                	select *
+		                	from (SELECT E.RECIPE_NUM, E.RECIPE_TITLE, E.USER_NUM, D.USER_NICKNAME, E.UPDATEDATE, E.EXCEL
+		                		FROM EXCEL_RECIPE_BASIC_TB E, USER_TB U, USER_DETAIL_TB D WHERE E.USER_NUM = U.USER_NUM AND U.USER_NUM = D.USER_NUM ORDER BY E.UPDATEDATE DESC)
+		                	)
+                	where recipe_title like '%'||#{keyword}||'%' or recipe_num like '%'||#{keyword}||'%' or user_nickname like '%'||#{keyword}||'%'
                 	)
             where rownum <![CDATA[<= ]]> #{startNum}+15
             )

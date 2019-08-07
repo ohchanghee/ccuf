@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -349,7 +350,9 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 		         	<!-- 제목,주재료,추가재료 -->
 		           	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
 						<div class="rounded">
-			    			
+			    			<!-- 추가 -> user_num도 넘겨줘야함. -->
+				           	<sec:authentication var="user_num" property="principal.member.user_num"/>
+				    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
 			           		<input id="cooking_title" name="cooking_title" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
 			           		<textarea id="cooking_main" name="cooking_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;"></textarea>
 			           		<textarea id="cooking_sub" name="cooking_sub" placeholder="추가 재료를 입력하세요 ..."style="width:100%;"></textarea>

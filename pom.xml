@@ -263,14 +263,6 @@
     		<artifactId>spring-websocket</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency> 
-		<!-- Provided Websocket API, beacause tomcat has its own implementation -->
-		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
-		<dependency>
-		    <groupId>javax.websocket</groupId>
-    		<artifactId>javax.websocket-api</artifactId>
-		    <version>1.1</version>
-    		<scope>provided</scope>
-		</dependency>
 		
 		<!-- 19.07.31 -->
 		<!-- stomp 사용하기 위한 추가 라이브러리 -> spring-messaging, sockJS, stomp -->

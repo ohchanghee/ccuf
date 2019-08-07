@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>레시피추가</title>
+<title>레시피수정</title>
 
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/magnific-popup.css">
@@ -51,16 +53,24 @@ function getThumbnailPrivew(html, $target) {
 }
 
 
-/* 추가버튼 */
-var oTbl ;
-var count=3;
+/* 추가, 삭제버튼 */
+
+var oTbl;
+var count=${cooking_list.size()+2};
+
+// 기존 row에 함수 등록
+window.onload=function(){
+	oTbl = document.getElementById("addTable");
+	for(i=1; i<oTbl.rows.length; i++){
+		oTbl.rows[i].onmouseover = function(){oTbl.clickedRowIndex=this.rowIndex;};
+	}
+}
 
 //Row 추가
 function insRow() {
-  oTbl = document.getElementById("addTable");
   var oRow = oTbl.insertRow();
   oRow.id = "add"+count; //tr에 id 부여 
-  oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+  oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex;}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
   var oCell = oRow.insertCell(0);
   oCell.style.width = "80%";
   var oCell1 = oRow.insertCell(1);
@@ -69,7 +79,7 @@ function insRow() {
   oCell2.style.width = "4%"
   var oCell3 = oRow.insertCell(3);
   oCell3.style.width = "5%";
-	
+  
   //삽입될 Form Tag
   var frmTag = "<input class='cooking_txt' type='text' name='add_txt' placeholder='조리순서를 입력하세요 ...' >";
   
@@ -126,7 +136,7 @@ function frmCheck()
 	}
   	
 	$.ajax({
-        url : "/insert_recipe",
+        url : "/modify_recipe",
         data : s1,
         dataType : 'text',
         processData : false,
@@ -148,7 +158,7 @@ function frmCheck()
      });
 	
  }
- 
+
 
 function cooking_getThumbnailPrivew(html, $target) {
     if (html.files && html.files[0]) {
@@ -286,7 +296,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
         
           <div class="col-12 text-left">
            <div class="block-heading-1">
-              <h4>- 레 시 피 추 가 -</h4>
+              <h4>- 레 시 피 수 정 -</h4>
               
             </div>
           </div>
@@ -297,8 +307,9 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
          		<div class="text-center rounded">
     			
          			<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
+         			<input type = "hidden" name = "recipe_num" value = "${recipe_num}"/>
     				<div id="mainimg_1" class="mb-5" style="height:25.0rem;border:1px solid #FFD7BE; text-align:center">
-           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
+           					<img src = "${basic.recipe_img}" id="img"style="width:100%; height:100%; border:none;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
           				</div>
            		
            					<input type="file" id="mainimg" name="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
@@ -309,10 +320,14 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
            	<div class="rounded">
-    			
-           		<input id="cooking_title" name="cooking_title" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
-           		<textarea id="cooking_main" name="cooking_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;"></textarea>
-           		<textarea id="cooking_sub"  name="cooking_sub" placeholder="추가 재료를 입력하세요 ..."style="width:100%;"></textarea>
+
+           		<!-- user_num과 excel을 함께 보내줌 -->
+	          	<sec:authentication var="user_num" property="principal.member.user_num"/>
+	    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
+	    		<input type="hidden" id="excel" name="excel" value="1">
+           		<input id="cooking_title" name="cooking_title" class="mb-4" type="text" value = "${basic.recipe_title}" placeholder="제목을 입력하세요 ..." style="width:100%;">
+           		<textarea id="cooking_main" name="cooking_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_main}</textarea>
+           		<textarea id="cooking_sub"  name="cooking_sub" placeholder="추가 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_suv}</textarea>
            		
           </div>
         </div>
@@ -347,19 +362,45 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 			           		<td align="center"><input class="cooking_btn mb-4" name="addButton" type="button" style="cursor:hand; width:7.5rem; height:2.5rem; color:#FFD7BE; background-color:black; border-color:#FFD7BE;" onClick="insRow()" value="조리순서 추가">
 			        		</td>
 			        	</tr>
+			        	
+			        	<c:set var="cnt" value="2" />
+			        	<c:forEach var="item" items="${cooking_list }">
+			        		<tr id="add${cnt}">
+			              <td style="width:80%;">
+			              	<input class="cooking_txt" type="text" name="add_txt" value="${item.cooking_content}"placeholder="조리순서를 입력하세요 ...">	</td>
+			              <td style="width:4%">
+			              <div id="add_img${cnt}"  style="height:150%; border-color:#65737e; text-align:center; padding-top:70%;" >	
+				              	<c:choose>
+				              		<c:when test='${item.cooking_img != " " && item.cooking_img != null}'>
+				              			<img src = "${item.cooking_img}"  id="add_img${cnt}"style="width:4.5rem;" onclick="document.getElementById('img${cnt}').click();">
+				              		</c:when>
+				              		<c:otherwise>
+				              			<img src ="../img/admin/admin_plus.png" id="add_img${cnt}"style="width:4.5rem;" onclick="document.getElementById('img${cnt}').click();"> 
+				              		</c:otherwise>
+				              	</c:choose>	
+           					</div>
+           					</td>
+	           				<td style="width:4%;">
+	           				<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow()' src='../img/admin/admin_delete.png'/>
+	          				<input type="file" id="img${cnt}" style="display:none; " name="img" onchange="cooking_getThumbnailPrivew(this,$('#add_img${cnt}'))"></td>
+				            <td style="width:5%"></td>
+				            <c:set var="cnt" value="${cnt+1}"/> 
+			        	</c:forEach>
+			            <!-- 
 			            <tr id="add2">
 			              <td style="width:80%;">
 			              	<input class="cooking_txt" type="text" name="add_txt" placeholder="조리순서를 입력하세요 ...">	</td>
 			              <td style="width:4%">
 			              	<div id="add_img2"  style="height:150%; border-color:#65737e; text-align:center; padding-top:70%;" >		
-           						<img src = "../img/admin/admin_plus.png" id="add_img2"style="width:4.5rem;" onclick="document.getElementById('img2').click();"> <!-- 이미지버튼으로 파일첨부  -->
+           						<img src = "../img/admin/admin_plus.png" id="add_img2"style="width:4.5rem;" onclick="document.getElementById('img2').click();"> 이미지버튼으로 파일첨부 
            					</div>
            				</td>
            				<td style="width:4%;">
           				<input type="file" id="img2" style="display:none; " name="img" onchange="cooking_getThumbnailPrivew(this,$('#add_img2'))"></td>
 			            <td style="width:5%"></td>	
 			            	
-			            	</tr>
+			            </tr> 
+			            -->
 			        
 			          </table></td>
 			        </tr>

@@ -2,11 +2,10 @@ package com.solrecipe.recipe.admin;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
 public interface AdminService {
@@ -15,6 +14,8 @@ public interface AdminService {
 	
 	List<Recipe_basicVO> getRecipeList(int page);
 	List<Recipe_basicVO> getSearchedRecipeList(int page, String keyword);
+	Recipe_basicVO getRecipeDetail(Long recipe_num, int excel);
+	List<Recipe_CookingVO> getCookingDetail(Long recipe_num, int excel);
 	int deleteRecipe(int excel, int recipe_num);
 	
 	List<FoodVideoVO> getFoodVideoList(int page);

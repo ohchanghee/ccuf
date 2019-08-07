@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
 @Controller
@@ -83,8 +83,17 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin_recipe_modify")
-	public String admin_recipe_modify() {
-		return null;
+	public String admin_recipe_modify(int excel, Long recipe_num, Model model) {
+		Recipe_basicVO basic = adminService.getRecipeDetail(recipe_num, excel);
+		List<Recipe_CookingVO> cooking_list = adminService.getCookingDetail(recipe_num, excel);
+		
+		System.out.println(basic);
+		cooking_list.forEach(data -> System.out.println(data));
+		
+		model.addAttribute("basic",basic);
+		model.addAttribute("cooking_list",cooking_list);
+		
+		return "admin/admin_recipe_modify";
 	}
 	
 	
