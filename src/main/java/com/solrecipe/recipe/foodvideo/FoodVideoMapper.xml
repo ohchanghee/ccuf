@@ -66,6 +66,10 @@
 		where r > #{startNum}
 		]]>
 	</select>
+	
+	<insert id="insertVideo">
+		insert into food_video_tb (video_num, video_id, video_playlist, video_title, video_content, video_thumbnail, firstdate) values (video_num_seq.nextVal, #{video_id}, #{video_playlist}, #{video_title}, #{video_content}, #{video_thumbnail}, #{firstdate})
+	</insert>
 </mapper>
 
 

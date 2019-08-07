@@ -1,7 +1,6 @@
 package com.solrecipe.recipe.foodvideo;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +14,5 @@ public interface FoodVideoMapper {
 	List<FoodVideoVO> getBestList();
 	List<FoodVideoVO> getListWithSearch(Criteria cri);
 	List<FoodVideoVO> getMoreSearchlist(@Param("startNum") int startNum, @Param("cri_search")String cri_search);
+	int insertVideo(FoodVideoVO fvVO);
 }

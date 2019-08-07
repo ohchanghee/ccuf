@@ -2,8 +2,6 @@ package com.solrecipe.recipe.foodvideo;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 public interface FoodVideoService {
 
 	List<FoodVideoVO> getNewList();
@@ -14,4 +12,5 @@ public interface FoodVideoService {
 	List<FoodVideoVO> getBestList();
 	List<FoodVideoVO> search_list(Criteria cri);
 	List<FoodVideoVO> getMoreSearchlist(int startNum, Criteria cri);
+	int insertVideo(FoodVideoVO fvVO);
 }

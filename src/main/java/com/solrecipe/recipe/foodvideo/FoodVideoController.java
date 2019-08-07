@@ -1,7 +1,7 @@
 package com.solrecipe.recipe.foodvideo;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +19,6 @@ public class FoodVideoController {
 
 	@Autowired
 	FoodVideoService foodVideoServiceImpl;
-	
-	ArrayList<FoodVideoVO> moreList = new ArrayList<FoodVideoVO>();
 	
 	@GetMapping("/foodvideo_index")
 	public String foodvideo_index(Model model) {
@@ -97,4 +95,31 @@ public class FoodVideoController {
 		return moreSearchlist;
 	}
 	
+	@GetMapping("/insertvideo")
+	public String insertvideo() {	
+		return "/foodvideo/insertvideo";
+	}
+	
+	// 동영상 추가
+	@RequestMapping(method=RequestMethod.GET, value="/insertVideos", produces ="application/text;charset=UTF-8")
+	@ResponseBody
+	public Object insertVideos(	String video_id, String video_playlist, String video_title, String video_content, String video_thumbnail, String firstdate) {
+		FoodVideoVO fvVO = new FoodVideoVO();
+		fvVO.setVideo_id(video_id);
+		fvVO.setVideo_playlist(video_playlist);
+		fvVO.setVideo_title(video_title);
+		fvVO.setVideo_content(video_content);
+		fvVO.setVideo_thumbnail(video_thumbnail);
+		String dateformat = firstdate.substring(0, 10);
+		Date date = Date.valueOf(dateformat);
+		fvVO.setFirstdate(date);
+		
+		int result = foodVideoServiceImpl.insertVideo(fvVO);
+		if(result == 1) {
+			return "good";
+		}
+		else {
+			return "bad";
+		}
+	}
 }

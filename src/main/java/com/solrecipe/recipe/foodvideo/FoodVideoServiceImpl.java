@@ -1,6 +1,5 @@
 package com.solrecipe.recipe.foodvideo;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +60,10 @@ public class FoodVideoServiceImpl implements FoodVideoService{
 	public List<FoodVideoVO> getMoreSearchlist(int startNum, Criteria cri) {
 		String cri_search = cri.getRecipe_search();
 		return foodVideoMapper.getMoreSearchlist(startNum, cri_search);
+	}
+
+	@Override
+	public int insertVideo(FoodVideoVO fvVO) {
+		return foodVideoMapper.insertVideo(fvVO);
 	}
 }
