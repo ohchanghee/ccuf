@@ -3,8 +3,11 @@ package com.solrecipe.recipe.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.mapping.MappableAttributesRetriever;
 import org.springframework.stereotype.Service;
 
+import com.solrecipe.recipe.chat.AdminChatRoomVO;
+import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
@@ -62,4 +65,27 @@ public class AdminServiceImpl implements AdminService{
 		return adminMapper.deleteFoodVideo(videoNum);
 	}
 
+	@Override
+	public List<AdminChatRoomVO> getChatRoomList(int page, String keyword) {
+		int startNum = (page-1)*15;
+		return adminMapper.getChatRoomList(startNum, keyword);
+	}
+
+	@Override
+	public int getChatRoomCnt(String keyword) {
+		return adminMapper.getChatRoomCnt(keyword);
+	}
+
+	@Override
+	public List<AdminChatVO> getChattingList(int chatroom_num) {
+		return adminMapper.getChattingList(chatroom_num);
+	}
+
+	@Override
+	public int deleteChatRoom(int chatroom_num,String type) {
+		return adminMapper.deleteChatRoom(chatroom_num, type);
+	}
+	
+	
+	
 }

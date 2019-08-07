@@ -1,14 +1,21 @@
 package com.solrecipe.recipe.admin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.solrecipe.recipe.chat.AdminChatRoomVO;
+import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
@@ -147,14 +154,67 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin_chat")
-	public String admin_chat(){
+	public String admin_chat(@RequestParam(value = "page", defaultValue="1")int page, @RequestParam(value="search" ,defaultValue = "")String search, Model model){
+		
+		Paging paging = new Paging(15, 10, page, adminService.getChatRoomCnt(search));
+		List<AdminChatRoomVO> chatroomList = adminService.getChatRoomList(paging.page, search);
+		
+		/*
+		chatroomList.forEach(s->System.out.println(s));
+		System.out.println(paging.page);
+		System.out.println(paging.startPage);
+		System.out.println(paging.endPage);
+		System.out.println(paging.totalPage);
+		*/
+		
+		model.addAttribute("totalPosts", paging.totalPosts);
+		model.addAttribute("chatroomList", chatroomList);
+		model.addAttribute("page", paging.page);
+		model.addAttribute("startPage", paging.startPage);
+		model.addAttribute("endPage", paging.endPage);
+		model.addAttribute("totalPage", paging.totalPage);
+		model.addAttribute("search",search);
+		
 		return "/admin/admin_chat";
+		
 	}
 	
+	@GetMapping("/admin_chat_delete")
+	public String admin_chat_delete(int chatroom_num, int page, @RequestParam(value="search" ,defaultValue = "") String search,
+									@RequestParam("type")String type,RedirectAttributes rttr) {
+		System.out.println("채팅방 삭제하기~");
+		
+		System.out.println("chatroom_num: "+chatroom_num);
+		System.out.println("search: "+search);
+		System.out.println("type: " +type);
+		
+		int result = adminService.deleteChatRoom(chatroom_num, type);
+		rttr.addFlashAttribute("isDeleted", result);
+		rttr.addAttribute("page", page);
+		
+		if(!(search.equals(""))) {
+			rttr.addAttribute("search", search);
+			return "redirect:/admin_chat";
+		}
+		
+		return "redirect:/admin_chat";
+	}
+	
+	@PostMapping(value = "/getChatting", produces = MediaType.APPLICATION_JSON_UTF8_VALUE) 
+	@ResponseBody
+	public Object getChatting(@RequestParam(value = "chatroom_num") int chatroom_num) {
+		
+		List<AdminChatVO> vo = adminService.getChattingList(chatroom_num);
+		return vo;
+		
+	}
+	
+	/*
 	@GetMapping("/admin_chatting")
 	public String admin_chatting(){
 		return "/admin/admin_chatting";
 	}
+	*/
 	
 	@GetMapping("/admin_message")
 	public String admin_message(){
