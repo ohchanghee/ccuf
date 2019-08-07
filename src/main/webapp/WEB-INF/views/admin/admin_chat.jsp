@@ -427,6 +427,34 @@ $(document).ready(function(){
 			 </table>
 		
 		</div>
+		
+		<!-- 페이징 -->
+		<div class="row" style="font-size:23px;">
+				<div class="col-12 text-center">
+					<%if(startPage != 1){ %>
+					<a href='javascript:movePage("${startPage-10 }")'><i class="fas fa-angle-left" style="color:#FFC69F;"></i></a>
+					&nbsp;
+					&nbsp;
+					<%}%>
+					<%for(int i=startPage; i<=endPage; i++){
+						if (i==curPage){
+					%>
+						<a href='javascript:movePage(<%=i %>)' style="color:white;"><%=i %></a>
+						&nbsp;
+						&nbsp;
+					<%}else{ %>
+						<a href='javascript:movePage(<%=i %>)'><%=i %></a>
+						&nbsp;
+						&nbsp;
+					<%}} %>
+					<%if(endPage != totalPage){ %>
+					<a href='javascript:movePage("${endPage+1 }")'><i class="fas fa-angle-right"  style="color:#FFC69F;"></i></a>
+					<%} %>
+				</div>	
+			</div>
+			<div class="row" style="margin-top:5%;"></div>
+			
+			
 		</div>
 	</div>
       
@@ -442,10 +470,12 @@ $(document).ready(function(){
 	var modal = document.getElementById('chattingModal');
 	var span1 = document.getElementsByClassName("close");
 	var chattingRoomTitle = document.querySelector('#chattingModal h4')
+	var search = "${search}"
 	//$('.chatting').click(function() {
 		//  modal.style.display = "block";
 		 /*  $(this).css('z-index', 3000); */
 	//});
+	
 	
 	span1[0].onclick = function() {
 		   modal.style.display = "none";
@@ -458,11 +488,22 @@ $(document).ready(function(){
 	   } 
 	}
 	
+	function movePage(page){
+		// 검색 안한 경우
+		if(search==""){
+			location.href="admin_chat?page="+page;	
+		}
+		// 검색한 경우
+		else{
+			location.href="admin_chat?page="+page+"&search="+encodeURIComponent(search);
+		}
+	}
+	
 	//채팅방 삭제
 	function deleteChatRoom(chatroom_num,type) {
 		//console.log(chatroom_num);
 		if (confirm("정말 삭제하시겠습니까?")==true){    //확인
-			location.href="/admin_chat_delete?chatroom_num="+chatroom_num+"&page=${page}"+"&search="+encodeURIComponent('${search}')+"&type="+encodeURIComponent(type);
+			location.href="/admin_chat_delete?chatroom_num="+chatroom_num+"&page=${page}"+"&search="+encodeURIComponent(search)+"&type="+encodeURIComponent(type);
 			//alert('구현중!')
 			
 		}else{   //취소
