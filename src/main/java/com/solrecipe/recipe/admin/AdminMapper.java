@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.solrecipe.recipe.chat.AdminChatRoomVO;
+import com.solrecipe.recipe.chat.AdminChatVO;
+import com.solrecipe.recipe.chat.ChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
@@ -21,4 +24,11 @@ public interface AdminMapper {
 	List<FoodVideoVO> getFoodVideoList(@Param("startNum")int startNum);
 	List<FoodVideoVO> getSearchedFoodVideoList(@Param("startNum")int startNum, @Param("keyword")String keyword);
 	int deleteFoodVideo(int videoNum);
+	
+	
+	//admin_chat 관련 , 마감된 방만 읽어온다 chat_status = 0
+	List<AdminChatRoomVO> getChatRoomList(@Param("startNum")int startNum, @Param("keyword")String keyword);
+	List<AdminChatVO> getChattingList(@Param("chatroom_num")int chatroom_num);
+	int getChatRoomCnt(@Param("keyword")String keyword);
+	int deleteChatRoom(@Param("chatroom_num")int chatroom_num,@Param("type")String type);
 }
