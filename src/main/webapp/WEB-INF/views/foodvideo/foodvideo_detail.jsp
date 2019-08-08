@@ -84,7 +84,7 @@ height: 100%;
 
 .thumbnails::-webkit-scrollbar
 {
-	width: 12px;
+	width: 8px;
 	background-color: #F5F5F5;
 }
 
@@ -99,6 +99,10 @@ height: 100%;
 	.thumbnails{
 		margin-left:0.5rem;
 		margin-right:0.5rem;
+	}
+	.thumbnails::-webkit-scrollbar
+	{
+	width: 4px;
 	}
 }
 
@@ -205,7 +209,8 @@ var playlistIds = x.split(',');
 	<jsp:include page="../headNfoot/footer.jsp"/>
 
 <script>
-
+var csrfHeaderName ="${_csrf.headerName}"; 
+var csrfTokenValue="${_csrf.token}";
 //무한스크롤 구현
 var thumbnails = document.getElementsByClassName("thumbnails")[0];
     
@@ -216,9 +221,13 @@ $(".thumbnails").scroll(function() {
 	if (maxHeight <= currentScroll) {
 		$.ajax({
 			type:"POST",
+			async:false,
 			url:"/getMorePlaylist",
 			data:{"startNum":startNum, "playList":"<%=fvVO.getVideo_playlist() %>"},
 			dataType:"json",
+			beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
 			success: function(data){
 				 $.each(data, function(index, item){
 					$(".thumbnails").append("<div class='col-md-12 thumbnailcontainer'>"
