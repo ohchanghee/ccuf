@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solrecipe.recipe.mypage.MyPageMapper">
+	<resultMap type="MyVideoVO" id="myVideoResultMap">
+		<result property="video_num" column="video_num" />
+		<result property="video_id" column="video_id" />
+		<result property="video_title" column="video_title" />
+		<result property="firstdate" column="firstdate" />
+	</resultMap>
+	
+	<select id="getMarkedVideos" resultMap="myVideoResultMap">
+		select *
+		from (select m.firstdate , v.video_num, v.video_id, v.video_title
+				from markvideo_tb m, food_video_tb v
+				where m.user_num = #{userNum} and
+				m.video_num = v.video_num
+				order by m.firstdate desc)
+		where rownum <![CDATA[<=]]> 6
+	</select>
+	
+	<select id="getMoreVideos" resultMap="myVideoResultMap">
+		select *
+		from (select firstdate, video_num, video_id, video_title, rownum r
+				from (select m.firstdate , v.video_num, v.video_id, v.video_title
+						from markvideo_tb m, food_video_tb v
+						where m.user_num = #{userNum} and
+						m.video_num = v.video_num
+						order by m.firstdate desc)
+				where rownum <![CDATA[<=]]> #{startNum}+4)
+		where r > #{startNum}
+	</select>
+	
+</mapper>
+
+
+
+
+
