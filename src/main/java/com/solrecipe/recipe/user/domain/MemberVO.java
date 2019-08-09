@@ -16,6 +16,8 @@ public class MemberVO {
 	
 	String user_intro;
 	String user_img;
+	int isopen;
+	
 	Timestamp firstdate;
 	Timestamp updatedate;
 	private boolean enabled;

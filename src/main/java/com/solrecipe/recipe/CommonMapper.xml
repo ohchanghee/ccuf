@@ -8,12 +8,16 @@
 	<resultMap type="memberVO" id="memberResultMap">
 		<result property="user_num" column="user_num"/>
 		<result property="user_nickname" column="user_nickname"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_intro" column="user_intro"/>
+		<result property="user_img" column="user_img"/>
+		<result property="isopen" column="isopen"/>
 	</resultMap>
 	
 	<select id="getMyVO" resultMap="memberResultMap">
-		select d.user_num, d.user_nickname  
-		from user_detail_tb d, user_tb u 
-		where d.user_num = u.user_num and u.user_username = #{id}
+		select d.user_num, d.user_nickname, d.user_name, p.user_intro, p.user_img, p.isopen
+		from user_detail_tb d, user_profile_tb p 
+		where d.user_num = p.user_num and d.user_username = #{id}
 	</select>
 	
 </mapper>
