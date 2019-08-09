@@ -1,5 +1,6 @@
 package com.solrecipe.recipe.foodvideo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,29 @@ public class FoodVideoServiceImpl implements FoodVideoService{
 	@Override
 	public List<FoodVideoVO> getMoreSearchlist(int startNum, Criteria cri) {
 		String cri_search = cri.getRecipe_search();
+		
 		return foodVideoMapper.getMoreSearchlist(startNum, cri_search);
 	}
 
 	@Override
 	public int insertVideo(FoodVideoVO fvVO) {
 		return foodVideoMapper.insertVideo(fvVO);
+	}
+
+	@Override
+	public int checkMarked(int user_num, int video_num) {
+		return foodVideoMapper.checkMarked(user_num, video_num);
+	}
+	
+	@Override
+	public int marking(int user_num, int video_num) {
+		int result =  foodVideoMapper.markingMarkVideo_tb(user_num, video_num) + foodVideoMapper.markingFoodVideo_tb(video_num);
+		return result;
+	}
+
+	@Override
+	public int unmarking(int user_num, int video_num) {
+		int result = foodVideoMapper.unmarkingMarkVideo_tb(user_num, video_num) + foodVideoMapper.unmarkingFoodVideo_tb(video_num);
+		return result;
 	}
 }

@@ -13,4 +13,7 @@ public interface FoodVideoService {
 	List<FoodVideoVO> search_list(Criteria cri);
 	List<FoodVideoVO> getMoreSearchlist(int startNum, Criteria cri);
 	int insertVideo(FoodVideoVO fvVO);
+	int checkMarked(int user_num, int video_num);
+	int marking(int user_num, int video_num);
+	int unmarking(int user_num, int video_num);
 }

@@ -187,8 +187,11 @@ input:focus::-ms-input-placeholder {
                      <a class='videoAtag' href='javascript:goDetail("${fvideo.video_num }")'>
                      <span class="play_button2"></span>
                      <img class="thumbnail" src="${fvideo.video_thumbnail}" style="height:220px;">
-                     <br><div><c:out value="${fvideo.video_title }"/></div></a>
-                     <br><div style="text-align:right; font-size:0.8rem;"><c:out value="${fvideo.firstdate}"/></div>
+                     <br><div style="margin-top:2%;">${fvVO.video_title }</div></a>
+                     <br>
+                     <div style="text-align:center; font-size:0.8rem;">찜횟수 ${fvVO.video_mark_cnt}
+					 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+					 ${fvVO.firstdate }</div>
                   </div>
                </div>
             </c:forEach>
@@ -257,6 +260,7 @@ $(document).scroll(function() {
 					 if(day<10){
 						 day = "0"+(d.getDate());
 					 }
+					 var date = year+"-"+month+"-"+day
 					 //var day = d.getFullYear()+"-"+(d.getMonth() + 1)+"-"+d.getDate();
 					$("#thumbnails").append("<div class='col-lg-4 col-md-6 mb-4 mb-lg-0'>"
 						+"<div class='video-team-member-1 text-center rounded'>"
@@ -264,7 +268,9 @@ $(document).scroll(function() {
 						+"<span class='play_button2'></span>"
 						+"<img class='thumbnail' src='"+item.video_thumbnail+"'style='height:220px;'>"
 						+"<br><div>"+item.video_title+"</div></a>"
-						+"<br><div style='text-align:right; font-size:0.8rem;'>"+year+"-"+month+"-"+day+"</div>"
+						+"<br><div style='text-align:center; font-size:0.8rem;'>찜횟수 " +item.video_mark_cnt
+						+"&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;"
+						+ date+"</div>"
 						+"</div>"
 						+"</div>"
 					);

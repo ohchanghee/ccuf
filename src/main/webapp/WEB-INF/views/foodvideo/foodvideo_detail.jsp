@@ -6,6 +6,7 @@
 <%
 	FoodVideoVO fvVO = (FoodVideoVO)request.getAttribute("fvVO");
 //	ArrayList<FoodVideoVO> playList = (ArrayList)request.getAttribute("playList");
+	int isMarked = (int)request.getAttribute("isMarked");
 %>
 <!DOCTYPE html>
 <html>
@@ -182,8 +183,15 @@ var playlistIds = x.split(',');
 				<!-- 좌측 하단 -->
 				<div class="col-md-12 vContent">
 				<br><br>
-					<h1 style="color:#FFC69F;"><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; <i class="far fa-star" style="font-size:1.5rem;" title="찜하기"></i><i class="fas fa-star" style="font-size:1.5rem;" title="이미 찜 된 영상입니다."></i>
-					<p><br>
+					<h1 style="color:#FFC69F;"><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; 
+					<%if(isMarked == 0){ %>
+					<i id="markIcon" class="far fa-star" style="font-size:2rem;" onClick=marking() title="찜하기"></i>
+					<%}else if(isMarked == 1){ %>
+					<i id="markIcon" class="fas fa-star" style="font-size:2rem;" onClick=unmarking() title="이미 찜 된 영상입니다."></i>
+					<%}else{} %>
+					<br>
+					<span id="markCntArea" style="font-size:1rem;">찜횟수 ${fvVO.video_mark_cnt }회</span>
+					<p><hr><br>
 					<%=fvVO.getVideo_content() %>
 				
 	 				<br><br>
@@ -204,10 +212,9 @@ var playlistIds = x.split(',');
 		</div>
 		<div class="row" style="height:3rem;"></div>
 	</div>
-
 	
 	<jsp:include page="../headNfoot/footer.jsp"/>
-
+	
 <script>
 var csrfHeaderName ="${_csrf.headerName}"; 
 var csrfTokenValue="${_csrf.token}";
@@ -244,7 +251,6 @@ $(".thumbnails").scroll(function() {
 	};
 });
 
-
 <%-- 
 var startNum=5;
 
@@ -268,6 +274,53 @@ var startNum=5;
 })
  --%>
 
- </script>
+	// 찜
+	var markCnt = ${fvVO.video_mark_cnt};
+	var user_num = ${user_num};
+	function marking(){
+		$.ajax({
+			type:"GET",
+			async:false,
+			url:"/markVideo",
+			data:{"video_num": <%=fvVO.getVideo_num() %>, "user_num": user_num},
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				markCnt ++;
+				$("#markCntArea").html("찜횟수 "+(markCnt)+"회");
+				$("#markIcon").attr('class', 'fas fa-star');
+				$("#markIcon").attr('onClick', "unmarking()");
+			},
+			error:function(){
+				alert("잠시 후 다시 시도해주세요.");
+			}
+		});
+	}
+
+	function unmarking(){
+		$.ajax({
+			type:"GET",
+			async:false,
+			url:"/unmarkVideo",
+			data:{"video_num":<%=fvVO.getVideo_num() %>, "user_num":user_num },
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				markCnt--;
+				$("#markCntArea").html("찜횟수 "+(markCnt)+"회");
+				$("#markIcon").attr('class', 'far fa-star');
+				$("#markIcon").attr('onClick', "marking()");
+			},
+			error:function(){
+				alert("잠시 후 다시 시도해주세요.");
+			}
+		});
+	}	
+	
+</script>
 </body>
 </html>

@@ -261,8 +261,11 @@ iframe {
 							<a class='videoAtag' href='javascript:goDetail("${fvVO.video_num }")'>
 							<span class="play_button2"></span>
 							<img class="thumbnail" src="${fvVO.video_thumbnail }">
-							<br><div>${fvVO.video_title }</div></a>
-							<br><div style="text-align:right; font-size:0.8rem;">${fvVO.firstdate }</div>
+							<br><div style="margin-top:2%;">${fvVO.video_title }</div></a>
+							<br>
+							<div style="text-align:center; font-size:0.8rem;">찜횟수 ${fvVO.video_mark_cnt}
+							 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+							 ${fvVO.firstdate }</div>
 						</div>
 					</div>
 				</c:forEach> 
@@ -360,6 +363,9 @@ iframe {
 	</script>
 
 <script>
+var csrfHeaderName ="${_csrf.headerName}"; 
+var csrfTokenValue="${_csrf.token}";
+
 // 특정 영상 선택시 detail로 이동
 function goDetail(video_num){
 	location.href="foodvideo_detail?video_num="+video_num;
@@ -375,8 +381,12 @@ $(document).scroll(function() {
 		$.ajax({
 			type:"POST",
 			url:"/getMoreNewlist",
+			async:false,
 			data:{"startNum":startNum},
 			dataType:"json",
+			beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
 			success: function(data){
 				 $.each(data, function(index, item){
 					 // date객체는 자바스크립트에서 본인들만의 형식으로 변환되므로, 아래와같은 변환과정을 거쳐야한다.
@@ -390,14 +400,17 @@ $(document).scroll(function() {
 					 if(day<10){
 						 day = "0"+(d.getDate());
 					 }
+					 var date = year+"-"+month+"-"+day;
 					 //var day = d.getFullYear()+"-"+(d.getMonth() + 1)+"-"+d.getDate();
 					$("#thumbnails").append("<div class='col-lg-4 col-md-6 mb-4 mb-lg-0'>"
 						+"<div class='video-team-member-1 text-center rounded'>"
 						+"<a class='videoAtag' href='javascript:goDetail("+item.video_num+")'>"
 						+"<span class='play_button2'></span>"
 						+"<img class='thumbnail' src='"+item.video_thumbnail+"'style='height:220px;'>"
-						+"<br><div>"+item.video_title+"</div></a>"
-						+"<br><div style='text-align:right; font-size:0.8rem;'>"+year+"-"+month+"-"+day+"</div>"
+						+"<br><div  style='margin-top:2%;'>"+item.video_title+"</div></a>"
+						+"<br><div style='text-align:center; font-size:0.8rem;'>찜횟수 " +item.video_mark_cnt
+						+"&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;"
+						+ date+"</div>"
 						+"</div>"
 						+"</div>"
 					);

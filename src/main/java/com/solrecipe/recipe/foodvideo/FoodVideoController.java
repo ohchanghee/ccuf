@@ -1,5 +1,6 @@
 package com.solrecipe.recipe.foodvideo;
 
+import java.security.Principal;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.solrecipe.recipe.CommonServiceImpl;
+import com.solrecipe.recipe.user.domain.MemberVO;
+
 
 @Controller
 public class FoodVideoController {
@@ -20,6 +24,8 @@ public class FoodVideoController {
 	@Autowired
 	FoodVideoService foodVideoServiceImpl;
 	
+	@Autowired
+	CommonServiceImpl commonService;
 	@GetMapping("/foodvideo_index")
 	public String foodvideo_index(Model model) {
 		// 인기영상
@@ -42,11 +48,25 @@ public class FoodVideoController {
 	}
 	
 	@GetMapping("/foodvideo_detail")
-	public String foodvideo_detail(int video_num, Model model) {
+	public String foodvideo_detail(int video_num, Model model, Principal principal) {
+		
+		//user_num을 가져옴 -> 로그인 하지 않은 경우에는 -1.
+		int user_num = -1;
+		int isMarked = -1;
+		if(principal != null) {
+			String username = principal.getName();
+			MemberVO myVO = commonService.getMyVO(username);//myVO는 user_num이랑 user_nickname 을 들고 있다.
+			user_num = myVO.getUser_num();
+			isMarked = foodVideoServiceImpl.checkMarked(myVO.getUser_num(),video_num);
+		}
+		
 		FoodVideoVO fvVO = foodVideoServiceImpl.getFVO(video_num);
 		ArrayList<FoodVideoVO> playList = (ArrayList) foodVideoServiceImpl.getPlayList(fvVO.getVideo_playlist());
 		model.addAttribute("fvVO", fvVO);
 		model.addAttribute("playList", playList);
+		model.addAttribute("isMarked", isMarked);
+		// 찜하기 누를 때 user_num 필요하기 때문에 model에 추가.
+		model.addAttribute("user_num",user_num);
 		return ("/foodvideo/foodvideo_detail");
 	}
 	
@@ -122,4 +142,30 @@ public class FoodVideoController {
 			return "bad";
 		}
 	}
+	
+	// 찜 ajax 반응
+	@RequestMapping(method=RequestMethod.GET, value="/markVideo", produces ="application/text;charset=UTF-8")
+	@ResponseBody
+	public Object markVideo(int video_num, int user_num) {
+		int result = foodVideoServiceImpl.marking(user_num, video_num);
+		if(result == 2) {
+			return "good";
+		}
+		else {
+			return "bad";
+		}
+	}
+	@RequestMapping(method=RequestMethod.GET, value="/unmarkVideo", produces ="application/text;charset=UTF-8")
+	@ResponseBody
+	public Object unmarkVideo(int video_num, int user_num) {
+		int result = foodVideoServiceImpl.unmarking(user_num, video_num);
+		if(result == 2) {
+			return "good";
+		}
+		else {
+			return "bad";
+		}
+	}
+	
+	
 }

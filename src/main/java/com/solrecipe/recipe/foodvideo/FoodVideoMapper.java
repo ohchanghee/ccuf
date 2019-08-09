@@ -15,4 +15,9 @@ public interface FoodVideoMapper {
 	List<FoodVideoVO> getListWithSearch(Criteria cri);
 	List<FoodVideoVO> getMoreSearchlist(@Param("startNum") int startNum, @Param("cri_search")String cri_search);
 	int insertVideo(FoodVideoVO fvVO);
+	int checkMarked(@Param("userNum")int user_num, @Param("videoNum")int video_num);
+	int markingMarkVideo_tb(@Param("userNum")int user_num, @Param("videoNum")int video_num);
+	int markingFoodVideo_tb(@Param("videoNum")int video_num);
+	int unmarkingMarkVideo_tb(@Param("userNum")int user_num, @Param("videoNum")int video_num);
+	int unmarkingFoodVideo_tb(@Param("videoNum")int video_num);
 }

@@ -2,7 +2,6 @@ package com.solrecipe.recipe.foodvideo;
 
 import java.sql.Date;
 
-
 /*
 video_num number primary key,
 video_id varchar2(200),
