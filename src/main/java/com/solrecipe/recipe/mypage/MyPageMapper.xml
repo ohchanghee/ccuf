@@ -33,6 +33,25 @@
 		where r > #{startNum}
 	</select>
 	
+	<update id="modifyPW">
+		update user_tb set user_pw=#{userPW} where user_num = #{userNum}
+	</update>
+	
+	<update id="updateProfile_tb">
+		update user_profile_tb set user_intro=#{userIntro}, user_img = #{userImg}, isopen=#{isOpen} where user_num = #{userNum}
+	</update>
+	
+	<update id="updateDetail_tb">
+		update user_detail_tb set user_nickname=#{userNickname}, user_name=#{userName} where user_num = #{userNum}
+	</update>
+	
+	<select id="checkNickname" resultType="int">
+		select count(*) from user_detail_tb where user_nickname = #{userNickname}
+	</select>
+	
+	<select id = "getENPW" resultType="String">
+		select user_pw from user_tb where user_num = #{userNum}
+	</select>
 </mapper>
 
 
