@@ -1,5 +1,6 @@
 package com.solrecipe.recipe.admin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -238,6 +239,52 @@ public class AdminController {
 	@GetMapping("/admin_users")
 	public String admin_users(){
 		return "/admin/admin_users";
+	}
+	
+	
+
+	//excel = 0 일 때만 이 메서드가 호출된다.
+	public boolean deleteFile(int recipe_num) {
+		
+		boolean result = false;
+		File file =  null;
+		File file2 = null;
+		File[] list= null;
+		String recipeNum = Integer.toString(recipe_num);
+		
+		
+		try {
+			file = new File("c:\\Project\\Recipe_IMG\\Main_IMG");
+			file2 = new File("c:\\Project\\Recipe_IMG\\Cooking_IMG");
+			
+			if(file.isDirectory() && file2.isDirectory()) {
+				
+				list  = file.listFiles((dir,name)->{
+					String[] imgNames = name.split("\\.");
+					return imgNames[0].equals(recipeNum);
+				});
+				
+				for(File _file : list) {
+					_file.delete();
+				}
+				
+				list = file2.listFiles((dir,name)->{
+					String[] imgNames = name.split("_");
+					return imgNames[0].equals(recipeNum);
+				});
+				
+				for(File _file : list) {
+					_file.delete();
+				}
+				
+			}
+			
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 }
