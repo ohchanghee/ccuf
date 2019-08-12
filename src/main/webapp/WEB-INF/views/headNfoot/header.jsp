@@ -216,7 +216,7 @@ label#menu_label, #menu{
                   <li><a href="recipe_index" id="recipe_link" class="nav-link"><img src="img/header/recipe.png" height="40px"/></a></li>
                   <li><a href="foodvideo_index" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
                   <li><a href="recipegram_index" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
-                  <li><a href="salethind_homeplus" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
+                  <li><a href="salething_homeplus" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
                   <li><a href="change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
                   
                   

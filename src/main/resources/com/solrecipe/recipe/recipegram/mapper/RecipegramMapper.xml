@@ -162,7 +162,7 @@
 				recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 								LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 								LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-								LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+								LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 			WHERE hash_name like '%'||#{recipe_search, jdbcType=VARCHAR}||'%' or user_nickname like '%'||#{recipe_search, jdbcType=VARCHAR}||'%'
 			)
 		order by firstdate desc
@@ -180,7 +180,7 @@
 				recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 								LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 								LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-								LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+								LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 			WHERE hash_name like '%'||#{recipe_search, jdbcType=VARCHAR}||'%' or user_nickname like '%'||#{recipe_search, jdbcType=VARCHAR}||'%'
 			)
 		order by recipegram_like_cnt desc, firstdate desc
@@ -199,7 +199,7 @@
 				recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 								LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 								LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-								LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+								LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 			where det.user_nickname = #{user_nickname, jdbcType=VARCHAR}
 			)
 		order by firstdate desc
@@ -228,7 +228,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 										LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 										LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-										LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+										LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 					)
 	
 	        )group by recipegram_num order by recipegram_num desc
@@ -259,7 +259,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 										LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 										LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-										LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+										LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 						
 					)
 	
@@ -281,7 +281,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 									LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num 
 			                        LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-			                        LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+			                        LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 				
 				
 			order by rg.recipegram_num desc
@@ -304,7 +304,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 									LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num 
 			                        LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-			                        LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+			                        LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 			                        
 				
 				order by recipegram_like_cnt desc, firstdate desc
@@ -340,7 +340,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 										LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 										LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-										LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+										LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 					WHERE hash_name like '%'||#{recipe_search, jdbcType=VARCHAR}||'%' 					
 					)
 	        	)group by recipegram_num order by recipegram_num desc
@@ -367,7 +367,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 										LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 										LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-										LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+										LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 										
 					)where recipegram_num = #{recipegram_num} 
 			
@@ -397,7 +397,7 @@
 						recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 										LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 										LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-										LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+										LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 					WHERE hash_name like '%'||#{recipe_search, jdbcType=VARCHAR}||'%' 					
 					)
         )group by recipegram_num order by recipegram_num desc
@@ -526,7 +526,7 @@
 				recipegram_tb rg LEFT OUTER JOIN user_tb mem on mem.user_num=rg.user_num
 								LEFT OUTER JOIN img_tb img on rg.recipegram_num=img.recipegram_num
 								LEFT OUTER JOIN user_detail_tb det on det.user_num=rg.user_num
-								LEFT OUTER JOIN hash_tb hash on rg.recipegram_num=hash.recipegram_num
+								LEFT OUTER JOIN hash_tb hs on rg.recipegram_num=hs.recipegram_num
 			WHERE rg.recipegram_num = #{recipegram_num}
 		
 		]]>

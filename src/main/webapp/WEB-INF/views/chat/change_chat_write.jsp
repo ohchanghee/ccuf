@@ -68,7 +68,7 @@
 
 <div id="chatWriteModal" class="chatWriteModal" >
 	<div class="chatWrite-modal-content block-heading-1">
-		<span class="close" id="closeWrite"><i class="fas fa-times fa-2x"></i></span>
+		<span id="closeWrite" class="close"><i class="fas fa-times fa-2x"></i></span>
 			
 			<!-- 수정: form에 id,method 추가 -->
 			<form id="chatRoomForm" action="/makeChatRoom" method="POST" accept-charset="utf-8">
