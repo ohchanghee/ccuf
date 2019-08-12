@@ -4,7 +4,11 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%
+String kakao_userid = (String)session.getAttribute("userId");
+String kakao_usernickname = (String)session.getAttribute("userNickname");
 
+%>
 
 <head>	
 <style>
@@ -182,6 +186,12 @@ label#menu_label, #menu{
 		<jsp:include page = "../email_signUp.jsp"/>
 		
 		<jsp:include page = "../signUp.jsp"/>
+		
+		<jsp:include page = "../kakaosignUp.jsp"/>
+		
+		<jsp:include page = "../findPW.jsp"/>
+		
+		<jsp:include page = "../newPW.jsp"/>
 <!-- Header -->
     <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
@@ -203,11 +213,11 @@ label#menu_label, #menu{
 			      <ul class="site-menu main-menu js-clone-nav  d-lg-block" id="nav">
 			       
                   <!-- id이용하여 이동  recipe-section부분은 이동 어디로?? 레시피페이지는 어디서 이동???-->
-                  <li><a href="/recipe_index" id="recipe_link" class="nav-link"><img src="/img/header/recipe.png" height="40px"/></a></li>
-                  <li><a href="#foodvideo-section" id="video_link" class="nav-link"><img src="/img/header/foodvideo.png" height="40px"/></a></li>
-                  <li><a href="#recipegram-section" id="recipegram_link" class="nav-link"><img src="/img/header/recipegram.png" height="40px"/></a></li>
-                  <li><a href="#salething-section" id="sale_link" class="nav-link"><img src="/img/header/salething.png" height="40px"/></a></li>
-                  <li><a href="/change_index" id="chat_link" class="nav-link"><img src="/img/header/chat.png" height="40px"/></a></li>
+                  <li><a href="recipe_index" id="recipe_link" class="nav-link"><img src="img/header/recipe.png" height="40px"/></a></li>
+                  <li><a href="foodvideo_index" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
+                  <li><a href="recipegram_index" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
+                  <li><a href="salethind_homeplus" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
+                  <li><a href="change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
                   
                   
 					
@@ -222,6 +232,7 @@ label#menu_label, #menu{
 								<a href="/admin_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
 									<sec:authentication property="principal.member.user_nickname"/> 
 									
+									
 								</a>
 							</li>
 	                  		<li>
@@ -234,7 +245,7 @@ label#menu_label, #menu{
 						
 						<!-- 일반 user -->
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
-							<li>
+											<li>
 								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
 									<sec:authentication property="principal.member.user_nickname"/>
 									
@@ -253,9 +264,27 @@ label#menu_label, #menu{
 					<sec:authorize access="isAnonymous()">
 						
 						
-						<li><button class="nav-link" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
-                  		<li><button class="nav-link" id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
-                
+						<%
+						// 카카오톡 로그인 
+							if(kakao_userid != null){
+						%>
+						<li>
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
+									<%=kakao_usernickname %>
+									
+								</a>
+							</li>
+	                  		<li>
+								<form action = "/kakao_logout" method = "post">   
+									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  			</form>
+	                  		</li>
+	                  		
+	                  	<%}else{ %>
+							<li><button class="nav-link" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
+	                  		<li><button class="nav-link" id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
+	                	<%} %>
 					</sec:authorize>
                   </ul>
               </nav>
@@ -267,7 +296,9 @@ label#menu_label, #menu{
         </div>
       </div>
       
-      
+      <!-- kakao chk -->
+    <input type="hidden" id="chkKakao" value="<%=session.getAttribute("chkKakao") %>">
+	
     </header>
     
     	
@@ -276,10 +307,28 @@ label#menu_label, #menu{
 var modal = document.getElementById('loginModal');
 var modal_email = document.getElementById('email_signupModal');
 var modal_sign_up = document.getElementById('sign_up_Modal');
+var modal_findPW = document.getElementById('findPWModal');
+var modal_newPW = document.getElementById('newPWModal');
+var modal_kakao_sign_up = document.getElementById('kakao_sign_up_Modal');
+
+
 
 var span1 = document.getElementsByClassName("close")[0];
 var span2 = document.getElementsByClassName("close")[1];
 var span3 = document.getElementsByClassName("close")[2];
+var span4 = document.getElementsByClassName("close")[3];
+var span5 = document.getElementsByClassName("close")[4];
+var span6 = document.getElementsByClassName("close")[5];
+
+//카카오톡 로그인   ... 
+var chkKakao = document.getElementById('chkKakao').value;
+console.log("chk kakao : " + chkKakao);
+if(chkKakao == "-1"){
+	console.log("if chk kakao : " + chkKakao);
+
+	modal_kakao_sign_up.style.display = "block";
+}
+
 
 
 $('#login').click(function() {
@@ -295,6 +344,22 @@ $('#signup').click(function() {
 
 });
 
+//비밀번호 찾 
+$('#findPW_btn').click(function() {
+
+   modal.style.display = "none";
+   modal_findPW.style.display = "block";
+
+});
+
+//비밀번호 찾기 다음 
+/* $('#find_btn').click(function() {
+
+	modal_findPW.style.display = "none";
+   modal_newPW.style.display = "block";
+
+}); */
+
  span1.onclick = function() {
    modal.style.display = "none";
    }
@@ -304,7 +369,15 @@ $('#signup').click(function() {
  span3.onclick = function() {
 	 modal_sign_up.style.display = "none";
 }
-
+ span4.onclick = function() {
+	 modal_findPW.style.display = "none";
+}
+ span5.onclick = function() {
+	 modal_newPW.style.display = "none";
+}
+ span6.onclick = function() {
+	 modal_kakao_sign_up.style.display = "none";
+} 
 window.onclick = function(event) {
    if (event.target == modal) {
       modal.style.display = "none";
@@ -321,6 +394,7 @@ $("#login_button").on("click", function(e){
 	$("#login_form").submit();
 });
 
+
 //로그인 페이지에 있는 회원가입 버튼 - 이메일 인증 페이지로 이동
 $("#sign_up_btn").on("click", function(e){
 
@@ -329,12 +403,22 @@ $("#sign_up_btn").on("click", function(e){
 	modal_email.style.display = "block";
 });
 
+/* //회원가입 페이지에서 이메일 인증 페이지로 이동
+$("#move_email").on("click", function(e){
+
+	modal_sign_up.style.display = "none";
+	
+	modal_email.style.display = "block";
+}); */
+
+
+
 //이메일 인증 페이지에 있는 다음 버튼 - 회원가입이지로 이동 
 $("#signup_btn").on("click", function(e){
 	var cnt =0;
 	$.ajax({
              type: "get",
-             url: "/mail/move?",
+             url: "/mail/move",
              contentType:'application/json; charset=UTF-8',
              dataType:'json',
             
@@ -359,8 +443,11 @@ $("#signup_btn").on("click", function(e){
             				if(val2 != 0){
 								
                 				$("#email_chk_text").css("display", "inline");
-                				console.log("return1 : " + val2);
+                				$("#joinCode_chk_text").css("display", "none");
                 				
+                				
+                				$('#send_btn').removeAttr('disabled');
+                				$('#check_btn').removeAttr('disabled');
                 				
     							return false;
             				}
@@ -370,17 +457,20 @@ $("#signup_btn").on("click", function(e){
             			//임시코드 일치하지 않음.... 
             			else if(val1 == 1){
             				if(val2 != 1){
+            					$("#email_chk_text").css("display", "none");
             					$("#joinCode_chk_text").css("display", "inline");
-                				console.log("return2 : " + val2);
+                				
+                				$('#send_btn').removeAttr('disabled');
+                				$('#check_btn').removeAttr('disabled');
+                				
+                				
                 				
                 				return false;
                 			}
-            				console.log("cnt : " + cnt);
+            		
             				cnt++
             			}
             			if(cnt == 2){
-            				console.log("return3 : " + val1 + ", " + val2);
-            				console.log("cnt : " + cnt);
             				
             				$('#user_username').val(idx);
             				
@@ -406,6 +496,7 @@ $("#signup_btn").on("click", function(e){
 	modal_sign_up.style.display = "block"; */
     
 });
+
 
 
 

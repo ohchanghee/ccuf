@@ -66,11 +66,11 @@
 
 			 if(val == "send"){
 				 var send_btn = document.getElementById("send_btn");
-				 /* send_btn.disabled = 'disabled'; */
+				 send_btn.disabled = 'disabled'; 
 				 email_form.action = "/mail/send";
 			 }else if(val == "check"){
 				 var check_btn = document.getElementById("check_btn");
-				 /* check_btn.disabled = 'disabled'; */
+				 check_btn.disabled = 'disabled'; 
 				 email_form.action = "/mail/check";
 			 }
 			 email_form.submit();

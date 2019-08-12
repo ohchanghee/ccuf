@@ -6,6 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class tempController {
 
+	
+   @RequestMapping("/change_index")
+   public String change_index() {
+      return "change_index";
+   }
+   @RequestMapping("/with_index")
+   public String with_index() {
+      return "with_index";
+   }
    @RequestMapping("/foodvideo_detail")
    public String foodvideo_detail() {
       return "foodvideo/foodvideo_detail";
@@ -22,18 +31,18 @@ public class tempController {
    public String myPage_index() {
       return "my/myPage_index";
    }
-   @RequestMapping("/myPage_att")
+   @RequestMapping("/myPage_mark")
    public String myPage_att() {
-      return "my/myPage_att";
+      return "my/myPage_mark";
    }
    @RequestMapping("/myPage_recipe")
    public String myPage_recipe() {
       return "my/myPage_recipe";
    }
-   @RequestMapping("/myPage_recipegram")
-   public String myPage_recipegram() {
-      return "my/myPage_recipegram";
-   }
+//   @RequestMapping("/myPage_recipegram")
+//   public String myPage_recipegram() {
+//      return "my/myPage_recipegram";
+//   }
    @RequestMapping("/salething_emart")
    public String salething_emart() {
       return "salething_emart";
@@ -54,10 +63,15 @@ public class tempController {
    public String recipe_write() {
       return "recipe/recipe_write";
    }
+   @RequestMapping("/recipegram_index")
+   public String recipegram_index() {
+      return "recipegram/recipegram_index";
+   }
    @RequestMapping("/recipegram_write")
    public String recipegram_write() {
       return "recipegram/recipegram_write";
    }
+  
    @RequestMapping("/fail_Login")
    public String fail_Login() {
       return "fail_Login";
@@ -65,5 +79,16 @@ public class tempController {
    @RequestMapping("/admin_index")
    public String admin_index() {
       return "admin/admin_index";
+   }
+   
+   
+   
+   @RequestMapping("/modify")
+   public String multifile() {
+      return "recipegram/modify";
+   }
+   @RequestMapping("/ajaxUpload")
+   public String ajaxUpload() {
+      return "recipegram/ajaxUpload";
    }
 }

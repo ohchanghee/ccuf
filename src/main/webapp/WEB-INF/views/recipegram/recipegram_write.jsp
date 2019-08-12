@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +67,7 @@ input.cooking_txt{
 
 
 /* 클릭 시 파란테두리 없애기  */
-input.cooking_txt:focus, .recipegram_btn:focus, #recipegram_hashtag:focus
+input.cooking_txt:focus, .recipegram_btn:focus, #recipegram_content:focus
 	{
 	outline: none;
 }
@@ -113,7 +115,7 @@ input.cooking_txt:focus, .recipegram_btn:focus, #recipegram_hashtag:focus
 	max-height:100%;
 }
 	
-#recipegram_hashtag{
+#recipegram_content{
 	height:20.0rem;
 	background-color: #FFD7BE;
 	border:none;
@@ -208,63 +210,81 @@ input.cooking_txt:focus, .recipegram_btn:focus, #recipegram_hashtag:focus
     	    	- 레시피그램 작성 -
 	        </div>
         </div>
+     
+
+     	<!-- <form id="recipegram_write" action="/insertRecipegram"> -->
      	<div class="row">
          <div class="col-lg-6 col-md-6 mb-4 mb-lg-0" >
-         		<span style="margin-left:95%;" onclick="document.getElementById('imgs').click();"><i class="fas fa-plus" title="이미지 추가"></i></span>
+         		<span style="margin-left:95%;" onclick="document.getElementById('imgs').click();"><i class="fas fa-plus" title="이미지 추가"> </i></span>
          		<div class="text-center rounded">
+         		<sec:authorize access="isAuthenticated()">
+	         		<sec:authentication var="user_num" property="principal.member.user_num"/>
+	    			<input type="hidden" id="user_num" name="user_num" value="${user_num }">
+    			</sec:authorize>
     			
+	    
          		<!-- 업로드한 이미지가 들어갈 부분 -->
        			<div id="imgWrapper">
        				<img id="mainImg" src="img/recipegram/default.jpg">
        			</div>
-           		<input type="file" id="imgs" style="display:none;" multiple/>
+           		<input type="file" id="imgs" name="imgs" style="display:none;" multiple/>
            			
            		</div>
 		</div>
-						
+					
 				
            
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
            	<div class="rounded">
     			
            		<!--textarea에 <a>태그를 넣지 못해 링크 못해서 <div> contenteditable 속성 사용  onkeyup="HashTag();"  -->
-           		<div id="recipegram_hashtag" contenteditable="true" style="width:100%; overFlow:auto;" ></div>
+           		<div id="recipegram_content" contenteditable="true" style="width:100%; overFlow:auto;" ></div>
            		
            		
           	</div>
           	<div class="rounded">
     		
          			 <label class="checkbox-inline">
-								  <input type="checkbox" id="inlineCheckbox1" value="option1"> 나만 보기
+								  <input type="checkbox" id="inlineCheckbox1" name="recipegram_secret" value="option1"> 나만 보기
 							</label>
 			</div>
 			      
         </div>
+		
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		
+		
+          <input class="recipegram_btn mt-4 " style="margin-left: 90%; width:5.5rem; height:2.5rem; background-color:#f8f9fa; color:#65737e;border-color:#65737e;" type="button" name="button" value="등 록" onClick="insertRecipegram();">
 		</div>
-		<div class="row">
-          <input class="recipegram_btn mt-4 " style="margin-left: 90%; width:5.5rem; height:2.5rem; background-color:#f8f9fa; color:#65737e;border-color:#65737e;" type="button" name="button" value="등 록" onClick="frmCheck();">
-		</div>
-		</div>
+		
 		   <!-- <span class="icon"><img src="img/main/search.png" /></span>
                 <input type="text" id="recipe_search" /> -->
-
-		
+		<!-- </form>  -->
             </div>
+          </div>  
  </div>
 <jsp:include page = "../headNfoot/footer.jsp"/> 
 
 <script>
 // 이미지 추가 및 메인이미지 초기화 로직
-	var imgSrcList=[];
+  
+	var imgSrcList=[];  //src
+
+	
 	$(document).ready(function(){
 		$("#imgs").on("change", handleImgFiles)
 	});
 	
 	function handleImgFiles(e){
-		var files = e.target.files;
-		var filesArr = Array.prototype.slice.call(files);
+		var files = e.target.files;  //전체파일..  src 
+		var filesArr = Array.prototype.slice.call(files);  //나눠서..  src
 		
+		if(filesArr.length >10){
+			alert("이미지를 10개이하 등록해주세요!");
+			return false;
+		}
 		filesArr.forEach(function(f){
+			
 			if(!f.type.match("image.*")	){
 				alert("확장자는 이미지 확장자만 가능합니다.");
 				return;
@@ -273,13 +293,104 @@ input.cooking_txt:focus, .recipegram_btn:focus, #recipegram_hashtag:focus
 			var reader = new FileReader();
 			
 			reader.onload = function(e){
+				
 				imgSrcList.push(e.target.result);
+					
 				$("#mainImg").attr("src",imgSrcList[0]);
+					
+				
 			}
 			
 			reader.readAsDataURL(f);
 		});
+		
+		
 	}
+	
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	  var maxSize = 5242880; //5MB
+	  
+	  function checkExtension(fileName, fileSize){
+	    
+	    if(fileSize >= maxSize){
+	      alert(fileName + "파일 사이즈 초과");
+	      return false;
+	    }
+	    
+	    if(regex.test(fileName)){
+	      alert("해당 종류의 파일은 업로드할 수 없습니다.");
+	      return false;
+	    }
+	    return true;
+	  }
+	
+	var csrfHeaderName ="${_csrf.headerName}"; 
+	 var csrfTokenValue="${_csrf.token}";
+
+	  
+	function insertRecipegram(){
+
+	    var formData = new FormData();
+	    
+	    var inputFile = $("input[name='imgs']");
+		//var inputFile = Array.prototype.slice.call(files);
+		
+	    console.log(inputFile);
+	    var inputText = document.getElementById('recipegram_content').innerHTML;
+	    
+	    var inputSecret = document.getElementById('inlineCheckbox1').checked;  //false, true
+	   	
+	    var user_num = document.getElementById('user_num').value;
+	    
+	    var files = inputFile[0].files;
+	    
+	    if(hash_txt.length == 0){
+	    	alert("해시태그를 1개이상 등록해주세요!");
+	    	return false;
+	    }
+	    /* if(files.length == 0){
+			  alert("이미지를 1개이상 등록해주세요!");
+			  return false;
+		} */
+	    if(files.length == 0){
+			  alert("이미지를 1개이상 등록해주세요!");
+			  return false;
+		}
+	   
+	    for(var i = 0; i < files.length; i++){
+	      if(!checkExtension(files[i].name, files[i].size) ){
+	            return false;
+	      }
+	      formData.append("uploadFile", files[i]);  //이미지파일 
+	      
+	    }
+	      formData.append("uploadText", inputText); //작성 내용 
+	      formData.append("uploadSecret", inputSecret); //나만보기 여부 
+	      formData.append("hashTag", hash_txt); //hash tag
+	      formData.append("user_num", user_num); //user_num
+	    
+	    $.ajax({
+	      url: '/insertRecipegram',
+	      processData: false, 
+	      contentType: false,
+	      data: formData,
+	      type: 'POST',
+	      beforeSend: function(xhr) {
+	          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	      },
+	      //dataType:'json',
+	      success: function(result){
+	          console.log(result); 
+	          location.href = "/recipegram_index";
+			  //showUploadResult(result); //업로드 결과 처리 함수 
+
+	      },error:function(request,status,error){
+	    	  console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       }
+
+	    }); //$.ajax
+	    
+	  }    
 </script>
 
 <script>
@@ -369,6 +480,9 @@ window.onclick = function(event) {
 // 아래는 모두 해쉬태그로직
 var saveSelection, restoreSelection;
 
+//해시태그 모음 ... 
+var hash_txt = new Array();
+
 //커서위치...
 if (window.getSelection && document.createRange) {
     saveSelection = function(containerEl) {
@@ -440,9 +554,13 @@ if (window.getSelection && document.createRange) {
 
 //a태그 
 function createLink(matchedTextNode) {
-    var el = document.createElement("a");
-    el.href = matchedTextNode.data;  //링크는 해시태그 텍스트.. 
+    var el = document.createElement("a");  // el : http://localhost/recipegram_write#djskfdl
+    var hash = matchedTextNode.data.split('#');  // search 하기위해 #제거 
+    el.href = "recipegram_index?recipe_search=" +hash[1];  //링크는 해시태그 텍스트.. 
+    el.style.color="#5CD1E5";
     el.appendChild(matchedTextNode);
+    hash_txt[hash_txt.length] = matchedTextNode.data;// 해시태그 내용... 
+	
     return el;
 }
 
@@ -477,7 +595,7 @@ function surroundMatchingText(textNode, regex, surrounderCreateFunc) {
     }
 }
 
-var textbox = document.getElementById("recipegram_hashtag");
+var textbox = document.getElementById("recipegram_content");
 var hashTag = /#([^#\s]+)/; //해시태그 정규식 
 
 function updateLinks() {
@@ -507,93 +625,6 @@ $(document).ready(function () {
 });
 
 
-
-
-
-//해쉬태그
-/* function HashTag(){
-	var content = document.getElementById('recipegram_hashtag'); // html 안에 'content'라는 아이디를 content 라는 변수로 정의한다.
-	//var content =  $("#recipegram_hashtag").val(); // html 안에 'content'라는 아이디를 content 라는 변수로 정의한다.
-	
-	
-	
-	
-	var linkedContent = '';  //a 태그 추가한 해시태그 
-	var hash = '';  // 해시태그내용 
-	var totalContent = ''; // 전체 글 
-	for(var idx in content.innerHTML){  //# 찾아라... 
-		
-		if(content.innerHTML[idx] == '#'){ 
-			
-			
-			for(var hash_idx=parseInt(idx)+1; hash_idx<content.innerHTML.length ; hash_idx++){
-				var blank = /[\s]/g; 
-				if(blank.test(content.innerHTML[hash_idx])==true){
-					linkedContent='<a class="editor-link" contenteditable="false" href="">#'+hash+'</a>';
-					content.innerHTML = content.innerHTML.replace('#'+hash, linkedContent); //바꿔라.
-					break;
-				}
-				hash += content.innerHTML[hash_idx];
-				
-			}
-			
-			
-		}
-		
-	}
-	
-	/* 
-	
-	
-	var caretID = '_caret'; 
-	var cc = document.createElement('span');
-	cc.id = caretID; 
-	
-	//  현재 커서 위치를 기억
-	window.getSelection().getRangeAt(0).insertNode(cc);
-  
-	content.blur(); //포커스 없애기.. 
-	
-	
-	var splitedArray = content.innerHTML.split(' '); // 공백을 기준으로 문자열을 자른다.
-	var linkedContent = '';
-	for(var word in splitedArray)
-	{
-	  word = splitedArray[word];
-		
-	   if(word.indexOf('#') == 0) // # 문자를 찾는다.
-	   {
-		 //linkedContent = word;
-	      word = '<a class="editor-link" contenteditable="false" href="#">'+word+'</a>'; 
-	      //document.getElementById('recipegram_hashtag').innerHTML = linkedContent;
-	     //alert(word);
-	     
-	   }
-	   //alert(linkedContent);
-	   	   //alert(linkedContent);
-	  	linkedContent += word+' ';
-	} 
-	
-	//content.innerHTML = content.innerHTML.replace(linkedContent, word); //바꿔라.
-	content.innerHTML = linkedContent;
-    content.focus();  //포커스 되돌리기...
-	
-	
-	//document.getElementById('recipegram_hashtag').innerHTML = linkedContent;
-	//content.innerHTML = linkedContent;
-	
-	var range = document.createRange(); 
-	cc = document.getElementById(caretID); 
-	range.selectNode(cc);
-	var selection = window.getSelection(); 
-	selection.removeAllRanges(); 
-	selection.addRange(range); 
-	range.deleteContents(); 
- */
-	//$("#recipegram_hashtag").val(linkedContent); 
-	
-
-//}; */
 </script>          
 </body>
 </html>

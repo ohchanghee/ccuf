@@ -1,48 +1,72 @@
-//package com.solrecipe.recipe.user.api.controller;
-//
-//import javax.servlet.http.HttpSession;
-//
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//
-//import com.fasterxml.jackson.databind.JsonNode;
-//import com.solrecipe.recipe.user.api.Kakao_restapi;
-//
-//public class KakaoController {
-//	@RequestMapping(value = "/oauth", produces = "application/json")
-//    public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) {
-//        System.out.println("로그인 할때 임시 코드값");
-//        //카카오 홈페이지에서 받은 결과 코드
-//        System.out.println(code);
-//        System.out.println("로그인 후 결과값");
-//        
-//        //카카오 rest api 객체 선언
-//        Kakao_restapi kr = new Kakao_restapi();
-//        //결과값을 node에 담아줌
-//        JsonNode node = kr.getAccessToken(code);
-//        //결과값 출력
-//        System.out.println(node);
-//        //노드 안에 있는 access_token값을 꺼내 문자열로 변환
-//        String token = node.get("access_token").toString();
-//        //세션에 담아준다.
-//        session.setAttribute("token", token);
-//        
-//        return "logininfo";
-//    }
-//	
-//	@RequestMapping(value = "/logout", produces = "application/json")
-//    public String Logout(HttpSession session) {
-//        //kakao restapi 객체 선언
-//        Kakao_restapi kr = new Kakao_restapi();
-//        //노드에 로그아웃한 결과값음 담아줌 매개변수는 세션에 잇는 token을 가져와 문자열로 변환
-//        JsonNode node = kr.Logout(session.getAttribute("token").toString());
-//        //결과 값 출력
-//        System.out.println("로그인 후 반환되는 아이디 : " + node.get("id"));
-//        return "redirect:/";
-//    }    
-//	
-//
-//
-//
-//}
+package com.solrecipe.recipe.user.api.controller;
+
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+ 
+import com.solrecipe.recipe.user.api.KakaoAPI;
+import com.solrecipe.recipe.user.service.UserService;
+ 
+@Controller
+public class KakaoController {
+ 
+	@Autowired
+    private KakaoAPI kakao;
+	
+	@Autowired
+	UserService userService;
+	
+	
+	@RequestMapping(value="/kakao_login")
+	public String login(@RequestParam("code") String code, HttpSession session) {
+		String access_Token = kakao.getAccessToken(code);
+		System.out.println("CODE : " + code);
+		System.out.println("token : " + access_Token);
+	    HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+	    System.out.println("login Controller : " + userInfo);
+	    System.out.println("before session : " +session.getAttribute("userId"));
+	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+	    if (userInfo.get("id") != null) {
+	        session.setAttribute("userId", userInfo.get("id"));
+	        session.setAttribute("userNickname", userInfo.get("nickname"));
+	        session.setAttribute("access_Token", access_Token);
+	    }
+	    
+	    String kakao_id = (String)session.getAttribute("userId");
+	    
+	    int chkKakao = userService.chkKakaouser(kakao_id);
+	    
+	    System.out.println("before chkKakao : " + chkKakao);
+		
+	    //없어어어엉 
+	    if(chkKakao == 0) {
+	    	chkKakao = -1;
+	    }
+	    
+	    
+	    System.out.println("chkKakao : " + chkKakao);
+	
+	    session.setAttribute("chkKakao", chkKakao);
+	    
+	    
+	    System.out.println("session : " +session.getAttribute("chkkakao"));
+	    return "main";
+	}
+	
+	@RequestMapping(value="/kakao_logout")
+	public String logout(HttpSession session) {
+	    kakao.kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    session.removeAttribute("userId");
+	    session.removeAttribute("userNickname");
+	    return "main";
+	}
+
+
+}

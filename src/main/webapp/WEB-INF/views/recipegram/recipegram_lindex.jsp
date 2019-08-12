@@ -7,7 +7,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%@ page import="com.solrecipe.recipe.recipegram.domain.RecipegramVO" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -277,29 +276,29 @@ textarea {
 
 	<div class="container">
 		<div class="row align-items-center justify-content-center">
-			
-			<div class="col-md-9">
+			<div class="col-md-12 col-lg-7 text-center search">
+
+
+								<div class="row" style="float: right;  margin-top: 8%; margin-right: -20%;">
+					<div class="col-xs-5 text-left">
+						<div class="previous">
+							<button type="button" id="button_new" class="btn btn-default btn-lg" style="border: none;" >
+							<a href="/recipegram_index" value="최신순">최신순</a>
+								<!-- <span class="">최신순</span> -->
+							</button>
+						</div>
+					</div>
+					&nbsp;
+					<div class="col-xs-5 text-right">
+						<div class="next">
+							<button type="button" id="button_like" class="btn btn-default btn-lg" style="border: none;">
+								<a href="/getRecipegramLike"" value="좋아요순">좋아요순</a>
+								<!-- <span class="">좋아요순</span> -->
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
-				<div class="col-md-3 row new_like_btn" style="float: right;  margin-top: 8%;">
-               <div class="col-xs-5 text-right">
-                  <div class="previous">
-                     <button type="button" id="button_new" class="btn btn-default btn-lg" style="border: none;" >
-                     <a href="/recipegram_index" value="최신순">최신순</a>
-                        <!-- <span class="">최신순</span> -->
-                     </button>
-                  </div>
-               </div>
-               &nbsp;
-               <div class="col-xs-5 text-right">
-                  <div class="next">
-                     <button type="button" id="button_like" class="btn btn-default btn-lg" style="border: none;">
-                        <a href="/getRecipegramLike"" value="좋아요순">좋아요순</a>
-                        <!-- <span class="">좋아요순</span> -->
-                     </button>
-                  </div>
-               </div>
-            </div>
-		
 		</div>
 	</div>
 
@@ -309,10 +308,9 @@ textarea {
 		<!-- 로그인 시   -->
 		<sec:authorize access="isAuthenticated()">
 		<sec:authentication var="user_num" property="principal.member.user_num"/>
-						<sec:authentication var="user_nickname" property="principal.member.user_nickname"/> 
-				    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
-				    		<input type="hidden" id="login_nickname" name="login_nickname" value="${user_nickname }">
-											
+		<sec:authentication var="user_nickname" property="principal.member.user_nickname"/> 
+    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
+    		<input type="hidden" id="user_nickname" name="user_nickname" value="${user_nickname }">
 			<div class="container  text-right">
 				<div class="next">
 					<button type="button" class="btn btn-default btn-lg"style="border:none; background:none;">
@@ -322,9 +320,7 @@ textarea {
 			</div>
 		</sec:authorize>
 		<sec:authorize access="isAnonymous()">
-		
-				<input type="hidden" id="user_num" name="user_num" value="-1">	
-				
+					<input type="hidden" id="user_num" name="user_num" value="-1">	
 						
 		</sec:authorize>
 		
@@ -338,36 +334,15 @@ textarea {
 			
 				<input type="hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
 				<input type="hidden" id="user_nickname" name="user_nickname" value="${rglist.user_nickname }">
-				<span id="nckname" class=" font-size-17 " style="color: #65737e;" onclick="user_list(${rglist.recipegram_num });"><c:out value="${rglist.user_nickname }"/></span>
+				<span id="nickname" class=" font-size-17 " style="color: #65737e;" onclick="user_list(${rglist.recipegram_num });"><c:out value="${rglist.user_nickname }"/></span>
 				
-				
-		<!-- 관리자시...  -->                  
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <c:choose>
-       		<c:when test = "${rglist.user_num eq user_num }">	
-				<img src="../img/user/recipegram_update.png" class="mr-2 recipegram_update " style="width:2.5%; margin-top:-1.5%; margin-left:88%;" onclick="modify(${rglist.recipegram_num })"/>
-		        
-		        <i class="fas fa-times fa-2x recipegram_delete " onclick="rg_delete(${rglist.recipegram_num})"></i>
-		        	
-		        	
-		      </c:when> 
-		     <c:otherwise> 
-        		<i class="fas fa-times fa-2x recipegram_delete " onclick="rg_delete(${rglist.recipegram_num})" style="margin-top:-1.5%; margin-left:91%;"></i>
-        	</c:otherwise>
-        </c:choose>
-        </sec:authorize>		
-        <!-- 일반 user -->
-		<sec:authorize access="!hasRole('ROLE_ADMIN')">
 			<c:if test = "${rglist.user_num eq user_num }">	
-				<img src="../img/user/recipegram_update.png" class="mr-2 recipegram_update " style="width:2.5%; margin-top:-1.5%; margin-left:88%;" onclick="modify(${rglist.recipegram_num })"/>
-		        
-		        		<i class="fas fa-times fa-2x recipegram_delete " onclick="rg_delete(${rglist.recipegram_num})"></i>
+			
+		        		<img src="../img/user/recipegram_update.png" class="mr-2 recipegram_update " style="width:2.5%; margin-top:-1.5%; margin-left:88%;"/>
+		        		<i class="fas fa-times fa-2x recipegram_delete "></i>
 		        	
 		        	
-		      </c:if> 
-		 </sec:authorize>
-		 
-		
+		      </c:if> 	
 			</div>
 			</form>	
 				<div class="row col-md-12 col-sm-12 col-xs-12" style="background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:5rem;padding-left:0;">
@@ -456,6 +431,8 @@ textarea {
 								onclick="ChangeImage(${recipegram_num})" name="hearts" id="hearts${rglist.recipegram_num }">&nbsp;
 							
 						
+							 <img src="img/recipegram/add.png" style="width: 1.8rem;">
+							 
 						</div>
 			<span class="col-md-10 rgdate font-size-13" style="float:left;color: #65737e;padding-top:1%;">  
 							 	<input type="text" name="cnt_like${rglist.recipegram_num }" value="${rglist.recipegram_like_cnt }" style="background:none; border:none;color: #65737e;width:5%;">명이 좋아합니다.
@@ -491,9 +468,6 @@ textarea {
 	<jsp:include page="../headNfoot/footer.jsp" />
 
 	<script>
-	function modify(recipegram_num){
-		window.location.href="getmodifyRecipegram?recipegram_num=" + recipegram_num;
-	}
 	function user_list(num){
 		
 		var form_id = "form" + num;
@@ -503,29 +477,9 @@ textarea {
 		document.getElementById(form_id).submit();
 	}
 	
-	function rg_delete(recipegram_num){
-		
-		$.ajax({
-	        type:'post',
-	        url : '/deleteRecipegram',
-	        dataType : "json",
-	        data:{"recipegram_num" : recipegram_num},
-	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-	        beforeSend: function(xhr) {
-		          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		    },
-	        success : function(data){
-	        	alert("레시피그램 삭제완료!");
-	        	location.href="/recipegram_index";
-	        },
-	        error:function(request,status,error){
-	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	        }
-	         
-	     });
-	}
-	
 	</script>
+
+ 
 
  
 
@@ -785,10 +739,9 @@ function getLikeSt(rgnum){
 
 function insertReply(code){
 	var user_num = document.getElementById('user_num').value;
-	var user_nickname = document.getElementById('login_nickname').value;
+	var user_nickname = document.getElementById('user_nickname').value;
 	var recipegram_num = code;
 	var reply = document.getElementById('reply'+recipegram_num).value;
-	
 	console.log(user_nickname);
     $.ajax({
         type:'POST',
@@ -817,18 +770,15 @@ function insertReply(code){
  // 답글달기 
 function Rereply(code, num){
 	var user_num = document.getElementById('user_num').value;
-	var user_nickname = document.getElementById('login_nickname').value;
+	var user_nickname = document.getElementById('user_nickname').value;
 	var reply_num = num;
 	console.log("nickname : "+user_nickname);
 	console.log("nicknum : "+user_num);
 	var recipegram_num = code;
 	var reply = document.getElementById('reply'+recipegram_num).value;
-	var reply_user =  document.getElementById('reply_user' + reply_num).innerHTML;
-	
-	
-	console.log(reply_user);
+	var reply_user = document.getElementById('reply_user' + reply_num).innerHTML;
+
 	$("#reply"+recipegram_num).val("@" + reply_user);
-	
 	
 	document.getElementById("insert"+code).onclick="";
 	 document.getElementById("insert"+code).onclick=function(){
@@ -840,33 +790,9 @@ function Rereply(code, num){
 	
 } 
  
-//답답글달기 
-function Rerereply(code, num){
-	var user_num = document.getElementById('user_num').value;
-	var user_nickname = document.getElementById('login_nickname').value;
-	var reply_num = num;
-	console.log("nickname : "+user_nickname);
-	console.log("nicknum : "+user_num);
-	var recipegram_num = code;
-	var reply = document.getElementById('reply'+recipegram_num).value;
-	var reply_user = document.getElementById('rereply_user' + reply_num).innerHTML;
-
-	$("#reply"+recipegram_num).val("@" + reply_user);
-	
-	document.getElementById("insert"+code).onclick="";
-	 document.getElementById("insert"+code).onclick=function(){
-		 
-		 insertRereply(recipegram_num, reply_num);
-	};
-	 
-	
-
-	
-} 
- 
 function insertRereply(code, num){
-	var rere_user_num = document.getElementById('user_num').value;
-	var rere_user_nickname = document.getElementById('login_nickname').value;
+	var user_num = document.getElementById('user_num').value;
+	var user_nickname = document.getElementById('user_nickname').value;
 	//var user_nickname = "${rglist.user_nickname }";
 
 	var reply_num = num;
@@ -880,8 +806,8 @@ function insertRereply(code, num){
         type:'POST',
         url : '/insertRereply',
         data:{
-        	"rere_user_num" : rere_user_num,
-        	"rere_user_nickname" : rere_user_nickname,
+        	"user_num" : user_num,
+        	"user_nickname" : user_nickname,
         	"recipegram_num" : recipegram_num,
         	"reply" : reply,
         	"reply_num" : reply_num
@@ -962,7 +888,7 @@ function getReplyList(){
 							$("#reply_list"+item.recipegram_num).append("<div class='col-md-12 rrr' id='reply_content"+item.recipegram_reply_num+"'>"
 									+"<span class='font-size-17 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
 									+"<span class='info_re font-size-16 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span>"
-									+"<span class='font-size-13'style='float:right' onclick='deleteReply("+item.recipegram_reply_num+")'>삭제</span><br>"
+									+"<span class='font-size-13'style='float:right' onclick='deleteReply("+item.recipegram_reply_num+")'>삭제</span><span class='font-size-13 pr-2'style='float:right'>수정</span><br>"
 									
 									+"<span class='font-size-13 pl-3'style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
 									+"<input class='rereplybtn pl-3'  type='button' onclick='Rereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
@@ -1025,27 +951,25 @@ function getReplyList(){
   							$("#reply_content"+item.recipegram_reply_num).append("<sec:authorize access='isAuthenticated()'> <sec:authentication var='user_num' property='principal.member.user_num'/>");
   							 
   							//작성자일때ㅔ... 
-  								if(user_num == val2.rere_user_num){
+  								if(user_num == item.user_num){
   									
   									$("#reply_content"+item.recipegram_reply_num).append("<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.user_nickname+"</span>&nbsp"
   			  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span>"
-  			  								+"<span class='font-size-13'style='float:right'onclick='deleteRereply("+val2.recipegram_rereply_num+")'>삭제</span><br>"
+  			  								+"<span class='font-size-13'style='float:right'onclick='deleteRereply("+val2.recipegram_rereply_num+")'>삭제</span><span class='font-size-13 pr-2'style='float:right'>수정</span><br>"
 			  								
   			  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
-  			  								+"<input class='rereplybtn pl-3'  type='button' onclick='Rerereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
-
+  			  								
   			  								
   			  								+"</div>");
   								
   								}else{
   									
   									$("#reply_content"+item.recipegram_reply_num).append("<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.user_nickname+"</span>&nbsp"
   			  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
   			  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
-  			  								+"<input class='rereplybtn pl-3'  type='button' onclick='Rerereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
-
+  			  								
   			  								+"</div>");
   								}
   									
@@ -1056,7 +980,7 @@ function getReplyList(){
   								 $("#reply_content"+item.recipegram_reply_num).append("<sec:authorize access='isAnonymous()'>"
   								 
   										+"<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  		  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  		  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.user_nickname+"</span>&nbsp"
   		  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
   		  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
   		  								
@@ -1120,7 +1044,7 @@ function deleteReply(num){
 	    },
         success : function(data){
         	alert("삭제완료!");
-        	location.href="/recipegram_index";
+        	location.href="/getRecipegramLike";
         },
         error:function(request,status,error){
         	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -1143,7 +1067,7 @@ function deleteRereply(num){
 	    },
         success : function(data){
         	alert("삭제완료!");
-        	location.href="/recipegram_index";
+        	location.href="/getRecipegramLike";
         },
         error:function(request,status,error){
         	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -1168,28 +1092,21 @@ function deleteRereply(num){
 		// footer높이만큼 전체크기에서 제외
 		var maxHeight = $(document).height()-$(".site-footer").outerHeight();
 		var currentScroll = $(window).scrollTop() + $(window).height();
-		
-		var cri = document.location.href.split("="); 
-		
-		console.log(cri);
-
 		/* console.log("cu : " + currentScroll);
 		console.log("max : " + maxHeight);
 		console.log("Start : " +startNum); */
 
-		if(maxHeight <= currentScroll + 50){
+		if(maxHeight == currentScroll + 1){
 			$.ajax({
 				type:"POST",
-				url:"/getMoreNewRecipegram",
-				async :false,
-				data:{"startNum":startNum
-				},
-			
+				url:"/getMoreLikeNewRecipegram",
+				data:{"startNum":startNum},
+				timeout :5000, //5초
 				beforeSend: function(xhr) {
 			          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			    },
 			    dataType:"json",
-				success: function(data){
+			    success: function(data){
 					 $.each(data, function(index, item){
 						 var user_num = document.getElementById('user_num').value;
 
@@ -1213,20 +1130,20 @@ function deleteRereply(num){
 							+"<div class='col-md-12 ' id='nick_"+item.recipegram_num+"'>"				
 							+"<input type='hidden' name = '${_csrf.parameterName }' value = '${_csrf.token }'/>"
 							+"<input type='hidden' id='user_nickname' name='user_nickname' value='"+item.user_nickname +"'>"
-							+"<span id='nckname' class='font-size-17' style='color: #65737e;'>"
+							+"<span id='nickname' class='font-size-17' style='color: #65737e;'>"
 							+item.user_nickname 
 					 		+"</span>");
 						
 						
 						if(item.user_num == user_num){
-							$("#nick_"+item.recipegram_num).append("<img src='../img/user/recipegram_update.png' class='mr-2 recipegram_update ' style='width:2.5%; margin-top:-1.5%; margin-left:88%;' onclick='modify("+item.recipegram_num +")'/>"
-				        		+"<i class='fas fa-times fa-2x recipegram_delete' onclick='rg_delete("+item.recipegram_num+")'></i>");
+							$("#nick_"+item.recipegram_num).append("<img src='../img/user/recipegram_update.png' class='mr-2 recipegram_update ' style='width:2.5%; margin-top:-1.5%; margin-left:88%;'/>"
+				        		+"<i class='fas fa-times fa-2x recipegram_delete '></i>");
 						}
 						$("#mainview").append("</div></form>	");
 					
-					 
+		
 					 		
-						$("#mainview").append("<div class='row col-md-12 col-sm-12 col-xs-12' id='row"+item.recipegram_num+"' style='background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:5rem;padding-left:0;'onclick='modify("+item.recipegram_num +")'>"
+						$("#mainview").append("<div class='row col-md-12 col-sm-12 col-xs-12' id='row"+item.recipegram_num+"' style='background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:5rem;padding-left:0;'>"
 							+"<div id='demo"+item.recipegram_num +"' class='col-md-6 carousel' style='padding-left:0;'data-ride='carousel' data-interval='false' >"
 							+"<ul class='carousel-indicators' id='indi"+item.recipegram_num +"'>");
 						
@@ -1306,6 +1223,7 @@ function deleteRereply(num){
 							+"<div class='col-md-10 favorite' style='margin-top: 4%; '>"
 							+"<img src='img/recipegram/favorite.png' style='width: 1.8rem;' onclick='ChangeImage("+item.recipegram_num+")' name='favorite'  id='favorite"+item.recipegram_num +"'>"
 							+"<img src='img/recipegram/hearts.png' style='width: 1.8rem;display:none;' onclick='ChangeImage("+item.recipegram_num+")' name='hearts' id='hearts"+item.recipegram_num +"'>&nbsp;"
+							+"<img src='img/recipegram/add.png' style='width: 1.8rem;'>"
 							+"</div>"
 							+"<span class='col-md-10 rgdate font-size-13' style='float:left;color: #65737e;padding-top:1%;'>"  
 							+"<input type='text' name='cnt_like"+item.recipegram_num +"' value='"+item.recipegram_like_cnt +"' style='background:none; border:none;color: #65737e;width:5%;'>명이 좋아합니다."
@@ -1334,7 +1252,6 @@ function deleteRereply(num){
 				},
 			});
 			startNum += 1;
-			console.log(startNum);
 		}
 	}); 
 	</script> 
