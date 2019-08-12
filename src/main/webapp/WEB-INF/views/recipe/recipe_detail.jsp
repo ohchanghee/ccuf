@@ -55,8 +55,9 @@
 <title>Home</title>
 </head>
 <body>
-		<%@include file="../headNfoot/header.jsp"%>
-			
+		<jsp:include page="../headNfoot/header.jsp"></jsp:include>
+		<%-- <%@include file="../headNfoot/header.jsp" %> 이상하게 에러 걸림;;;--%>
+		
 		<div class="container mt-5">
 		<div class="row">
 
