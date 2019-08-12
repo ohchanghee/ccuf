@@ -135,7 +135,12 @@
         
 	</style>
 	
-		
+	<script type="text/javascript">
+	
+	var isDeleted = '${isDeleted}';
+	if(isDeleted) {alert('${isDeleted}'+'게시물이 삭제되었습니다.')}
+	
+	</script>
 	<title>자취방 레시피: 레시피 목록</title>
 </head>
 <body>
@@ -235,10 +240,8 @@
 	
 	<script>
 	
-	
-	
 	//레시피 한개를 추가할 때 생기는 일이 함축되어 있는 
-	function recipe_add(recipe_num,recipe_title,recipe_img,recipe_food_main,recipe_food_suv,excel) {
+	function recipe_add(recipe_num,recipe_title,recipe_img,recipe_food_main,recipe_food_suv,excel,user_nickname) {
 		//recipe_num: 레시피 번호
 		//title: 음식 이름
 		//sumry: 음식 요약
@@ -256,15 +259,15 @@
 		}
 		
     	let recipe_card = $('<div class="col-md-3">'
-		            	+'<div class="card img-fluid mb-4 box-shadow">'
-		                	+'<img class="card-img-top" src='+recipe_img+' alt="Card image" style="width:100%;border: 1px solid gray" >'
-		                	+'<div class="card-img-overlay" data-recipe_num='+recipe_num+' data-excel='+excel+' style="padding-top: 2em;text-overflow: ellipsis;overflow:hidden; color: #65737e; border: 1px solid gray"  >'
-					            +'<p class="card-text">주재료 :'+food_main+'</p>'
-					            +'<p class="card-text">'+'부재료 : '+food_suv+'</p>'
-	            			+'</div>'
-	            			+'<div class="card-head text-center" style="padding-top: 1em;margin-bottom: 1em;">'+recipe_title+'</div>'
-	            		+'</div>'
-	            	+'</div>')
+			            	+'<div class="card img-fluid mb-4 box-shadow">'
+			                	+'<img class="card-img-top" src='+recipe_img+' alt="Card image" style="width:100%;border: 1px solid gray" >'
+			                	+'<div class="card-img-overlay" data-recipe_num='+recipe_num+' data-excel='+excel+' style="padding-top: 2em;text-overflow: ellipsis;overflow:hidden; color: #65737e; border: 1px solid gray"  >'
+						            +'<p class="card-text">주재료 :'+food_main+'</p>'
+						            +'<p class="card-text">'+'부재료 : '+food_suv+'</p>'
+		            			+'</div>'
+		            			+'<div class="card-head text-center" style="padding-top: 1em;margin-bottom: 1em;">'+recipe_title+'<br>작성자: '+user_nickname+'</div>'
+		            			+'</div>'
+	            			+'</div>')
 		
 		//.card-img-overlay 에 이벤트를 걸어주는 작업이다. 
     	$(recipe_card.children().children()[1]).mouseover(function() {//handler 메서드를 절대로 ()=> {} 로 하지말것 , this가 무조건 window로 잡혀버림;;
@@ -286,14 +289,11 @@
 		
     }
 	
-	
-	
 	//내용물을 초기화 할 때 사용
 	function erase_recipe() {
 		$('.cards').empty();
 		$('footer').css('display','none');	
 	}
-	
 	
 	//클로저로 쓰인다.
 	function recipe_loop(search_result) {
@@ -315,7 +315,7 @@
 					}
 					let result = search_result[cnt];
 					console.log(result);//[0]~[11] , [12]~[23] , [24]~[35], [36]~[39] 나머진 undefined
-					recipe_add(result['recipe_num'],result['recipe_title'],result['recipe_img'],result['recipe_food_main'],result['recipe_food_suv'],result['excel']);
+					recipe_add(result['recipe_num'],result['recipe_title'],result['recipe_img'],result['recipe_food_main'],result['recipe_food_suv'],result['excel'],result['user_nickname']);
 		      	}
 		        counter += amount;
 		   }
@@ -388,7 +388,7 @@
                error       : function(request, status, error) {
                    alert(error);
                }
-           });
+		});
 			
 		//=================================== 맨 위의 헤더 아이콘에 마우스 대면 툴팁이 뜬다 ====================================//
 		
