@@ -30,7 +30,10 @@
 		<result property="user_nickname" column="user_nickname"/>
 	</resultMap>
 	
-		
+	<sql id="SELECT_COOKING_TB">
+       <choose> <when test="excel == 1">EXCEL_RECIPE_COOKING_TB</when><otherwise>RECIPE_COOKING_TB</otherwise></choose> 
+   </sql>
+   
 	<select id="getTotalCnt" resultType="int">
 		select count(*) from 
 		<choose>
