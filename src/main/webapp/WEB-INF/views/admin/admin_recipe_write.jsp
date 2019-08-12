@@ -33,7 +33,27 @@
 
 <script src="../resources/js/jquery-ui.js"></script>
 <script >
+
+var checkExtension = new RegExp("\.(zip|ZIP|jpg|JPG|png|PNG|jpeg|JPEG)");
+
+
 function getThumbnailPrivew(html, $target) {
+	//이미지 파일인지 검사
+	if((html.files[0])['type'].split("/")[0]!=="image") {
+		alert("이미지 파일이 아닙니다.")
+		return;
+	}  else if ((html.files[0]).size >= 10485760) {
+		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
+		return;
+	} else if (!checkExtension.test((html.files[0]).name)) {
+		alert("이미지 파일의 확장자는 \"zip,jpg,jpeg,png\"만 가능합니다");
+		return;
+	}
+	
+	$('[name~="recipe_img"]').val(location.origin+"/Recipe_IMG/Main_IMG/."+name.split(".")[1]);
+	
+	
+	
     if (html.files && html.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -97,7 +117,7 @@ function removeRow() {
 
 function frmCheck()
 {
-	var frm = document.form;
+	/* var frm = document.form;
 	  
 	for( var i = 0; i <= frm.elements.length - 1; i++ ){
 	    if( frm.elements[i].name == "add_txt" )
@@ -108,12 +128,26 @@ function frmCheck()
 				return;
 	    	}
 		}
-	}
+	} */
   	
 	// 수정: 만약 위에서 return이 되지 않고 무사히 여기까지 왔으면 ajax를 통해서 FormData를 보낸다.
 	
 	var s1 = new FormData($('form#form')[0]);
+	
+	if( (s1.get("mainimg").size === 0) || (s1.get("recipe_title") === "") || (s1.get("recipe_food_main") === "")){
+		alert("대표 이미지, 레시피 제목, 주재료는 필수 입력항목입니다");
+		return;
+	} 
+	
 	var s2 = new FormData($('form#cooking')[0]); 
+	
+	for(var s of s2.entries()){	//이클립스에서는 오류가 뜨는데 전혀 문제 없는 코드다.
+		if(s.includes('add_txt') && s[1] === "") {
+			alert("조리 순서에 공백을 넣을 수 없습니다.");
+			return;
+	    } 
+	}
+	
 	var csrfHeaderName ="${_csrf.headerName}"; 
 	var csrfTokenValue="${_csrf.token}";
 
@@ -152,6 +186,17 @@ function frmCheck()
  
 
 function cooking_getThumbnailPrivew(html, $target) {
+	if((html.files[0])['type'].split("/")[0]!=="image") {
+		alert("이미지 파일이 아닙니다.")
+		return;
+	}  else if ((html.files[0]).size >= 10485760) {
+		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
+		return;
+	} else if (!checkExtension.test((html.files[0]).name)) {
+		alert("이미지 파일의 확장자는 \"zip,jpg,jpeg,png\"만 가능합니다");
+		return;
+	}
+	
     if (html.files && html.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -170,6 +215,31 @@ function cooking_getThumbnailPrivew(html, $target) {
 /* $(document).ready(function() {
     $("#addTable").tableDnD();
 }); */
+
+$(document).ready(function() {
+
+	$('textarea#cooking_main').blur(function(e){
+		var some = $(this).val().replace(/(\s*)/g,"");
+		if(some === '') {return;}	
+		if(some.lastIndexOf(",") === some.length-1) {
+			$(this).val(some); 
+        		} else {
+			$(this).val(some+','); 
+		}
+	})
+	
+	
+	$('textarea#cooking_sub').blur(function(e){
+		var some = $(this).val().replace(/(\s*)/g,"");
+		if(some === '') {return;}	
+		if(some.lastIndexOf(",") === some.length-1) {
+			$(this).val(some); 
+        		} else {
+			$(this).val(some+','); 
+		}
+	})
+	
+});
 </script>
 <style>
 
@@ -296,28 +366,25 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
      	<div class="row">
          <div class="col-lg-6 col-md-6 mb-4 mb-lg-0" >
          		<div class="text-center rounded">
-    			
-         			<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
-    				<div id="mainimg_1" class="mb-5" style="height:25.0rem;border:1px solid #FFD7BE; text-align:center">
-           					<img src = "../img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
-          				</div>
-           		
-           					<input type="file" id="mainimg" name="mainimg" style="display:none; " onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
-           		
-           			
-           		</div>
+			    	<div id="mainimg_1" class="mb-5" style="height:25.0rem;border:1px dashed #65737e; text-align:center">
+			        	<img src = "/img/admin/admin_plus.png" id="img"style="width:20%; border:none; padding-top:27%;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
+			        </div>
+			        <!-- 변경: name="mainimg" -->
+			  		<input type="file" id="mainimg" name="mainimg" style="display:none;" onchange="getThumbnailPrivew(this,$('#mainimg_1'))">
+			  </div>
            		
            	</div>
            	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
            	<div class="rounded">
-           	<!-- 추가 -> user_num도 넘겨줌. -->
-           	<sec:authentication var="user_num" property="principal.member.user_num"/>
-    		<input type="hidden" id="user_num" name="user_num" value="${user_num }">
-           		<input id="cooking_title" name="cooking_title" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
-           		<textarea id="cooking_main" name="cooking_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;"></textarea>
-           		<textarea id="cooking_sub"  name="cooking_sub" placeholder="추가 재료를 입력하세요 ..."style="width:100%;"></textarea>
-           		
-          </div>
+				<sec:authorize access="isAuthenticated()">
+				<input type="hidden" name="user_num" value='<sec:authentication property="principal.member.user_num"/>'>
+				</sec:authorize> 
+				<input id="cooking_title" name="recipe_title" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
+				<textarea id="cooking_main" name="recipe_food_main" placeholder="주 재료를 입력하세요 ..."style="width:100%;"></textarea>
+				<textarea id="cooking_sub" name="recipe_food_suv" placeholder="추가 재료를 입력하세요 ..."style="width:100%;"></textarea>
+				<input type="hidden" name="excel" value='0'>
+				<input type="hidden" name="recipe_img" value="">
+			</div>
         </div>
 		</div>
         </form>
@@ -329,7 +396,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
         <div class="col-12">
         	
 		<form id="cooking" method="post">
-			<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
+			
 					<!-- <input type="submit" id="search_btn" name="search_btn" >
 					<span class="icon"><img src="img/main/search.png" /></span> -->
 		

@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.mapping.MappableAttributesRetriever;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
 import com.solrecipe.recipe.recipe.RecipeMapper;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
+import com.solrecipe.recipe.recipe.Recipe_MarkVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 
 import lombok.Setter;
@@ -23,6 +27,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Setter(onMethod_ = @Autowired)
 	private RecipeMapper mapper;
+	
+	@Autowired
+	private PlatformTransactionManager manager;
 	
 	@Override
 	public int getTotalCnt(String whichPage) {
@@ -87,6 +94,52 @@ public class AdminServiceImpl implements AdminService{
 		int result2 = adminMapper.deleteRecipeCooking(excel, recipe_num);
 		return result1+result2;
 	}
+	
+	//레시피 수정 관련
+
+	@Override
+	public int updateRecipeBasic(Recipe_basicVO basic) {
+		return mapper.updateRecipeBasic(basic);
+	}
+
+	@Override
+	public int updateRecipeCooking(Recipe_CookingVO cooking, int excel) {
+		return mapper.updateRecipeCooking(cooking, excel);
+	}
+
+	// 레시피 찜하기 관련
+
+	@Override
+	public int insertMarkRecipe(Recipe_MarkVO mark) {
+		int result;
+		TransactionStatus status = manager.getTransaction(new DefaultTransactionDefinition());
+		try {
+			result = mapper.insertMarkRecipe(mark);
+			manager.commit(status);
+		} catch (Exception e) {
+			e.printStackTrace();
+			manager.rollback(status);
+			result = -1;
+		}
+
+		return result;
+	}
+
+	@Override
+	public int deleteMarkRecipe(Recipe_MarkVO mark) {
+		return mapper.deleteMarkRecipe(mark);
+	}
+
+	@Override
+	public List<Recipe_MarkVO> selectUserMarkRecipe(int user_num) {
+		return mapper.selectUserMarkRecipe(user_num);
+	}
+
+	@Override
+	public Integer getUserNumById(String user_id) {
+		return mapper.getUserNumById(user_id);
+	}
+	
 	
 	@Override
 	public List<FoodVideoVO> getFoodVideoList(int page) {

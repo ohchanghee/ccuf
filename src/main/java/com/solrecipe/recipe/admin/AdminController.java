@@ -9,9 +9,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
@@ -68,6 +70,9 @@ public class AdminController {
 	@GetMapping("/admin_recipe_delete")
 	public String admin_recipe_delete(int excel, int recipe_num, int page, String search, RedirectAttributes rttr){
 		int result = adminService.deleteRecipe(excel, recipe_num);
+		if(result>0 && excel == 0) {deleteFile(recipe_num);	}//excel값은 필요없다, 애초에 excel에 있느느 레시피의  이미지 파일은 외부의 링크로 따온 것이기 때문에, 실제 파일이 내 컴퓨터에 없다. 
+		
+		
 		rttr.addFlashAttribute("isDeleted", result);
 		rttr.addAttribute("page", page);
 		// 참고 - redirect의 경우 url이 두 번 호출된다. 그러므로 string의 경우에는 ?파라미터로 전달할 수 없다.
@@ -88,13 +93,47 @@ public class AdminController {
 		Recipe_basicVO basic = adminService.getRecipeDetail(recipe_num, excel);
 		List<Recipe_CookingVO> cooking_list = adminService.getCookingDetail(recipe_num, excel);
 		
-		System.out.println(basic);
-		cooking_list.forEach(data -> System.out.println(data));
+		//System.out.println(basic);
+		//cooking_list.forEach(data -> System.out.println(data));
 		
 		model.addAttribute("basic",basic);
 		model.addAttribute("cooking_list",cooking_list);
 		
 		return "admin/admin_recipe_modify";
+	}
+	
+	@PostMapping(value = "/admin_modify_recipe")
+	@ResponseBody
+	public Object recipe_modify_(@ModelAttribute("basic") Recipe_basicVO basic, MultipartHttpServletRequest request) {
+		
+		Long recipe_num = basic.getRecipe_num();
+		int excel= basic.getExcel();
+		
+		System.out.println(basic);
+		System.out.println(basic.getRecipe_title()+" / "+basic.getRecipe_food_main()+" / "+basic.getRecipe_food_suv());
+		
+		
+		adminService.updateRecipeBasic(basic);
+		
+		Recipe_CookingVO cooking = null;
+		
+		String[] add_txt = request.getParameterValues("add_txt");
+		
+		
+		for(int i = 0 ; i < add_txt.length ; i++) {
+			
+			System.out.println(add_txt[i]);
+
+			cooking = new Recipe_CookingVO();
+			cooking.setRecipe_num(recipe_num);
+			cooking.setCooking_num((i+1L));
+			cooking.setCooking_content(add_txt[i]);
+			
+			adminService.updateRecipeCooking(cooking,excel);
+			
+		}
+		return recipe_num.toString();
+		
 	}
 	
 	

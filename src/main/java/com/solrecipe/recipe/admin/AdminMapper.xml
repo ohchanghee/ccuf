@@ -18,12 +18,16 @@
 	</resultMap>
 	
 	<resultMap type="Recipe_basicVO" id="recipeResultMap">
-		<result property="recipe_num" column="recipe_num" />
-		<result property="recipe_title" column="recipe_title" />
-		<result property="updatedate" column="updatedate" />
-		<result property="user_num" column="user_num" />
-		<result property="excel" column="excel" />
-		<collection property="memberVO" resultMap="memberResultMap"/>
+		<result property="recipe_num" column="recipe_num"/>
+		<result property="recipe_title" column="recipe_title"/>
+		<result property="recipe_img" column="recipe_img"/>
+		<result property="firstdate" column="firstdate"/>
+		<result property="updatedate" column="updatedate"/>
+		<result property="recipe_food_main" column="recipe_food_main"/>
+		<result property="recipe_food_suv" column="recipe_food_suv"/>
+		<result property="excel" column="excel"/>
+		<result property="user_num" column="user_num"/>
+		<result property="user_nickname" column="user_nickname"/>
 	</resultMap>
 	
 		
@@ -55,7 +59,7 @@
 	
 	<!-- recipe_basic_tb를 user_tb, user_detail_tb와 join, 동일하게 excel_recipe_basic_tb도 join 한 후에 두 select문을 union -->
 	<!-- 직접 만든 레시피가 시간순으로 정렬되서 먼저 배치, 그 다음으로 엑셀 레시피가 정렬되서 배치 -->
-	<select id="getRecipeList" resultMap="recipeResultMap">
+	<!-- <select id="getRecipeList" resultMap="recipeResultMap">
 		select * 
 		from (select  RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, UPDATEDATE, EXCEL, rownum r
 			from (select * 
@@ -71,9 +75,23 @@
             where rownum <![CDATA[<= ]]> #{startNum}+15
             )
 		where r > #{startNum}
+	</select> -->
+	
+	<!-- 수정 190807 , 상언 -->
+	<select id="getRecipeList" resultMap="recipeResultMap">
+	select RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, FIRSTDATE,UPDATEDATE, EXCEL from 
+		(
+		    select RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, FIRSTDATE,UPDATEDATE, EXCEL,rownum rn from 
+		    (
+		        select * from (select a.*,b.user_nickname from recipe_basic_tb a inner join user_detail_tb b ON a.user_num = b.user_num order by a.recipe_num desc)
+		            UNION ALL
+		        select * from (select a.*,b.user_nickname from excel_recipe_basic_tb a inner join user_detail_tb b ON a.user_num = b.user_num order by a.recipe_num desc)
+		    ) where rownum <![CDATA[<=]]> #{startNum}+15
+		)
+	where rn <![CDATA[ > ]]> #{startNum}
 	</select>
 	
-	<select id="getSearchedRecipeList" resultMap="recipeResultMap">
+	<!-- <select id="getSearchedRecipeList" resultMap="recipeResultMap">
 		select * 
 		from (select  RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, UPDATEDATE, EXCEL, rownum r
 			from (select * 
@@ -93,7 +111,22 @@
             )
 		where
 			r > #{startNum}
-	</select>
+	</select> -->
+	
+	<!-- 수정 190807 , 상언 -->
+	 <select id="getSearchedRecipeList" resultMap="recipeResultMap">
+	 select RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME, FIRSTDATE,UPDATEDATE, EXCEL from 
+		(
+		    select RECIPE_NUM, RECIPE_TITLE, USER_NUM, USER_NICKNAME,FIRSTDATE, UPDATEDATE, EXCEL,rownum rn from 
+		    (
+		        select * from (select a.*,b.user_nickname from recipe_basic_tb a inner join user_detail_tb b ON a.user_num = b.user_num order by a.recipe_num desc)
+		            UNION ALL
+		        select * from (select a.*,b.user_nickname from excel_recipe_basic_tb a inner join user_detail_tb b ON a.user_num = b.user_num order by a.recipe_num desc)
+		    ) where (recipe_title like '%'||#{keyword}||'%' or recipe_num like '%'||#{keyword}||'%' or user_nickname like '%'||#{keyword}||'%') and rownum <![CDATA[ <= ]]>  #{startNum}+15
+		)
+	 where rn  <![CDATA[ > ]]> #{startNum}
+	 </select>
+	
 	
 	<delete id="deleteRecipeBasic">
 		delete 
@@ -108,6 +141,8 @@
   		</choose>
 		       where recipe_num = #{recipe_num}
 	</delete>
+	
+	
 	
 	<delete id="deleteRecipeCooking">
 		delete 
