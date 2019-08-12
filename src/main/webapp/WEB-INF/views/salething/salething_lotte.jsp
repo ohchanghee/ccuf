@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.ArrayList" %>
+
+<%
+	ArrayList<String> lt_img = (ArrayList<String>)request.getAttribute("lt_img");
+	ArrayList<String> lt_title = (ArrayList<String>)request.getAttribute("lt_title");
+	ArrayList<String> lt_buy = (ArrayList<String>)request.getAttribute("lt_buy");
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,12 +43,12 @@
 		
 		function page_lottemart(){
 			newin=window.open('about:blank');
-			newin.location.href="http://www.lottemart.com/plan/planDetail.do?CategoryID=C20600090001&GroupCd=01";
+			newin.location.href="http://www.lottemart.com/todayhot/todayhotMain.do?SITELOC=AC002&LPOINT_YN=N&CHILD_YN=N&STR_CD=307&LOGIN_YN=N&CUST_GRADE=&tabNo=tab00&sortType=mDesc&freeDeliYn=N&shopDeliYn=N";
 		}
 		
 		function page_emart(){
 			newin=window.open('about:blank');
-			newin.location.href="http://emart.ssg.com/planshop/detail.ssg?dispCmptId=0126818000";
+			newin.location.href="http://emart.ssg.com/sale/main.ssg?Egnb=sale";
 		}
 	</script>
 </head>
@@ -72,7 +79,7 @@
    
       
     <jsp:include page = "../headNfoot/header.jsp"/> 
-		
+    
     
    <div class="subsite-section">
       <div class="container">
@@ -80,7 +87,7 @@
           <div class="col-md-4 col-lg-3 mb-1 text-center">
             <div class="block-heading-1">
             
-              <a href="salething_homeplus.jsp" id="homeplus"><h4 class="mart">홈플러스</h4></a>
+              <a href="salething_homeplus" id="homeplus"><h4 class="mart">홈플러스</h4></a>
               
             </div>
           </div>
@@ -88,14 +95,14 @@
           <div class="col-md-4 col-lg-3 mb-1 text-center">
             <div class="block-heading-1">
             	<a href="#table2">	
-              <a href="salething_lotte.jsp" id="lotte"><h4 class="clickmart">롯데마트</h4></a>
+              <a href="salething_lotte" id="lotte"><h4 class="clickmart">롯데마트</h4></a>
               </a>
             </div>
           </div>
           <div class="col-md-4 col-lg-3 mb-1 text-center">
             <div class="block-heading-1">
             
-              <a href="salething_emart.jsp" id="emart"><h4 class="mart">이마트</h4></a>
+              <a href="salething_emart" id="emart"><h4 class="mart">이마트</h4></a>
               
             </div>
           </div>
@@ -109,57 +116,25 @@
        <div class="container"> 
         <div class="row">
         	<!-- 해당 링크로 이동  -->
+        	
+        <%
+        	for(int i=0; i<4; i++){
+        %>
           <div class="col-lg-3 col-md-4 mb-4 mb-lg-0" data-aos="fade-up" >
             <div class="block-team-member-1 text-center rounded">
             	
-            	<img src="http://image.lottemart.com/lim/static_root/images/prodimg/88095/8809597443328_1_640.jpg"
+            	<img src=<%=lt_img.get(i) %>
 											onclick="page_lottemart()" 
 											alt="Image" class="img-fluid">
                
-              <h3 class="font-size-18 text-center mb-4 mt-4">체리(미국산)_650G(팩)</h3>
+              <h3 class="font-size-18 text-center mb-4 mt-4"><%=lt_title.get(i)%></h3>
               <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2"></span>
-              <p class="px-3 font-size-16 mb-3">할인가격 : 9,900원</p>
+              <p class="px-3 font-size-16 mb-3">할인가격 : <%=lt_buy.get(i) %>원</p>
               
             </div>
           </div>
-            
-            <div class="col-lg-3 col-md-4 mb-4 mb-lg-0" data-aos="fade-up" >
-            <div class="block-team-member-1 text-center rounded">
-            	
-            	<img src="http://image.homeplus.co.kr/UserFiles/Pressimages/95/280/122078995_0.jpg" 
-											onclick="page_homeplus()"
-											alt="Image" class="img-fluid">
-               
-              <h3 class="font-size-18 text-center mb-4 mt-4">자두(국산)_1.2kg(팩)</h3>
-              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2"></span>
-              <p class="px-3 font-size-16 mb-3">할인가격 : 5,900원</p>
-              
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mb-4 mb-lg-0" data-aos="fade-up" >
-            <div class="block-team-member-1 text-center rounded">
-            	
-            	<img src="http://image.homeplus.co.kr/UserFiles/Pressimages/25/280/128364825_0.jpg"
-											onclick="page_homeplus()" alt="Image" class="img-fluid">
-               
-              <h3 class="font-size-18 text-center mb-4 mt-4">감자(국산)_900G(봉)</h3>
-              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2"></span>
-              <p class="px-3 font-size-16 mb-3">할인가격 : 2,480원</p>
-              
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mb-4 mb-lg-0" data-aos="fade-up" >
-            <div class="block-team-member-1 text-center rounded">
-            	
-            	<img src="http://image.homeplus.co.kr/UserFiles/Pressimages/95/280/129341995_0.jpg" 
-											onclick="page_homeplus()" alt="Image" class="img-fluid">
-               
-              <h3 class="font-size-18 text-center mb-4 mt-4">경북청송사과(국산)_4-6입(봉)</h3>
-              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2"></span>
-              <p class="px-3 font-size-16 mb-3">할인가격 : 7,900원</p>
-              
-            </div>
-          </div>  
+         <%} %>
+
       </div>     
      </div>
      </div>
