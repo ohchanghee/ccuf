@@ -213,11 +213,11 @@ label#menu_label, #menu{
 			      <ul class="site-menu main-menu js-clone-nav  d-lg-block" id="nav">
 			       
                   <!-- id이용하여 이동  recipe-section부분은 이동 어디로?? 레시피페이지는 어디서 이동???-->
-                  <li><a href="recipe_index" id="recipe_link" class="nav-link"><img src="img/header/recipe.png" height="40px"/></a></li>
-                  <li><a href="foodvideo_index" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
-                  <li><a href="recipegram_index" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
-                  <li><a href="salething_homeplus" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
-                  <li><a href="change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
+                  <li><a href="/recipe_index" id="recipe_link" class="nav-link"><img src="img/header/recipe.png" height="40px"/></a></li>
+                  <li><a href="/foodvideo_index" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
+                  <li><a href="/recipegram_index" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
+                  <li><a href="/salething_homeplus" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
+                  <li><a href="/change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
                   
                   
 					
