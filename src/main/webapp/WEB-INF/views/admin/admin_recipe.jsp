@@ -200,7 +200,7 @@ if ("${isModified}" != null && "${isModified}" > 1)
 				 			제 목
 				 		</th>
 				 		<th>
-				 			수정날짜
+				 			게시일
 				 		</th>
 				 		<th>
 				 			수 정
@@ -219,10 +219,10 @@ if ("${isModified}" != null && "${isModified}" > 1)
 						 		<td>
 						 			<c:choose>
 							 			<c:when test="${recipeVO.user_num eq 1}">
-							 				${recipeVO.memberVO.user_nickname}
+							 				${recipeVO.user_nickname}
 							 			</c:when>
 							 			<c:otherwise>
-							 				<a href="#">${recipeVO.memberVO.user_nickname}</a>
+							 				<a href="#">${recipeVO.user_nickname}</a>
 							 			</c:otherwise>
 							 		</c:choose>
 						 		</td>
@@ -230,7 +230,7 @@ if ("${isModified}" != null && "${isModified}" > 1)
 						 			<a href="/recipe_detail/${recipeVO.excel }/${recipeVO.recipe_num }">${recipeVO.recipe_title}</a>
 						 		</td>
 						 		<td>
-						 			${recipeVO.updatedate}
+						 			${recipeVO.firstdate}
 						 		</td>
 						 		<td>
 						 		<c:choose>
@@ -374,7 +374,7 @@ function movePage(page){
 }
 
 // 삭제 함수
-function deleteRecipe(excel, recipe_num){
+function deleteRecipe(excel, recipe_num) {
 	if (confirm("정말 삭제하시겠습니까?")==true){    //확인
 		location.href="admin_recipe_delete?excel="+excel+"&recipe_num="+recipe_num+"&page="+"${page}"+"&search="+search;
 	 }else{   //취소

@@ -7,51 +7,17 @@
   <meta charset="UTF-8">
   <title>Timer</title>
   
+  
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
 
-<style>
-#time {
-  display: block;
-  width: 20%;
-  height: 10%;
-  text-align: center;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 40%;
-  right: 1%;
-  font-size:3.0rem;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 6000;
-}@media (max-width:500px){
-	#time{
-		display:none;
-	}
-}
-#time::after {
+      <link rel="stylesheet" href="/resources/css/Timecss.css">
 
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  font-size:3.0rem;
-  line-height: 1%;
- 
-}
-#time:hover {
-  cursor: pointer;
-}
-
-#time.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-</style> 
   
 </head>
 
 <body>
 
-      <div class=" text-center" id="time">
+      <div class="jumbotron text-center">
         
         <!-- Timer -->
 
@@ -77,17 +43,7 @@
 
     <script  src="/resources/js/Timejs.js"></script>
 
-<script>
 
-$(window).scroll(function() {
-    if ($(document).scrollTop() > 1) {
-      $('#time').addClass('show');
-    } else {
-      $('#time').removeClass('show');
-    }
-  });
-
-</script>
 
 
 </body>
