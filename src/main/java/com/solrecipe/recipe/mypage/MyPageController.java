@@ -145,4 +145,8 @@ public class MyPageController {
 		return moreVideos;
 	}
 	
+	@GetMapping("/myPage_recipe")
+	public String myPage_recipe() {
+		return "my/myPage_recipe";
+	}
 }

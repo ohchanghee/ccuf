@@ -135,7 +135,7 @@ div.update_btn
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
 		            <div class="block-heading-1">
 		            
-		              <a href="myPage_index.jsp" id="mypage"><h4 class="clickmy">회원정보</h4></a>
+		              <a href="/myPage_index" id="mypage"><h4 class="clickmy">회원정보</h4></a>
 		              
 		            </div>
 		          </div>
@@ -143,21 +143,21 @@ div.update_btn
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
 		            <div class="block-heading-1">
 		            	
-		              <a href="myPage_recipegram.jsp" id="myrecipegram"><h4 class="my">레시피그램</h4></a>
+		              <a href="/myPage_recipegram" id="myrecipegram"><h4 class="my">레시피그램</h4></a>
 		             
 		            </div>
 		          </div>
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
 		            <div class="block-heading-1">
 		            
-		              <a href="myPage_recipe.jsp" id="myrecipe"><h4 class="my">레시피</h4></a>
+		              <a href="/myPage_recipe" id="myrecipe"><h4 class="my">레시피</h4></a>
 		              
 		            </div>
 		          </div>
 		          <div class="col-md-3 col-lg-2 mb-1 text-center">
 		            <div class="block-heading-1">
 		            
-		              <a href="myPage_mark.jsp" id="mymark"><h4 class="my">찜</h4></a>
+		              <a href="/myPage_mark" id="mymark"><h4 class="my">찜</h4></a>
 		              
 		            </div>
 		          </div>
