@@ -141,4 +141,10 @@
 		where user_username = #{user_username}
 	
 	</select>
+	<select id="chk" resultType="Integer">
+		select ut.user_num from user_detail_tb dt
+		left outer join user_tb ut on dt.user_num = ut.user_num
+		where dt.user_name = #{user_name} and ut.user_username = #{user_username}
+	
+	</select>
 </mapper>

@@ -95,13 +95,18 @@ public class UserServiceImpl implements UserService{
 	public int chkName(String user_username, String user_name) {
 		// TODO Auto-generated method stub
 		Integer user_chk = userMapper.chkUsername(user_username);
-		Integer name_chk = userMapper.chkName(user_name);
-		log.info("user : " + user_chk + " name : " + name_chk);
+		Integer[] name_chk = userMapper.chkName(user_name);
+		log.info("user : " + user_chk + " name : " + name_chk.length);
 		//이메일이 없엉... 
 		if(user_chk == null) {
 			return 1;
-		}else if(name_chk == null) {
+		}else if(name_chk.length == 0) {
 			return -1;
+		}else {
+			Integer chk = userMapper.chk(user_username, user_name);
+			if(chk == null) {
+				return 2;
+			}
 		}
 		return 0;
 	}

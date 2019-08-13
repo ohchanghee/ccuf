@@ -915,33 +915,39 @@ $('#findPW_btn').click(function() {
 
 }); */
 
- span1.onclick = function() {
-   modal.style.display = "none";
-   }
- span2.onclick = function() {
-	 modal_email.style.display = "none";
-}
- span3.onclick = function() {
-	 modal_sign_up.style.display = "none";
-}
- span4.onclick = function() {
-	 modal_findPW.style.display = "none";
-}
- span5.onclick = function() {
-	 modal_newPW.style.display = "none";
-}
- span6.onclick = function() {
-	 modal_kakao_sign_up.style.display = "none";
-} 
-window.onclick = function(event) {
-   if (event.target == modal) {
-      modal.style.display = "none";
-   } else if (event.target == modal_email) {
-	   modal_email.style.display = "none";
-   } else if (event.target == modal_sign_up) {
-	   modal_sign_up.style.display = "none";
-   }
-}
+span1.onclick = function() {
+	   modal.style.display = "none";
+	   }
+	 span2.onclick = function() {
+		 modal_email.style.display = "none";
+	}
+	 span3.onclick = function() {
+		 modal_sign_up.style.display = "none";
+	}
+	 span4.onclick = function() {
+		 modal_kakao_sign_up.style.display = "none";
+	}
+	 span5.onclick = function() {
+		 modal_findPW.style.display = "none";
+	}
+	 span6.onclick = function() {
+		 modal_newPW.style.display = "none";
+	} 
+	window.onclick = function(event) {
+	   if (event.target == modal) {
+	      modal.style.display = "none";
+	   } else if (event.target == modal_email) {
+		   modal_email.style.display = "none";
+	   } else if (event.target == modal_sign_up) {
+		   modal_sign_up.style.display = "none";
+	   } else if (event.target == modal_sign_up) {
+		   modal_findPW.style.display = "none";
+	   } else if (event.target == modal_sign_up) {
+		   modal_newPW.style.display = "none";
+	   } else if (event.target == modal_sign_up) {
+		   modal_kakao_sign_up.style.display = "none";
+	   }
+	}
 
 $("#login_button").on("click", function(e){
 
