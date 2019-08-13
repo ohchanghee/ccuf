@@ -68,14 +68,24 @@ div.update_btn
 
 #pwCheckModal-modal-content {
 	background-color: #fefefe;
-	margin: 1% auto; /* 15% from the top and centered */
+	margin: 15% auto; /* 15% from the top and centered */
 	padding: 1%;
 	border: 1px solid #888;
 	width: 700px; /* Could be more or less, depending on screen size */
-	height: 520px;
+	height: 300px;
 }
 
+#pwCheckBox{
+	background-color: rgb(232, 240, 254);
+	margin-top : 10%;
+	width: 50%;
+	height : 25%;
+	font-size: 25px;
+}
 @media(max-width:500px){
+	#pwCheckModal-modal-content {
+		width:100%;
+	}
 	#leftSide{
 		width:100% !important;
 		padding-left : 0 !important;
