@@ -92,10 +92,10 @@
 					<button class="btn btn-success"  onclick="location.href= recipe_modify">수정하기</button>
 					<button class="btn btn-danger" onclick="location.href = recipe_delete">삭제하기</button>
 					</c:if>
-					<c:if test="${empty isLogin and isDib == 'dib'}">
+					<c:if test="${not empty isLogin and isDib == 'dib'}">
 						<button class="btn btn-primary" id="recipe_dibBtn">찜해제</button>
 					</c:if>
-					<c:if test="${empty isLogin and isDib == 'not_dib'}">
+					<c:if test="${not empty isLogin and isDib == 'not_dib'}">
 						<button class="btn btn-primary" id="recipe_dibBtn">찜하기</button>
 					</c:if>
 					

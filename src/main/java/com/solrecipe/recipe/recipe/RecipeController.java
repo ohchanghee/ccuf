@@ -146,30 +146,33 @@ public class RecipeController {
 		
 		Recipe_basicVO basic = service.getRecipeDetail(recipe_num, excel);
 		
+		System.out.println(principal.getName());
 		//로그인이 된 상태면
 		if(principal != null) { 
 			String currentUserNickName = service.getUserNickName(principal.getName());
+			model.addAttribute("isLogin","yes");
+			String dib_result="not_dib";
+			int user_num = service.getUserNumById(principal.getName());
+			List<Recipe_MarkVO> mark_list = service.selectUserMarkRecipe(user_num);
 			
-			if(currentUserNickName!=null && currentUserNickName.equals(basic.getUser_nickname())) {
-				
-				model.addAttribute("isWriter","yes");
-				int user_num = service.getUserNumById(principal.getName());
-				List<Recipe_MarkVO> mark_list = service.selectUserMarkRecipe(user_num);
-				
-				String dib_result = "not_dib";
-				for(Recipe_MarkVO vo : mark_list) {
-					if(vo.getRecipe_num() == recipe_num.intValue()) {
-						dib_result="dib";
-						break;
-					}
+			for(Recipe_MarkVO vo : mark_list) {
+				if(vo.getRecipe_num() == recipe_num.intValue()) {
+					dib_result="dib";
+					break;
 				}
-				
-				model.addAttribute("isDib",dib_result);
 			}
 			
-		} else {
-			model.addAttribute("isLogin","no");
-		}
+			model.addAttribute("isDib",dib_result);
+			
+			//해당 글을 쓴 유저면
+			if(currentUserNickName!=null && currentUserNickName.equals(basic.getUser_nickname())) {
+				model.addAttribute("isWriter","yes");
+			}
+			
+		} /*
+			 * else { model.addAttribute("isLogin","no"); }
+			 */
+		
 		
 		System.out.println(principal.toString());
 		List<Recipe_CookingVO> cooking_list = service.getCookingDetail(recipe_num, excel);
