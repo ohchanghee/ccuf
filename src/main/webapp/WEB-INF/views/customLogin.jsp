@@ -64,7 +64,7 @@
 					
 					<!-- 카카오톡 로그인창으로 이동 -->
 					
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=883e28a352b418b05e174ad11fdd3a07&redirect_uri=http://localhost/kakao_login&response_type=code">
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=883e28a352b418b05e174ad11fdd3a07&redirect_uri=http://localhost:8080/kakao_login&response_type=code">
 						<img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="250">
 					</a>
 					<!-- 네이버 로그인 창으로 이동 -->
