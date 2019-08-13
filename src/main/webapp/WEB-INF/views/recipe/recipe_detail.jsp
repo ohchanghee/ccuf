@@ -89,8 +89,8 @@
 				<div class="col text-center">
 				
 					<c:if test="${not empty isWriter}">
-					<button class="btn btn-primary"  onclick="location.href= recipe_modify">수정하기</button>
-					<button class="btn btn-primary" onclick="location.href = recipe_delete">삭제하기</button>
+					<button class="btn btn-success"  onclick="location.href= recipe_modify">수정하기</button>
+					<button class="btn btn-danger" onclick="location.href = recipe_delete">삭제하기</button>
 					</c:if>
 					<c:if test="${empty isLogin and isDib == 'dib'}">
 						<button class="btn btn-primary" id="recipe_dibBtn">찜해제</button>
@@ -200,6 +200,9 @@
 			});
 		})
 	
+		$('.site-logo span').attr('style','color:#FFC69F !important');
+		
+		
 	</script>
 	
 	<%@include file="../headNfoot/footer.jsp"%>

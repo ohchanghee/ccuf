@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.solrecipe.recipe.recipe.Recipe_basicVO;
 import com.solrecipe.recipe.recipegram.domain.HashVO;
 import com.solrecipe.recipe.recipegram.domain.ImgVO;
 import com.solrecipe.recipe.recipegram.domain.RecipegramVO;
@@ -60,4 +61,16 @@ public class MyPageServiceImpl implements MyPageService{
 		String enpw = myPageMapper.getENPW(user_num);
 		return pwencoder.matches(user_pw, enpw);
 	}
+
+	@Override
+	public ArrayList<Recipe_basicVO> getMyRecipe(int user_num) {
+		return myPageMapper.getMyRecipe(user_num);
+	}
+
+	@Override
+	public int getUserNumById(String user_id) {
+		return myPageMapper.getUserNumById(user_id);
+	}
+	
+	
 }

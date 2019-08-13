@@ -10,7 +10,7 @@
   
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
 
-      <link rel="stylesheet" href="/resources/css/Timecss.css">
+      <!-- <link rel="stylesheet" href="/resources/css/Timecss.css"> -->
 
   
 </head>

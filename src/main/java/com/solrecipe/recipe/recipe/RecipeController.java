@@ -199,7 +199,11 @@ public class RecipeController {
 	
 	
 	@GetMapping("/recipe_modify/{excel}/{recipe_num}")
-	public String recipe_update(@PathVariable("excel") Integer excel, @PathVariable("recipe_num") Long recipe_num, Model model ,RedirectAttributes rttr, Principal principal) {
+	public String recipe_update(@PathVariable("excel") Integer excel, @PathVariable("recipe_num") Long recipe_num, Model model
+								,@RequestParam(value = "from", required = false) String from
+								,RedirectAttributes rttr, Principal principal) {
+		
+		System.out.println(from);
 		
 		Recipe_basicVO basic = service.getRecipeDetail(recipe_num, excel);
 		List<Recipe_CookingVO> cooking_list = service.getCookingDetail(recipe_num, excel);
@@ -210,7 +214,11 @@ public class RecipeController {
 		model.addAttribute("cooking_list",cooking_list);
 		
 		
-		return "recipe/recipe_modify";
+		if(from != null && from.equals("myPage_recipe")) {
+			return "my/myRecipe_modify";
+		} else {
+			return "recipe/recipe_modify";
+		}
 		
 	}
 	

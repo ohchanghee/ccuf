@@ -3,6 +3,9 @@ package com.solrecipe.recipe.mypage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.solrecipe.recipe.recipe.Recipe_basicVO;
 import com.solrecipe.recipe.recipegram.domain.ImgVO;
 import com.solrecipe.recipe.recipegram.domain.RecipegramVO;
 import com.solrecipe.recipe.recipegram.domain.Recipegram_likeVO;
@@ -20,5 +23,6 @@ public interface MyPageService {
 
 	boolean checkPW(String user_pw, int user_num);
 	
-
+	ArrayList<Recipe_basicVO> getMyRecipe(int user_num);
+	int getUserNumById(String user_id);
 }
