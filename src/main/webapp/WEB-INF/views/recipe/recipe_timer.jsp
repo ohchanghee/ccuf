@@ -75,7 +75,7 @@
   
   
 
-    <script  src="resources/js/Timejs.js"></script>
+    <script  src="/resources/js/Timejs.js"></script>
 
 <script>
 

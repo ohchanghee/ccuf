@@ -35,10 +35,6 @@
 	var pathname = location['pathname'];
 	var excel = pathname.split("/")[2];
 	var recipe_num = pathname.split("/")[3];
-	/* var isDib = '${isDib}';
-	if(isDib === 'dib') {
-		document.getElementById('recipe_dibBtn').innerText = '찜 해제';
-	} */
 	
 	<sec:authorize access="isAuthenticated()">
 	var user_num = '<sec:authentication property="principal.member.user_num"/>'; 
@@ -125,7 +121,6 @@
 	<aside class="sidebar" >
          <jsp:include page="recipe_timer.jsp"/>
     </aside> 
-
 	
 
 	<script>

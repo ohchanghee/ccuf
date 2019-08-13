@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+.content {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-right: 25vw;
+}
+
+.header,
+.footer {
+  background: Salmon;
+  padding: 2rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+.header .logo,
+.footer .logo {
+  color: Ivory;
+  -webkit-transform: skewX(-10deg);
+          transform: skewX(-10deg);
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  bottom: 0;
+}
+
+.section {
+  color: DimGray;
+  margin: 2rem 2rem 0;
+}
+
+.sidebar {
+  /* width: 20vw; */
+  background: White; 
+  color: White;
+  position: fixed;
+  top: 30rem;
+  right: 0;
+  bottom: 30rem;
+  padding: .5rem;
+}
+.sidebar h2 {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+.sidebar ul {
+  height: calc(100% - 5rem);
+  overflow-y: auto;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar ul li a {
+  display: block;
+  color: DimGray;
+  background: White;
+  text-decoration: none;
+  padding: .5rem;
+  border-bottom: 1px dotted Tomato;
+  transition: color .2s;
+}
+.sidebar ul li a:hover, .sidebar ul li a:focus, .sidebar ul li a:active {
+  color: Tomato;
+  outline: 0;
+}
