@@ -28,8 +28,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int insertMember(MemberVO memberVO) {
-		// TODO Auto-generated method stub
-		return userMapper.insertMember(memberVO);
+		userMapper.insertMember(memberVO);
+		// 프로필_tb 에 추가.
+		memberVO.setUser_intro("");
+		memberVO.setUser_img("user-upload/base_user.png");
+		memberVO.setIsopen(0);
+		return userMapper.insertProfile(memberVO);
 	}
 
 	@Override
