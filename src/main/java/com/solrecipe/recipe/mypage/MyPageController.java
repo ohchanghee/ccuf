@@ -161,7 +161,15 @@ public class MyPageController {
 		
 		int user_num = myPageService.getUserNumById(principal.getName());
 		ArrayList<Recipe_basicVO> recipeList = myPageService.getMyRecipe(user_num); 
-		recipeList.forEach(s->System.out.println(s));//디버깅용
+		recipeList.forEach(s->{
+			System.out.println(s);
+			String main = s.getRecipe_food_main();
+			s.setRecipe_food_main(main.substring(0, main.lastIndexOf(",")));
+			String suv = s.getRecipe_food_suv();
+			s.setRecipe_food_suv(suv.substring(0,suv.lastIndexOf(",")));
+			
+		});//디버깅용
+		
 		System.out.println("user_num:"+user_num);
 		
 		model.addAttribute("recipeList",recipeList);
