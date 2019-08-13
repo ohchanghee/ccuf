@@ -21,7 +21,7 @@
         
         <!-- Timer -->
 
-        <div class="timer">
+        <div class="timer" style="color:black;">
             <span class="minutes">00</span> : <span class="seconds">00</span>
         </div>        
 

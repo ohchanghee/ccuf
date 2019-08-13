@@ -105,15 +105,18 @@
 		
 		<br>
 		<div class="row mb-2" style="clear: both;">
-			<div class="col-sm-11" contentEditable="true" style="padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border-color: #eaedef; border-style: solid; FONT-FAMILY: 돋움; font-weight: bold; table-layout: fixed;">
-				<c:forEach var="item" items="${cooking_list}">
+			<div class="col-sm-11 text-center" contentEditable="true" style="padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border-color: #eaedef; border-style: solid; FONT-FAMILY: 돋움; font-weight: bold; table-layout: fixed;">
+				<c:forEach var="item" items="${cooking_list}" varStatus="index">
 					<br>
 					<c:if test="${item.cooking_img != '' || item.cooking_img != null}">
-						<img src="${item.cooking_img}" />
+						<img src="${item.cooking_img}" style="width: 50%;"/>
 						<br>
 					</c:if>
 					${item.cooking_num}&nbsp;${item.cooking_content}
 					<br>
+					<c:if test="${!index.last}">
+					<hr>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>
