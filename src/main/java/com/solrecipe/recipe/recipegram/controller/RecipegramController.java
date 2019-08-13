@@ -67,6 +67,12 @@ public class RecipegramController {
 	@Autowired
 	CommonService commonService;
 	
+	@RequestMapping("/recipegram_write")
+	   public String recipegram_write() {
+	      return "recipegram/recipegram_write";
+	 }
+	
+	
 	//이미지 indigators
 		@RequestMapping(value="/img_list", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
 		@ResponseBody
