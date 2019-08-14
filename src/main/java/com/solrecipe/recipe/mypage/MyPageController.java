@@ -28,6 +28,7 @@ import com.solrecipe.recipe.admin.AdminController;
 import com.solrecipe.recipe.foodvideo.FoodVideoServiceImpl;
 import com.solrecipe.recipe.recipe.RecipeService;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
+import com.solrecipe.recipe.recipe.Recipe_MarkVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 import com.solrecipe.recipe.user.domain.MemberVO;
 
@@ -42,6 +43,10 @@ public class MyPageController {
 	MyPageServiceImpl myPageService;
 	@Autowired
 	FoodVideoServiceImpl foodVideoService;
+	
+	//190814 추가
+	@Autowired
+	RecipeService recipeService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private PasswordEncoder pwencoder;
@@ -124,12 +129,21 @@ public class MyPageController {
 		//user_num을 가져옴
 		String username = principal.getName();
 		MemberVO myVO = commonService.getMyVO(username);
+		System.out.println("myVO: "+myVO);
 		
 		ArrayList<MyVideoVO> getMarkedVideos = myPageService.getMarkedVideos(myVO.getUser_num());
 		model.addAttribute("myVideoVO", getMarkedVideos);
+		
+		
+		// 190814 추가 - 레시피를 처음 불러올 때는 위의 비디오와 마찬가지로 6개를 가져온다, 
+		//추가적인 레시피 찜은 AJAX를 통해서 가져오고 비디오 찜과 마찬가지로 4개씩 추가로 불러온다.
+		ArrayList<Recipe_basicVO> getMarkedRecipes = myPageService.getMarkedRecipes(myVO.getUser_num());
+		model.addAttribute("myRecipeVO", getMarkedRecipes);
+		
 		return ("/my/myPage_mark");
 	}
 		
+	
 	@GetMapping("/deleteMarkedVideo")
 	public String deleteMarkedVideo(Principal principal, int video_num) {
 		
@@ -138,6 +152,18 @@ public class MyPageController {
 		MemberVO myVO = commonService.getMyVO(username);//myVO는 user_num이랑 user_nickname 을 들고 있다.
 		
 		int result = foodVideoService.unmarking(myVO.getUser_num(), video_num);
+		return "redirect:/myPage_mark";
+	}
+	
+	
+	// 190814 추가 
+	@GetMapping("/deleteMarkRecipe")
+	public String deleteMarkRecipe(Recipe_MarkVO markedRecipe,Principal principal) {
+//		String username = principal.getName();
+//		MemberVO myVO = commonService.getMyVO(username);//myVO는 user_num이랑 user_nickname 을 들고 있다.
+//		markedRecipe.setUser_num(myVO.getUser_num());
+		recipeService.deleteMarkRecipe(markedRecipe);
+		
 		return "redirect:/myPage_mark";
 	}
 	
@@ -153,6 +179,21 @@ public class MyPageController {
 		ArrayList<MyVideoVO> moreVideos =myPageService.getMoreVideos(myVO.getUser_num(), startNum);
 		return moreVideos;
 	}
+	
+	
+	// 190814 추가 , 무한스크롤
+	@RequestMapping(method=RequestMethod.GET, value="/getMoreRecipes", produces ="application/json;charset=UTF-8")
+	@ResponseBody
+	public ArrayList<Recipe_basicVO> getMoreRecipes(Principal principal, int startNum) {
+		//user_num을 가져옴
+		String username = principal.getName();
+		MemberVO myVO = commonService.getMyVO(username);//myVO는 user_num이랑 user_nickname 을 들고 있다.
+		
+		ArrayList<Recipe_basicVO> moreRecipe = myPageService.getMoreRecipes(myVO.getUser_num(), startNum);
+		return moreRecipe;
+		
+	}
+	
 	
 	
 	//190813 수정 	
