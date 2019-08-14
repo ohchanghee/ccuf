@@ -194,15 +194,16 @@ body{
 					</div>
 					
 					<div class="col-md-12 recipeBody">
-						<% for(int i=0; i<5; i++){  %>
+						<c:forEach var="vo" items="${myRecipeVO}">
 						<div class="each">
-							<span class="deleteBtn"><i class="fas fa-times"></i></span>
+							<span class="deleteBtn" onclick="deleteMarkedRecipe(${vo.user_num},${vo.recipe_num},${vo.excel});"><i class="fas fa-times"></i></span>
 							<div class="rWrapper">
-								<img src="../img/main/mainimg4">
+								<img src="${vo.recipe_img}" style="width:100%;height:100%">
 							</div>
-							<h5><%=i %> 번째 블럭</h5>
+							<h5>${vo.recipe_title} &nbsp; &nbsp;<a href="/recipe_detail/${vo.excel}/${vo.recipe_num}">- 보러가기</a></h5>
+							<div class="bottom text-right">찜한 날짜 : ${vo.firstdate }</div>
 						</div>
-						<%} %>
+						</c:forEach> 
 					</div>
 				</div>
 				
@@ -215,8 +216,8 @@ body{
 					
 					<div class="col-md-12 videoBody">
 						<c:forEach var="vo" items="${myVideoVO}">
-							<div class="each">		 						<!-- 에러 무시 -->
-								<span class="deleteBtn" onClick=deleteMarkedVideo(${vo.video_num})><i class="fas fa-times"></i></span>
+							<div class="each">		 						<!-- 에러 ''로 감싸서 없앰 -->
+								<span class="deleteBtn" onClick='deleteMarkedVideo(${vo.video_num})'><i class="fas fa-times"></i></span>
 									<div class="vWrapper">
 										<iframe src="https://www.youtube.com/embed/${vo.video_id }" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 									</div>
@@ -244,6 +245,7 @@ $(".mainRow").scroll(function() {
 	var maxHeight =  mainRow.scrollHeight;
 	var currentScroll = mainRow.clientHeight + mainRow.scrollTop;
 	if (maxHeight <= currentScroll) {
+		console.log('wow');
 		$.ajax({
 			// 비디오 영상 호출
 			type:"GET",
@@ -279,7 +281,45 @@ $(".mainRow").scroll(function() {
 						+"</div>"
 					);
 	             });
-			}
+				 
+				 //레시피
+				 $.ajax({
+						type:"GET",
+						async:false,
+						url:"/getMoreRecipes",
+						data:{"startNum":startNum},
+						dataType:"json",
+						beforeSend: function(xhr) {
+			                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			            },
+						success: function(data){
+							if(data.length == 0) {return}
+							$.each(data, function(index, item){
+								console.log(item);
+								
+								let s = new Date(item['firstdate']);
+								
+								let date = s.toLocaleDateString().substring(0,s.toLocaleDateString().length-1).replace(/\./gi,'-').replace(/\s/gi,'');
+								
+								$(".recipeBody").append(
+									'<div class="each">'+
+										'<span class="deleteBtn" onclick="deleteMarkedRecipe('+item["user_num"]+','+item["recipe_num"]+','+item["excel"]+');"><i class="fas fa-times"></i></span>'+
+										'<div class="rWrapper">'+
+											'<img src="'+item["recipe_img"]+'" style="width:100%;height:100%">'+
+										'</div>'+
+										'<h5>'+item["recipe_title"]+' &nbsp; &nbsp;<a href="/recipe_detail/'+item["excel"]+'/'+item["excel"]+'">- 보러가기</a></h5>'+
+										'<div class="bottom text-right">찜한 날짜 : '+date+' </div>'+		
+									'</div>'
+								); 
+				             }); 
+						},
+						complete : function() {
+							startNum += 4;
+					    }
+					});
+				 
+			},
+			
 		});
 		// 레시피 호출
 		/* $.ajax({
@@ -303,14 +343,26 @@ $(".mainRow").scroll(function() {
 	             });
 			}
 		}); */
+		
+		//수정: 레시피를 추가하는 ajax의 complete 콜백 메서드에 집어 넣었다.
 		// 4개씩 불러냄.
-		startNum += 4;
+		//startNum += 4;
 	};
 });
 
-function deleteMarkedVideo(video_num){
+function deleteMarkedVideo(recipe_num){
 	if (confirm("찜 목록에서 제거하시겠습니까?")==true){    //확인
 		location.href="/deleteMarkedVideo?video_num="+video_num;
+	 }else{   //취소
+		return false;
+	 }
+}
+
+
+// 190814 추가 - 레시피 찜 제거
+function deleteMarkedRecipe(user_num,recipe_num,excel){
+	if (confirm("찜 목록에서 제거하시겠습니까?")==true){    //확인
+		location.href="/deleteMarkRecipe?recipe_num="+recipe_num+"&excel="+excel+"&user_num="+user_num;
 	 }else{   //취소
 		return false;
 	 }
