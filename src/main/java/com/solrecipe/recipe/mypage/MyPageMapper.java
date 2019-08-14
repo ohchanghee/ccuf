@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
-import com.solrecipe.recipe.user.domain.MemberVO;
 
 public interface MyPageMapper {
 	ArrayList<MyVideoVO>getMarkedVideos(@Param("userNum")int user_num);
@@ -19,4 +18,8 @@ public interface MyPageMapper {
 	// 190813 myPage_recipe에 쓰일 것들.
 	ArrayList<Recipe_basicVO> getMyRecipe(@Param("user_num")int user_num);
 	int getUserNumById(@Param("user_id")String user_id);
+	
+	//190814 myPage_mark 에서 recipe 찜한 것들 불러 모으기 위한 쿼리와 메서드
+	ArrayList<Recipe_basicVO> getMarkedRecipes(@Param("userNum")int user_num);
+	ArrayList<Recipe_basicVO> getMoreRecipes(@Param("userNum")int user_num, @Param("startNum")int startNum);
 }

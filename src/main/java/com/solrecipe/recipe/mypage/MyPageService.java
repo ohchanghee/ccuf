@@ -25,4 +25,9 @@ public interface MyPageService {
 	
 	ArrayList<Recipe_basicVO> getMyRecipe(int user_num);
 	int getUserNumById(String user_id);
+	
+	//상언 - 190814 추가 - "/myPage_mark" 관련 
+	ArrayList<Recipe_basicVO> getMarkedRecipes(int user_num);
+	ArrayList<Recipe_basicVO> getMoreRecipes(int user_num, int startNum);
+	
 }

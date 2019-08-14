@@ -46,6 +46,39 @@
 		where r > #{startNum}
 	</select>
 	
+	
+	
+	<!-- 190814 수정 , myRecipe_mark 에서 찜한 레시피를 가져오는 sql -->
+	<!-- 찜한 날짜순으로 가져온다. -->
+	<select id="getMarkedRecipes" resultMap="basic_info">
+	select b.*,rownum rn from 
+	(select * from markrecipe_tb where user_num = #{userNum} order by firstdate desc) a 
+	inner join 
+	( select * from 
+	    ( select * from  recipe_basic_tb)
+	     UNION ALL
+	    ( select * from excel_recipe_basic_tb)
+	) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel) where rownum <![CDATA[<= ]]> 6
+	</select>
+	
+	
+	<!-- 190814 수정 , myRecipe_mark 에서 찜한 레시피를 추가적으로 가져오는 sql -->
+	<select id="getMoreRecipes" resultMap="basic_info">
+	
+	select * from (
+		select b.*,rownum rn from 
+		(select * from markrecipe_tb where user_num = #{userNum} order by firstdate desc) a 
+		inner join 
+		( select * from 
+		    ( select * from  recipe_basic_tb)
+		     UNION ALL
+		    ( select * from excel_recipe_basic_tb)
+		) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel) where rownum <![CDATA[ <= ]]>  #{startNum}+4
+	) where rn > #{startNum}
+	
+	</select>
+	
+	
 	<update id="modifyPW">
 		update user_tb set user_pw=#{userPW} where user_num = #{userNum}
 	</update>

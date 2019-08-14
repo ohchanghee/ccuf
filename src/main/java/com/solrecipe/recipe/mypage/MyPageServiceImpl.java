@@ -71,6 +71,19 @@ public class MyPageServiceImpl implements MyPageService{
 	public int getUserNumById(String user_id) {
 		return myPageMapper.getUserNumById(user_id);
 	}
+
+	//190814 추가.
+	@Override
+	public ArrayList<Recipe_basicVO> getMarkedRecipes(int user_num) {
+		return myPageMapper.getMarkedRecipes(user_num);
+	}
+
+	@Override
+	public ArrayList<Recipe_basicVO> getMoreRecipes(int user_num, int startNum) {
+		return myPageMapper.getMoreRecipes(user_num, startNum);
+	}
+	
+	
 	
 	
 }
