@@ -200,7 +200,7 @@ label#menu_label, #menu{
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="main" class="text-black"><span class="text-primary">자취방 레시피</span></a>
+              <a href="/main" class="text-black"><span class="text-primary">자취방 레시피</span></a>
             </div>
 				
 			  <!-- main 메뉴 아이콘  -->            
