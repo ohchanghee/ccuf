@@ -146,7 +146,6 @@ public class RecipeController {
 		
 		Recipe_basicVO basic = service.getRecipeDetail(recipe_num, excel);
 		
-		System.out.println(principal.getName());
 		//로그인이 된 상태면
 		if(principal != null) { 
 			String currentUserNickName = service.getUserNickName(principal.getName());
