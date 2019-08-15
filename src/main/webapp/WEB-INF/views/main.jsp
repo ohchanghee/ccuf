@@ -378,6 +378,29 @@ label#menu_label, #menu{
 	width:100%;
 }
 
+/* 모달 스크롤바 다 지워버림 */
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* 메시지함 관련 */
+.messageC{
+	letter-spacing: 1px;
+    word-spacing: 3px;
+    line-heigh: 35px;
+}
+@media (max-width:500px){
+	#message_tb{
+		font-size:5px;
+	}
+	#msg_write{
+		font-size:1rem;
+	}
+	.messageHeads{
+		font-size:1rem !important;
+	}
+}
+
 </style>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
