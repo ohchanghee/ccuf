@@ -59,6 +59,9 @@
 				on mem_dt.user_num = mem.user_num
 				left outer join user_blackList_tb bl on mem_dt.user_num = bl.user_num)
 			</when>
+			<when test='whichPage.equals("message")'>
+				message_tb
+			</when>
 		</choose>
 	</select>
 
