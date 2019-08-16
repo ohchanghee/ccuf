@@ -95,11 +95,11 @@ function insRow() {
   var frmTag = "<input class='cooking_txt' type='text' name='add_txt' placeholder='조리순서를 입력하세요 ...' >";
   
   var frmTag1 = "<div id='add_img"+count+"' style='height:150%; border-color:#65737e; text-align:center'>";
-  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
+  frmTag1 += '<img src = "/img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
   frmTag1 += "</div>";
   
   var frmTag2 = "<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow();' src='../img/admin/admin_delete.png'/>";
-  var frmTag3 = '<input type="file" id="img'+count+'" style="display:none;"  onchange="cooking_getThumbnailPrivew(this,$(\'#add_img'+count+'\'))">';
+  var frmTag3 = '<input type="file" id="img'+count+'" name="img" style="display:none;"  onchange="cooking_getThumbnailPrivew(this,$(\'#add_img'+count+'\'))">';
 
   
   oCell.innerHTML = frmTag;

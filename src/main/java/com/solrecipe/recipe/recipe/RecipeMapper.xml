@@ -106,7 +106,7 @@
 		<selectKey keyProperty="recipe_num" resultType="long" order="BEFORE">
 			select RECIPENUM_SEQ.nextval from dual			
 		</selectKey>
-		insert into recipe_basic_tb 
+		insert into recipe_basic_tb(recipe_num,recipe_title,recipe_img,firstdate,updatedate,recipe_food_main,recipe_food_suv,excel,user_num) 
 		VALUES(#{recipe_num},#{recipe_title},
 			SUBSTR(#{recipe_img},1,(INSTR(#{recipe_img},'.',-1)-1))||#{recipe_num}||'.'||
 			SUBSTR(#{recipe_img},(INSTR(#{recipe_img},'.',-1)+1))

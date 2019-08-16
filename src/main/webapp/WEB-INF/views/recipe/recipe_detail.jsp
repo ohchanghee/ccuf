@@ -200,7 +200,7 @@
 						${item.cooking_num}.&nbsp;${item.cooking_content}
 					</div>
 					
-					<c:if test="${item.cooking_img != '' || item.cooking_img != null}">
+					<c:if test="${ item.cooking_img != null}">
 					
 						<img src="${item.cooking_img}" class="col-md-5"style="width: 100%; float:right; padding-top:0;"/>
 					
