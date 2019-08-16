@@ -3,13 +3,13 @@ package com.solrecipe.recipe.admin;
 public class Paging {
 	
 	// 페이징
-	int listCnt;
-	int pageCnt;
-	int page;
-	int totalPosts;
-	int totalPage;
-	int startPage;
-	int endPage;
+	public int listCnt;
+	public int pageCnt;
+	public int page;
+	public int totalPosts;
+	public int totalPage;
+	public int startPage;
+	public int endPage;
 	
 	// 한 페이지 게시글개수 , 한번에 보여질 페이지 개수, 현재 페이지, 총 게시글 개수    
 	public Paging(int listCnt, int pageCnt, int page, int totalPosts) {
