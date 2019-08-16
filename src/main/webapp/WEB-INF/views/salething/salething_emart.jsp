@@ -111,7 +111,7 @@ ArrayList<String> em_buy = (ArrayList<String>)request.getAttribute("em_buy");
        
       
          <!-- 이마트 --> 
-     <div class="subsite-section mb-5 bg-light" id="emart-section">
+     <div class="subsite-section mb-5 bg-light" id="emart-section" style="cursor:pointer;">
        <div class="container"> 
         <div class="row">
         	<!-- 해당 링크로 이동  -->

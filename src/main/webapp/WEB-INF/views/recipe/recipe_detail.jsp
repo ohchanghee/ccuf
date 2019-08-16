@@ -68,6 +68,10 @@
 		
 		
 	}
+	
+#recipe_dibBtn{
+	cursor:pointer;
+}
 	</style>
 <title>Home</title>
 </head>

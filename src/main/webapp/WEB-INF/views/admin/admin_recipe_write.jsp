@@ -49,7 +49,7 @@ function getThumbnailPrivew(html, $target) {
 		alert("이미지 파일의 확장자는 \"zip,jpg,jpeg,png\"만 가능합니다");
 		return;
 	}
-	
+	var name = (html.files[0]).name;
 	$('[name~="recipe_img"]').val(location.origin+"/Recipe_IMG/Main_IMG/."+name.split(".")[1]);
 	
 	
@@ -95,7 +95,7 @@ function insRow() {
   var frmTag = "<input class='cooking_txt' type='text' name='add_txt' placeholder='조리순서를 입력하세요 ...' >";
   
   var frmTag1 = "<div id='add_img"+count+"' style='height:150%; border-color:#65737e; text-align:center'>";
-  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'' + count+'\').click();\">';
+  frmTag1 += '<img src = "../img/admin/admin_plus.png" id="add_img'+count+'"' +' style="width:4.5rem; border:none; padding-top:60%;" '+'onclick=\"document.getElementById(\'img' + count+'\').click();\">';
   frmTag1 += "</div>";
   
   var frmTag2 = "<input class='cooking_btn' id='close' type=IMAGE value='삭제' onClick='removeRow();' src='../img/admin/admin_delete.png'/>";

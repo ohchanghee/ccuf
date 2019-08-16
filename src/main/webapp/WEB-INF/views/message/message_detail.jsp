@@ -48,7 +48,7 @@
 					<input type="hidden" id="message_num" name="message_num">
 					 <fieldset>
 						<div class="form-group mt-5">
-							<textarea rows="7" class="form-control mb-2 messageC" id="send" name = "recevMessage_content" style="height:100px; resize: none; max-height:200px;"placeholder="답장하기 .. "onkeyup="recvTextHeight();"></textarea>
+							<textarea rows="7" class="form-control mb-2 messageC" id="send" name = "recevMessage_content" style="height:100px; resize: none; max-height:200px; border: 1px solid;"placeholder="답장하기 .. "onkeyup="recvTextHeight();"></textarea>
 							<Button type="button" id="send_button" class="btn btn-success btn-block" style="float:right;">보내기</Button> 
 						</div>
 					</fieldset> 

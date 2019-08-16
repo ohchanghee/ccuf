@@ -451,14 +451,14 @@ label{
 				<div class="col-md-4 col-lg-3 mb-1 text-center">
 					<div class="block-heading-1">
 
-						<a href="/change_index" id="change"><h4 class="clickmy">물물교환</h4></a>
+						<a href="/change_index" id="change"><h4 class="my">물물교환</h4></a>
 
 					</div>
 				</div>
 
 				<div class="col-md-4 col-lg-3 mb-1 text-center">
 					<div class="block-heading-1">
-						<a href="/change_index?select=1" id="with"><h4 class="my">공동구매</h4></a>
+						<a href="/change_index?select=1" id="with"><h4 class="clickmy">공동구매</h4></a>
 					</div>
 				</div>
 			</div>
@@ -502,7 +502,7 @@ label{
 				<div class="row mb-2">
 
 					<div class="col-6 text-left"
-						style="font-size: 20px; color: #FFC69F;">- 물물교환 -</div>
+						style="font-size: 20px; color: #FFC69F;">- 공동구매 -</div>
 					<div class="col-6 text-right"
 						style="font-size: 20px; color: #FFC69F;">
 						<span class="writing" style="cursor: default">글쓰기</span>

@@ -23,6 +23,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 
+@Service("recipegramService")
 public class RecipegramServiceImpl implements RecipegramService{
 
 	@Autowired

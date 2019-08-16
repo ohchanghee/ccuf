@@ -497,7 +497,7 @@ label#menu_label, #menu{
                   <li><a href="#foodvideo-section" id="video_link" class="nav-link"><img src="img/header/foodvideo.png" height="40px"/></a></li>
                   <li><a href="#recipegram-section" id="recipegram_link" class="nav-link"><img src="img/header/recipegram.png" height="40px"/></a></li>
                   <li><a href="#salething-section" id="sale_link" class="nav-link"><img src="img/header/salething.png" height="40px"/></a></li>
-                  <li><a href="chat/change_chat.jsp" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
+                  <li><a href="/change_index" id="chat_link" class="nav-link"><img src="img/header/chat.png" height="40px"/></a></li>
                   
                   
 					

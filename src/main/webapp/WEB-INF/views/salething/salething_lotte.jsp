@@ -112,7 +112,7 @@
        
       
        <!-- 롯데마트 --> 
-     <div class="subsite-section mb-5 bg-light" id="lotte-section">
+     <div class="subsite-section mb-5 bg-light" id="lotte-section" style="cursor:pointer;">
        <div class="container"> 
         <div class="row">
         	<!-- 해당 링크로 이동  -->
