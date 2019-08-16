@@ -181,7 +181,7 @@ var playlistIds = x.split(',');
 				</div>	
 				
 				<!-- 좌측 하단 -->
-				<div class="col-md-12 vContent">
+				<div class="col-md-12 vContent" style="letter-spacing: 1px; word-spacing: 3px;">
 				<br><br>
 					<h1 style="color:#FFC69F;"><%=fvVO.getVideo_title() %></h1> &nbsp; &nbsp; 
 					<%if(isMarked == 0){ %>
