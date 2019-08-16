@@ -51,14 +51,17 @@
 	<!-- 190814 수정 , myRecipe_mark 에서 찜한 레시피를 가져오는 sql -->
 	<!-- 찜한 날짜순으로 가져온다. --><!-- ※ firstdate는 찜한 날짜를, user_num은 레시피를 찜한 사람의 user_num이다! -->
 	<select id="getMarkedRecipes" resultMap="basic_info">
-	select a.firstdate,b.recipe_num,b.recipe_title,b.recipe_img,b.recipe_food_main,b.recipe_food_suv,b.excel,a.user_num,rownum rn from 
-	(select * from markrecipe_tb where user_num = #{userNum} order by firstdate desc) a 
-	inner join 
-	( select * from 
-	    ( select * from  recipe_basic_tb)
-	     UNION ALL
-	    ( select * from excel_recipe_basic_tb)
-	) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel) where rownum <![CDATA[<= ]]> 6
+	select recipe_num,recipe_title,recipe_img,recipe_food_main,recipe_food_suv,excel,user_num,rownum rn from (
+    select a.firstdate,b.recipe_num,b.recipe_title,b.recipe_img,b.recipe_food_main,b.recipe_food_suv,b.excel,a.user_num from(
+        (select * from markrecipe_tb where user_num = #{userNum}) a 
+        inner join 
+        ( select * from
+            ( select * from  recipe_basic_tb)
+             UNION ALL
+            ( select * from excel_recipe_basic_tb)
+        ) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel)
+    	) order by a.firstdate desc
+	) where rownum <![CDATA[ <= ]]> 6
 	</select>
 	
 	
@@ -66,17 +69,21 @@
 	<select id="getMoreRecipes" resultMap="basic_info">
 	
 	select * from (
-		select a.firstdate,b.recipe_num,b.recipe_title,b.recipe_img,b.recipe_food_main,b.recipe_food_suv,b.excel,a.user_num,rownum rn from 
-		(select * from markrecipe_tb where user_num = #{userNum} order by firstdate desc) a 
-		inner join 
-		( select * from 
-		    ( select * from  recipe_basic_tb)
-		     UNION ALL
-		    ( select * from excel_recipe_basic_tb)
-		) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel) where rownum <![CDATA[ <= ]]>  #{startNum}+4
-	) where rn > #{startNum}
+	    select recipe_num,recipe_title,recipe_img,recipe_food_main,recipe_food_suv,excel,user_num,rownum rn from (
+	        select a.firstdate,b.recipe_num,b.recipe_title,b.recipe_img,b.recipe_food_main,b.recipe_food_suv,b.excel,a.user_num from(
+	            (select * from markrecipe_tb where user_num = #{userNum}) a 
+	            inner join 
+	            ( select * from
+	                ( select * from  recipe_basic_tb)
+	                 UNION ALL
+	                ( select * from excel_recipe_basic_tb)
+	            ) b ON (a.recipe_num = b.recipe_num and a.excel = b.excel)
+	        ) order by a.firstdate desc
+	    ) where rownum <![CDATA[ <= ]]> #{startNum}+4
+	) where rn <![CDATA[ > ]]> #{startNum}
 	
 	</select>
+	
 	
 	
 	<update id="modifyPW">
