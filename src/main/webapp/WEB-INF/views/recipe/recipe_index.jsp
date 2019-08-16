@@ -8,17 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 	
-	<link href="/resources/css/aos.css" rel="stylesheet">
-	<link href="/resources/css/bootstrap-datepicker.css" rel="stylesheet">
-	<link href="/resources/css/jquery-ui.css" rel="stylesheet">
-	<link href="/resources/css/magnific-popup.css" rel="stylesheet">
-	<!-- <link href="/resources/css/mediaelementplayer.css" rel="stylesheet"> -->
-	<link href="/resources/css/owl.carousel.min.css" rel="stylesheet">
-	<link href="/resources/css/owl.theme.default.min.css" rel="stylesheet">
-	<link href="/resources/css/style.css" rel="stylesheet">
-    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
-	
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/magnific-popup.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="resources/css/aos.css">
+<link rel="stylesheet" href="resources/css/style.css">
+<!-- MetisMenu CSS -->
+<link href="resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
+	rel="stylesheet">
+<script src="https://kit.fontawesome.com/d2c6942021.js"></script>
+
 	
 	<style type="text/css">
 		
@@ -28,7 +31,7 @@
 		}
 		
 		.text-center input#recipe_search {
-		   margin-top: 6%;
+		 
 		   margin-bottom: 2em;
 		   min-width: 500px;
 		   
@@ -75,8 +78,8 @@
 		   top: 0%; 
 		   width: 70px;
 		   height: 90px;
-		   margin-left: 430px;
-		   margin-top: 9%;
+		   margin-left: 420px;
+		   margin-top: 3.5%;
 		   z-index: 1;
 		}
 		
@@ -144,11 +147,24 @@
 	<title>자취방 레시피: 레시피 목록</title>
 </head>
 <body>
+	<script src="/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/aos.js"></script>
+	<script src="/resources/js/jquery-ui.js"></script>
+	<script src="/resources/js/jquery.animateNumber.min.js"></script>
+	<script src="/resources/js/jquery.countdown.min.js"></script>
+	<script src="/resources/js/jquery.magnific-popup.min.js"></script>
+	<!-- <script src="/resources/js/jquery.stellar.min.js"></script> -->
+	<script src="/resources/js/jquery.sticky.js"></script>
+	<script src="/resources/js/jquery.waypoints.min.js"></script>
+	<script src="/resources/js/main.js"></script>
+	<script src="/resources/js/mediaelement-and-player.min.js"></script>
+	<script src="/resources/js/owl.carousel.min.js"></script>
 	
-	
-	<%-- <jsp:include page="header.jsp"></jsp:include> --%>
-	<%@include file="../headNfoot/header.jsp" %>
-	
+	<jsp:include page="../headNfoot/header.jsp" />
+	<div class="subsite-section bg-light" style="padding-bottom: 2%;padding-top:1.5em;">
+		
 	<!-- 검색을 위한 섹션 -->
 	<section>
 		<div class="container mt-4">
@@ -156,7 +172,7 @@
 			<div class="row align-items-center justify-content-center">
 	            <div class="col-sm-12 col-lg-7 text-center search">
 	                  <span class="icon"> <input TYPE="IMAGE" id="search_icon" src="img/main/search.png" value="Submit">
-	                  </span> <input id="recipe_search" name="recipe_search" placeholder="search" style="margin-left: 0px;" value='${MainSearch}'>
+	                  </span> <input id="recipe_search" name="recipe_search" placeholder="재료를 검색하세요." style="margin-left: 0px;" value='${MainSearch}'>
 	               
 	            </div>
 	         </div>
@@ -213,7 +229,7 @@
 			</div><!-- end of row -->
 		</div><!-- end of container -->
 	</section>
-	
+	</div>
 	
 	<jsp:include page="../headNfoot/footer.jsp"></jsp:include>
 	<%-- <%@include file="footer.jsp" %> --%>
@@ -259,13 +275,15 @@
 		}
 		
     	let recipe_card = $('<div class="col-md-3">'
-			            	+'<div class="card img-fluid mb-4 box-shadow">'
-			                	+'<img class="card-img-top" src='+recipe_img+' alt="Card image" style="width:100%;border: 1px solid gray" >'
-			                	+'<div class="card-img-overlay" data-recipe_num='+recipe_num+' data-excel='+excel+' style="padding-top: 2em;text-overflow: ellipsis;overflow:hidden; color: #65737e; border: 1px solid gray"  >'
+			            	+'<div class="card img-fluid mb-4 box-shadow" style="height:85%;">'
+			        		+'<div style="height:80%;">'
+			                	+'<img class="card-img-top" src='+recipe_img+' alt="Card image" style="width:100%;height:100%;" >'
+			                +'</div>'
+			                	+'<div class="card-img-overlay" data-recipe_num='+recipe_num+' data-excel='+excel+' style="padding-top: 2em;text-overflow: ellipsis;overflow:hidden; color: #65737e; border:1px solid rgba(0,0,0,.0975);"  >'
 						            +'<p class="card-text">주재료 :'+food_main+'</p>'
 						            +'<p class="card-text">'+'부재료 : '+food_suv+'</p>'
 		            			+'</div>'
-		            			+'<div class="card-head text-center" style="padding-top: 1em;margin-bottom: 1em;">'+recipe_title+'<br>작성자: '+user_nickname+'</div>'
+		            			+'<div class="card-head text-center" style="padding-top: 1em;margin-bottom: 1em; color:#65737e;">'+recipe_title+'<br><font class="pt-2 pr-2" style="float:right;color:#939393;">'+user_nickname+'</font></div>'
 		            			+'</div>'
 	            			+'</div>')
 		

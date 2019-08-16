@@ -48,88 +48,31 @@
 	
 	
 	</script>
+	<style>
+	input:focus, div:focus, button:focus {
+	outline: none;
+}
+#mob_timer{
+		display:none;
+	}
+	@media (max-width:500px){
+		#mob_timer {
+			display:block;
+			font-size : 0.7em;
+			
+		}
+		.cooking_dc{
+			height:	40%;
+		}
+		
+		
+		
+	}
+	</style>
 <title>Home</title>
 </head>
 <body>
-		<jsp:include page="../headNfoot/header.jsp"></jsp:include>
-		<%-- <%@include file="../headNfoot/header.jsp" %> 이상하게 에러 걸림;;;--%>
-		
-		<div class="container mt-5">
-		<div class="row">
-
-			<!-- 대표 이미지 -->
-			<div class="col-sm-5" style="float: left;">
-				<img src="${basic.recipe_img}" class="img-fluid rounded">
-			</div>
-			
-			<!-- 레시피 이름, 주재료, 부재료,  -->
-			<div class="col-sm-6" style="float: left; border: 1px solid; margin-left: 15px;">
-				<table style="width: 100%; height: 300px;">
-					<tr>
-						<th>${basic.recipe_title}</th>
-					</tr>
-					
-					<tr>
-						<td>
-							주재료 : ${basic.recipe_food_main}
-							
-							<!-- <br>
-							양념 :  -->
-							
-							<br>
-							부재료 : ${basic.recipe_food_suv}
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		
-		<div class="container mt-5">
-			<div class="row">
-				<div class="col text-center">
-				
-					<c:if test="${not empty isWriter}">
-					<button class="btn btn-success"  onclick="location.href= recipe_modify">수정하기</button>
-					<button class="btn btn-danger" onclick="location.href = recipe_delete">삭제하기</button>
-					</c:if>
-					<c:if test="${not empty isLogin and isDib == 'dib'}">
-						<button class="btn btn-primary" id="recipe_dibBtn">찜해제</button>
-					</c:if>
-					<c:if test="${not empty isLogin and isDib == 'not_dib'}">
-						<button class="btn btn-primary" id="recipe_dibBtn">찜하기</button>
-					</c:if>
-					
-				</div>
-			</div>
-		</div>
-		
-		<br>
-		<div class="row mb-2" style="clear: both;">
-			<div class="col-sm-11 text-center" contentEditable="true" style="padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border-color: #eaedef; border-style: solid; FONT-FAMILY: 돋움; font-weight: bold; table-layout: fixed;">
-				<c:forEach var="item" items="${cooking_list}" varStatus="index">
-					<br>
-					<c:if test="${item.cooking_img != '' || item.cooking_img != null}">
-						<img src="${item.cooking_img}" style="width: 50%;"/>
-						<br>
-					</c:if>
-					${item.cooking_num}&nbsp;${item.cooking_content}
-					<br>
-					<c:if test="${!index.last}">
-					<hr>
-					</c:if>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
-	<aside class="sidebar" >
-         <jsp:include page="recipe_timer.jsp"/>
-    </aside> 
-	
-
-	<script>
-		
-	</script>
-	<script src="/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/resources/js/aos.js"></script>
 	<script src="/resources/js/jquery-ui.js"></script>
 	<script src="/resources/js/jquery.animateNumber.min.js"></script>
@@ -145,7 +88,141 @@
 	<script src="/resources/js/slick.min.js"></script>
 	<script src="/resources/js/typed.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
+		<jsp:include page="../headNfoot/header.jsp"></jsp:include>
+		<%-- <%@include file="../headNfoot/header.jsp" %> 이상하게 에러 걸림;;;--%>
+	<div class="subsite-section bg-light" style="padding-bottom: 2%;padding-top:1.5em; font-family: 'Jua', sans-serif;">
+	
+	
+		<div class="container pt-2">
+		<div class="row col-md-11 col-sm-12 col-xs-12" style="padding-left:75%;">
+		
+			<c:if test="${not empty isWriter}">
+					<button style="background:none; border:none; color:#FFC69F; font-family: 'Jua', sans-serif;"  onclick="location.href= recipe_modify">수정하기</button>
+					<button style="background:none; border:none; color:#FFC69F; font-family: 'Jua', sans-serif;" onclick="location.href = recipe_delete">삭제하기</button>
+					</c:if>
+					<c:if test="${not empty isLogin and isDib == 'dib'}">
+						<button style="background:none; border:none; color:#FFC69F; font-family: 'Jua', sans-serif;" id="recipe_dibBtn">찜해제</button>
+					</c:if>
+					<c:if test="${not empty isLogin and isDib == 'not_dib'}">
+						<button style="background:none; border:none; color:#FFC69F;font-family: 'Jua', sans-serif; " id="recipe_dibBtn">찜하기</button>
+					</c:if>
+		</div>
+		</div>
+		
+		
+		<div class="container pt-3 " >
+		<div class="row col-md-8 col-sm-12 col-xs-12 font-size-28" style=" border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975); margin-left:15%;">
+			<input type="text" class="pt-3 pb-3" style="background:none; border:none; text-align:center; width:100%; font-family: 'Jua', sans-serif;" value="${basic.recipe_title}"/>
+					
+					
+		</div>
+		</div>
+	<!-- test -->
+		
+		
+		<div class="container pt-5 ">			
+		<div class="row col-md-11 col-sm-12 col-xs-12" style="margin-left:15%; height:50%; ">
+
+			<!-- 대표 이미지 -->
+
+				<img src="${basic .recipe_img}" class="img-fluid rounded" style="float: center; height:100%;">
+	
+			
+			
+		</div>
+		
+		<div class="container mt-5 ml-5">
+		<!-- 레시피 이름, 주재료, 부재료,  -->
+			<div class="row col-md-8 col-sm-12 col-xs-12" style="border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975); margin-left:5%;">
+				<div class="col-md-12 col-sm-12 col-xs-12 pt-2 pb-2 font-size-22">
+				 주재료 리스트
+				
+				</div>
+				
+				<c:forEach items="${fn:split(basic.recipe_food_main,',')}" var="recipe_food_main">
+
+				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-20" style="color:#65737e;">
+					
+					${recipe_food_main}
+				</div>
+				</c:forEach>
+				
+				<div class="col-md-12 col-sm-12 col-xs-12 pt-2 pb-2 font-size-22">
+				<br>
+				 부재료 리스트
+				
+				</div>
+				
+				<c:forEach items="${fn:split(basic.recipe_food_suv,',')}" var="recipe_food_suv">
+
+				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-20" style="color:#939393;">
+					
+					${recipe_food_suv}
+				</div>
+				</c:forEach>
+				
+							
+					
+			</div>
+			
+		</div>
+		
+		<br>
+		<div class="row mb-2 col-md-10 col-sm-12 col-xs-12 ml-5 " contentEditable="true" style="clear: both; padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border:1px solid rgba(0,0,0,.0975);table-layout: fixed; background-color:#fff;"">
+		<!-- 	<div class="col-sm-11 " contentEditable="true" style="padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border:1px solid rgba(0,0,0,.0975);table-layout: fixed; background-color:#fff;">
+			 --><div class=" text-center mt-3" id="mob_timer" >
+        
+				        <!-- Timer -->
+				
+				       <span class="minutes"style="color:#FFC69F; " >00</span> : <span class="seconds" style="color:#FFC69F; " >00</span>
+				        
+				                <button class="btn  " data-action="start"> <!-- Data- Allows you to create custome HTML elements for Js purposes -->
+				                    Start
+				                </button>
+				                <button class="btn  " data-action="stop">
+				                    Stop
+				                </button>
+				                <button class="btn  " data-action="reset">
+				                    Reset
+				                </button>
+				            
+				    
+				</div>
+			
+				<c:forEach var="item" items="${cooking_list}" varStatus="index">
+				<div class="col-md-12" style="height:100%;">
+					<br>
+					<div  class="col-md-6 font-size-20" >
+						${item.cooking_num}.&nbsp;${item.cooking_content}
+					</div>
+					
+					<c:if test="${item.cooking_img != '' || item.cooking_img != null}">
+					
+						<img src="${item.cooking_img}" class="col-md-5"style="width: 100%; float:right; padding-top:0;"/>
+					
+					</c:if>
+					
+					
+				</div>
+				<div class="col-md-12" >
+				<c:if test="${!index.last}">
+					<hr>
+					</c:if>
+				</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	
+	
+	<aside class="sidebar" >
+         <jsp:include page="recipe_timer.jsp"/>
+    </aside> 
+	
+
+
 	<script type="text/javascript">
+	
 		
 		$('header').addClass(' border-bottom');
 		

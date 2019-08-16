@@ -195,7 +195,7 @@ label#menu_label, #menu{
 <!-- Header -->
     <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
-      <div class="container">
+      <div class="container" style="font-family: 'Jua', sans-serif">
         <div class="row align-items-center position-relative">
           
             <!-- 로고 -->
@@ -238,7 +238,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
 	                  			</form>
 	                  		</li>
 						</sec:authorize> 
@@ -254,7 +254,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
 	                  			</form>
 	                  		</li>
 						</sec:authorize>

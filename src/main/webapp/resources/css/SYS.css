@@ -1,42 +1,4 @@
-* {
-  box-sizing: border-box;
-}
 
-.content {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-  padding-right: 25vw;
-}
-
-.header,
-.footer {
-  background: Salmon;
-  padding: 2rem;
-  font-size: 1rem;
-  line-height: 1rem;
-  position: fixed;
-  left: 0;
-  right: 0;
-}
-.header .logo,
-.footer .logo {
-  color: Ivory;
-  -webkit-transform: skewX(-10deg);
-          transform: skewX(-10deg);
-}
-
-.header {
-  top: 0;
-}
-
-.footer {
-  bottom: 0;
-}
-
-.section {
-  color: DimGray;
-  margin: 2rem 2rem 0;
-}
 
 .sidebar {
   /* width: 20vw; */

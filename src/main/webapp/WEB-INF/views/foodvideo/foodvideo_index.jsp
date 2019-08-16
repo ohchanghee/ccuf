@@ -189,7 +189,7 @@ iframe {
 
 	<script src="resources/js/main.js"></script>
 <jsp:include page="../headNfoot/header.jsp" />
-
+	<div class="subsite-section bg-light" style="padding-top:1.5em;">
 	<div class="container">
 		<div class="row align-items-center justify-content-center">
 			<div class="col-md-12 col-lg-7 text-center search">
@@ -199,7 +199,7 @@ iframe {
                      <input TYPE="IMAGE" id="search_icon" src="img/main/search.png" value="Submit">
                   </span> 
                      <input type="text" id="recipe_search" name="recipe_search" 
-                     value='<c:out value="${cri.recipe_search }"/>' placeholder="영상을 찾아보아요"/>
+                     value='<c:out value="${cri.recipe_search }"/>' placeholder="영상을 검색하세요."/>
                </form>
                <form id='actionForm' action="/foodvideo_search" method="get">
                   <input type="hidden" name='recipe_search' value='<c:out value="${cri.recipe_search }"/>'/>
@@ -209,7 +209,7 @@ iframe {
 		</div>
 	</div>
 
-	<div class="subsite-section bg-light" style="margin-top: -5%">
+
 		<div class="container" style="margin-top: -2.5%">
 			<div
 				style="float: left; margin-left: -1%; font-size: 150%; color: #FFC69F;">인기영상</div>
@@ -274,7 +274,7 @@ iframe {
 			</div>
 		</div>
 	</div>
-
+</div>
 	<jsp:include page="../headNfoot/footer.jsp" />
 
 
