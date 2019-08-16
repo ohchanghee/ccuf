@@ -131,7 +131,7 @@ $(document).ready(function(){
 }
 
 /* Modal Content/Box */
-.msg-modal-content {
+.modal-content {
 	background-color: #fefefe;
 	margin: 8% auto; /* 15% from the top and centered */
 	padding: 2%;
@@ -139,10 +139,28 @@ $(document).ready(function(){
 	width: 50%; /* Could be more or less, depending on screen size */
 	height: auto;
 }@media (max-width:500px){
-	.msg-modal-content{
+	.modal-content{
 		margin: 2% 5%; /* 15% from the top and centered */
 		padding: 1%;
 		width: 93%;
+	}
+}
+
+/* 메시지함 관련 */
+.messageC{
+	letter-spacing: 1px;
+    word-spacing: 3px;
+    line-height: 35px;
+}
+@media (max-width:500px){
+	#message_tb{
+		font-size:5px;
+	}
+	#msg_write{
+		font-size:1rem;
+	}
+	.messageHeads{
+		font-size:1rem !important;
 	}
 }
 
@@ -167,7 +185,7 @@ $(document).ready(function(){
 
 <body bgcolor="black">
 
- <%-- <jsp:include page = "../message/message_write.jsp"/> --%>
+ <jsp:include page = "../message/message_write.jsp"/> 
 
 <div class="site-wrap"  id="home-section">
 
@@ -325,9 +343,6 @@ $(document).ready(function(){
 var csrfHeaderName ="${_csrf.headerName}"; 
 var csrfTokenValue="${_csrf.token}";
 
-var modal = document.getElementById('write_msg');
-var span1 = document.getElementsByClassName("close")[0];
-
 
 	function black_click(userNum){
 		var black_cnt = document.getElementById('black_btn' + userNum).value;
@@ -372,6 +387,20 @@ var span1 = document.getElementsByClassName("close")[0];
 			 
 	}
 
+	// 쪽지 쓰기(message_write)
+	var writeMsgModal = document.getElementById("write_msg");
+	
+	
+	// x버튼 누르면 현재 모달 없어지는 로직
+	$('.close').on("click",function(){
+		
+	/* 	boxmodal.style.display = "block";
+		msgModal.style.display = "none"; */
+		writeMsgModal.style.display = "none";
+		// 작성했던 내용 지우기
+		$("#send").val("");
+		$("#recv").val("");
+	})
 	
 	function warning_click(userNum){
 		
@@ -401,26 +430,24 @@ var span1 = document.getElementsByClassName("close")[0];
 					
 					document.getElementById('warning_btn' + userNum).value = 1;
 					
-					/* modal.style.display = "block";
-					span1.onclick = function() { modal.style.display = "none"; } */
+					writeMsgModal.style.display = "block"; 
+					
+					
 
 				}else  if(warning_cnt==1){
 					
 					document.getElementById('warning_btn' + userNum).value = 2;
-					/* modal.style.display = "block";
-					span1.onclick = function() { modal.style.display = "none"; } */
+					writeMsgModal.style.display = "block";
+					
 					
 				}else if(warning_cnt==2){
 				
 					document.getElementById('warning_btn' + userNum).value = 3;
 					document.getElementById('black_btn' + userNum).value = 1;
-				
-				/* 	document.getElementById('black_name' + userNum).value= userNum;  
 					
-					console.log(document.getElementById('black_name' + userNum).value); */
-					
-					/* modal.style.display = "block";
-					span1.onclick = function() { modal.style.display = "none";  } */
+					writeMsgModal.style.display = "block"; 
+							
+			
 				}
 				
 			},
