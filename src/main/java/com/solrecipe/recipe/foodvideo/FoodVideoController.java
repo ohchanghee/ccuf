@@ -115,12 +115,13 @@ public class FoodVideoController {
 		return moreSearchlist;
 	}
 	
+	// 동영상 추가위치! 동영상을DB에 넣으려면 이쪽 url 이용
 	@GetMapping("/insertvideo")
 	public String insertvideo() {	
 		return "/foodvideo/insertvideo";
 	}
 	
-	// 동영상 추가
+	// 동영상 추가 ajax
 	@RequestMapping(method=RequestMethod.GET, value="/insertVideos", produces ="application/text;charset=UTF-8")
 	@ResponseBody
 	public Object insertVideos(	String video_id, String video_playlist, String video_title, String video_content, String video_thumbnail, String firstdate) {
