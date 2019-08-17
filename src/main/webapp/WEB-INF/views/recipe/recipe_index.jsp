@@ -176,7 +176,7 @@
 	               
 	            </div>
 	         </div>
-	         
+	        
 	        <!-- 검색바로 검색한 단어들이 들어갈 input 태그 -->
 	        <div class="row mb-5">
 	        	 <form id="searchForm" class="form-inline"> 
@@ -212,9 +212,13 @@
 						</div>
 		            </div>
 		          </form>
-		          
+		         
 	        </div>
-	         
+	        <div class="text-right">
+	        		<div class="block-heading-1" style="color:#FFC69F; font-size:1.5em">
+					<a href = "/recipe_write">레시피 추가</a>
+	            	</div>
+	        </div>
 	         
 	      
 		</div>
