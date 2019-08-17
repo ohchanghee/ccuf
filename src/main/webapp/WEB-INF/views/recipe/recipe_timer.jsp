@@ -61,13 +61,13 @@
 
         <!-- Timer Buttons -->
             <div class="timer-buttons">
-                <button class="btn btn-lg btn-success" data-action="start"> <!-- Data- Allows you to create custome HTML elements for Js purposes -->
+                <button class="btn btn-lg btn-success" id="start" data-action="start"> <!-- Data- Allows you to create custome HTML elements for Js purposes -->
                     Start
                 </button>
-                <button class="btn btn-lg btn-danger" data-action="stop">
+                <button class="btn btn-lg btn-danger"  id="stop" data-action="stop">
                     Stop
                 </button>
-                <button class="btn btn-link btn-block" data-action="reset">
+                <button class="btn btn-link btn-block" id="reset" data-action="reset">
                     Reset
                 </button>
             </div>
