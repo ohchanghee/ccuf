@@ -14,7 +14,7 @@
 	</resultMap>
 
 	<select id="getBestList" resultMap="fvResultMap">
-		select video_num, video_title, video_thumbnail, rownum from (select * from food_video_tb order by video_mark_cnt desc)
+		select video_num, video_title, video_thumbnail, firstdate, video_mark_cnt, rownum from (select * from food_video_tb order by video_mark_cnt desc)
 		where rownum <![CDATA[<=]]> 6
 	</select>
 	<select id="getNewList" resultMap="fvResultMap">

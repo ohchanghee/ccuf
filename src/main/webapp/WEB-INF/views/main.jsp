@@ -859,14 +859,29 @@ label#menu_label, #menu{
 		contentType:'application/x-www-form-urlencoded;charset=utf-8',
 		success:function(data){
 			$.each(data, function(index, item){
+				// date객체는 자바스크립트에서 본인들만의 형식으로 변환되므로, 아래와같은 변환과정을 거쳐야한다.
+				 var d = new Date(item.firstdate);
+				 year = d.getFullYear();
+				 month = d.getMonth()+1
+				 if(month<10){
+					 month = "0"+(d.getMonth()+1);
+				 }
+				 day = d.getDate();
+				 if(day<10){
+					 day = "0"+(d.getDate());
+				 }
+				 var date = year+"-"+month+"-"+day;
+				 
 				$('.fv_best').append("<div class='col-lg-4 col-md-6 mb-4 mb-lg-0' data-aos='fade-up' >"
 						+"<div class='video-team-member-1 text-center rounded'>"
 						+"<div class='row  col-auto'> "
 						+"<a class='videoAtag' href='javascript:goDetail(" + item.video_num + ")'>"
 						+"<span class='play_button'></span> "
 						+"<img class='preview_img' src=" + item.video_thumbnail + " alt='preview_img'>"
-						+"<span class='title' >" + item.video_title + "</span>"
+						+"<div style='margin-top:2%; text-align:center;''>" + item.video_title + "</div>"
 						+"</a>"
+						+"<div style='text-align:center; font-size:0.8rem; margin-top:2%; width:100%;'>찜횟수 "+item.video_mark_cnt
+						+"&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;"+date+"</div>"
 						+"</div>"
 						+"</div>"
 						+"</div>")

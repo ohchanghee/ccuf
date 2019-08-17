@@ -137,7 +137,7 @@ iframe {
 	background:
 		url("https://t1.daumcdn.net/cfile/tistory/272B024E567617E839")
 		no-repeat;
-	background-position: 45% 20%;
+	background-position: 42% 25%;
 	background-size: 16%;
 	text-align: center;
 }
@@ -222,8 +222,11 @@ iframe {
 								<a class="videoAtag" href='javascript:goDetail("${fvVO.video_num }")'> <span
 								class="play_button"></span> <img class="preview_img"
 								src="${fvVO.video_thumbnail }"
-								alt="preview_img"> <span class="title">${fvVO.video_title }</span>
+								alt="preview_img"><div style="margin-top:2%; text-align:center;">${fvVO.video_title }</div>
 								</a>
+								<div style="text-align:center; font-size:0.8rem; margin-top:2%;">찜횟수 ${fvVO.video_mark_cnt}
+								 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+								 ${fvVO.firstdate }</div>
 							</div>
 						</c:forEach> 
 						<!-- 
