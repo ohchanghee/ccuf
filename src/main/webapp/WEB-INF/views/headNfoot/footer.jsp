@@ -45,7 +45,7 @@
 		  <sec:authorize access="isAuthenticated()">
            <span class="message" style="color:white; cursor:pointer;">
 		  <sec:authentication property="principal.member.user_num" var="user_num"/>
-          		<img src="img/user/message.png">
+          		<img src="/img/user/message.png">
               문의하기
           </span>
           </sec:authorize>
