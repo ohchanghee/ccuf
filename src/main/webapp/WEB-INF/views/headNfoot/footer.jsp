@@ -11,9 +11,13 @@
             <div class="row">
               <div class="col-md-8">
                 <h2 class="footer-heading mb-4">About Us</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facere laudantium magnam voluptatum autem. Amet aliquid nesciunt veritatis aliquam.</p>
+                <p>김관수 &nbsp; &nbsp; worldkks7@gmail.com</p>
+                <p>양아람 &nbsp; &nbsp; crying25i87@gmail.com</p>
+                <p>최연정 &nbsp; &nbsp; crying25i87@gmail.com</p>
+                <p>박상언 &nbsp; &nbsp; sampark1234@naver.com</p>
+                <p>오창희 &nbsp; &nbsp; </p>
               </div>
-              <div class="col-md-4 ml-auto">
+<!--               <div class="col-md-4 ml-auto">
                 <h2 class="footer-heading mb-4">Features</h2>
                 <ul class="list-unstyled">
                   <li><a href="#">About Us</a></li>
@@ -24,33 +28,27 @@
                   <li><a href="#">Contact Us</a></li>
                 </ul>
               </div>
-              
+ -->              
             </div>
           </div>
           <div class="col-md-4 ml-auto">
 
             <div class="mb-5">
               <div class="mb-5">
-                <h2 class="footer-heading mb-4">Some Paragraph</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat nostrum libero iusto dolorum vero atque aliquid.</p>
+                <h2 class="footer-heading mb-4">Michaelins 소개</h2>
+                <p>1인가구 80만 세대를 기념하여 자취생들을 위한 특별한 홈페이지를 만들어 보았습니다.</p>
               </div>
-              <h2 class="footer-heading mb-4">Subscribe to Newsletter</h2>
-              <form action="#" method="post">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary text-white" type="button" id="button-addon2">Subscribe</button>
-                  </div>
-                </div>
               </div>
 
 
-              <h2 class="footer-heading mb-4">Follow Us</h2>
-                <a href="#about-section" class="smoothscroll pl-0 pr-3"><span class="icon-facebook"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-            </form>
+                  <!-- 로그인 시에만 쪽지함 보이게  -->
+		  <sec:authorize access="isAuthenticated()">
+           <span class="message" style="color:white; cursor:pointer;">
+		  <sec:authentication property="principal.member.user_num" var="user_num"/>
+          		<img src="img/user/message.png">
+              문의하기
+          </span>
+          </sec:authorize>
           </div>
         </div>
         <div class="row pt-5 mt-5 text-center">
@@ -58,17 +56,12 @@
             <div class="border-top pt-5">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> 해당 홈페이지 권한은 모두 저에게 있습니다. <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Michaelins</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
             </div>
           </div>
           <!-- 메시지 관련 -->
-            <!-- 로그인 시   -->
-		  <sec:authorize access="isAuthenticated()">
-		  <sec:authentication property="principal.member.user_num" var="user_num"/>
-          		<img src="img/user/message.png" class="message">
-          </sec:authorize>
         <jsp:include page="../message/message_detail.jsp"/>
 		<jsp:include page="../message/message_box.jsp"/>
 		<jsp:include page="../message/message_write.jsp"/>
@@ -271,7 +264,7 @@ window.onclick = function(event) {
    }
 }
 // x버튼 누르면 현재 모달 없어지는 로직
-$('.close').on("click",function(){
+$('.closeMsg').on("click",function(){
 	
 	boxmodal.style.display = "block";
 	msgModal.style.display = "none";

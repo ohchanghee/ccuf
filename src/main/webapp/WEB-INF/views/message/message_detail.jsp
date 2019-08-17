@@ -28,7 +28,7 @@
  	
 	<!-- chatting Modal -->
 	<div class="modal-content block-heading-1">
-		<span style="width:10%; margin-left:90%;" class="close" id="close"><i class="fas fa-times fa-2x"></i></span>
+		<span style="width:10%; margin-left:90%;" class="close closeMsg" id="close"><i class="fas fa-times fa-2x"></i></span>
 		<h4 align="center">메 시 지</h4>
 		<div class="modal-body" style="padding: 10px 10px;">
 			<form role="form" method = "get" action="recverMessage.do">
