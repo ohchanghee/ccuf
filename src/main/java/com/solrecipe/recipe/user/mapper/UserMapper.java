@@ -24,5 +24,5 @@ public interface UserMapper {
 	Integer chkKakaouser(String user_username);
 	int kakaoMember(MemberVO membervo);
 	
-	
+	int insertBlackList(MemberVO membervo);
 }
