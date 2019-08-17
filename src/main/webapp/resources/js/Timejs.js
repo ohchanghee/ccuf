@@ -1,9 +1,17 @@
 // grab what we need
-const startButton = document.querySelector('[data-action="start"]');
-const stopButton = document.querySelector('[data-action="stop"]');
-const resetButton = document.querySelector('[data-action="reset"]');
-const minutes = document.querySelector('.minutes');
-const seconds = document.querySelector('.seconds');
+
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const resetButton = document.getElementById('reset');
+//const startButton = document.querySelector('[data-action="start"]');
+//const stopButton = document.querySelector('[data-action="stop"]');
+//const resetButton = document.querySelector('[data-action="reset"]');
+//const minutes = document.querySelector('.minutes');
+//const seconds = document.querySelector('.seconds');
+
+const minutes = document.getElementsByClassName('minutes')[1];
+const seconds = document.getElementsByClassName('seconds')[1];
+
 let timerTime = 0;
 let isRunning = false;
 let interval;
@@ -39,12 +47,12 @@ function incrementTimer() {
 	seconds.innerText = pad(numberOfSeconds);
 }
 
-/*             function pad(number) {
+             function pad(number) {
  if (number < 10) {
  return '0' + number; }
  else {
  return number; }    
- } */
+ } 
 
 // Ternary Operator
 function pad(number) {

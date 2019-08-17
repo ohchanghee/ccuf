@@ -220,7 +220,8 @@
 	
 	
 	<aside class="sidebar" >
-         <jsp:include page="recipe_timer.jsp"/>
+         <%-- <jsp:include page="recipe_timer.jsp"/> --%>
+         <%@include file="recipe_timer.jsp"%>
     </aside> 
 	
 
