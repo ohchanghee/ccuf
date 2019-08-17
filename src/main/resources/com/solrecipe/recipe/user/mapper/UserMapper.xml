@@ -14,6 +14,8 @@
 		<result property="firstdate" column="firstdate"/>
 		<result property="updatedate" column="updatedate"/>
 		<result property="kakao_login" column="kakao_login"/>
+		<result property="user_black" column="user_black"/>
+		<result property="user_warning" column="user_warning"/>
 		<collection property="authList" resultMap="authMap">
 		</collection>
 		
@@ -147,4 +149,13 @@
 		where dt.user_name = #{user_name} and ut.user_username = #{user_username}
 	
 	</select>
+	
+	<insert id="insertBlackList" parameterType="com.solrecipe.recipe.user.domain.MemberVO">
+		<selectKey keyProperty="user_num" resultType="int" order="BEFORE">
+	    	select user_num FROM user_tb WHERE user_num = #{user_num}
+	  	</selectKey>
+	  	
+		INSERT INTO user_blacklist_tb (user_num, user_black, user_warning) 
+			VALUES (#{user_num}, 0,0)
+	</insert>
 </mapper>
