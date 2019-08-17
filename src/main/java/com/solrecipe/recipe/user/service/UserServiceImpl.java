@@ -3,7 +3,6 @@ package com.solrecipe.recipe.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import com.solrecipe.recipe.user.domain.AuthVO;
 import com.solrecipe.recipe.user.domain.MemberVO;
@@ -33,6 +32,14 @@ public class UserServiceImpl implements UserService{
 		memberVO.setUser_intro("");
 		memberVO.setUser_img("user-upload/base_user.png");
 		memberVO.setIsopen(0);
+		
+		memberVO.setUser_black(0);
+		memberVO.setUser_warning(0);
+		
+		userMapper.insertBlackList(memberVO);
+		
+		System.out.println("black&wrning: " + memberVO.getUser_black() +"\n" +  memberVO.getUser_warning());;
+		
 		return userMapper.insertProfile(memberVO);
 	}
 
@@ -143,6 +150,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		log.info("imply kakaousername : " + memberVO.getUser_username());
 		return userMapper.kakaoMember(memberVO);
+	}
+
+	@Override
+	public int insertBlackList(MemberVO membervo) {
+		// TODO Auto-generated method stub
+		return userMapper.insertBlackList(membervo);
 	}
 
 	

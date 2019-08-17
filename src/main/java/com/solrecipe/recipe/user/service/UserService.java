@@ -22,4 +22,6 @@ public interface UserService{
 	public int chkKakaouser(String kakao_user);
 	public int kakaoMember(MemberVO memberVO);
 	
+	public int insertBlackList(MemberVO membervo);
+	
 }
