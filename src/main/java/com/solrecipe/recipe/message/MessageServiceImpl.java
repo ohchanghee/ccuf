@@ -59,4 +59,9 @@ public class MessageServiceImpl implements MessageService{
 	public int answerMsg(MessageVO vo) {
 		return messageMapper.answerMsg(vo);
 	}
+
+	@Override
+	public int deleteMsg(int message_num) {
+		return messageMapper.deleteMsg(message_num);
+	}
 }

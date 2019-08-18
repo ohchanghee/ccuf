@@ -75,6 +75,8 @@ $("#write_btn").click(function(){
 				alert("메시지 발송 완료");
 				// 쪽지함 재생성
 				setMsgBox(1);
+				$('#recv').val("");
+				// 내용 지우기
 				// 글쓰기모달 지우고 쪽지함 열기
 				writeMsgModal.style.display = "none";
 				boxmodal.style.display = "block";

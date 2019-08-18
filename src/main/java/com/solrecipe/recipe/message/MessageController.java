@@ -95,4 +95,17 @@ public class MessageController {
 			return "bad";
 		}
 	}
+	
+	// 문의 취소
+	@PostMapping(value = "/deleteMsg", produces = "application/text;charset=UTF-8")
+	@ResponseBody
+	public String deleteMsg(int message_num) throws Exception {
+		int n = messageService.deleteMsg(message_num);
+		if (n == 1) {
+			return "good";
+		} else {
+			return "bad";
+		}
+	}
+	
 }

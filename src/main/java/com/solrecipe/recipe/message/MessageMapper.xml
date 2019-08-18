@@ -63,5 +63,8 @@
 		insert into sendmsg_tb(sendmsg_num, message_content, firstdate, sender_num) 
 		values( (select NVL(max(sendmsg_num) + 1, 0) from sendmsg_tb), #{message_content}, 
 		sysdate, #{sender_num} ) </insert> -->
-
+	
+	<delete id="deleteMsg">
+		delete from message_tb where message_num = #{message_num}
+	</delete>
 </mapper>

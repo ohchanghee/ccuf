@@ -7,4 +7,5 @@ public interface MessageService {
 	int sendMsg(MessageVO vo);
 	MessageVO getDetailMsg(int message_num);
 	int answerMsg(MessageVO vo);
+	int deleteMsg(int message_num);
 }

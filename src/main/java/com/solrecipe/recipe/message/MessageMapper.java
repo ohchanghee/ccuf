@@ -13,5 +13,7 @@ public interface MessageMapper {
 	MessageVO getDetailMsg(int message_num);
 	
 	int answerMsg(MessageVO vo);
+	
+	int deleteMsg(int message_num);
 }
 

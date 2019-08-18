@@ -129,7 +129,7 @@ var setMsgBox = function(page){
 				 }
 				 var date = year+"-"+month+"-"+day;
 				 var htmlText;
-				 htmlText += "<tr onclick='fn_msgDetail("+item.message_num+")' style='cursor:pointer;'>";
+				 htmlText += "<tr>";
 				 // 보낸사람이 관리자인 경우 색 입히기
 				 if(item.sender_nickname == '관리자'){
 					 htmlText += "<td class='msg' style='color : #FFC69F;'>"+item.sender_nickname+"</td>"
@@ -137,16 +137,16 @@ var setMsgBox = function(page){
 					 htmlText += "<td class='msg'>"+item.sender_nickname+"</td>"
 				 }
 				 htmlText += "<td class='msg'>"+item.recver_nickname+"</td>"
-				 htmlText += "<td >"+item.index_content+"</td>";
+				 htmlText += "<td onclick='fn_msgDetail("+item.message_num+")' style='cursor:pointer;'>"+item.index_content+"</td>";
 				 htmlText += "<td>"+date+"</td>";
            		if (item.isRecvSend == 0){
            			if(item.sender_num == 1){ // 관리인에게 받은 것 중 처리가 되지 않은 쪽지 표시
-           				htmlText += "<td style='color : #86D5FF;'>처리중</td>";
-           			}else{
-	           			htmlText += "<td>처리중</td>";
+           				htmlText += "<td style='color : #86D5FF;'>답변 대기중..</td>";
+           			}else{	// 본인이 보낸 메시지 중 아직 답변이 되지 않았다면 취소가 가능하다.
+	           			htmlText += "<td><a href='javascript:deleteMsg("+item.message_num+")'>문의 취소</a></td>";
            			}
            		}else{
-           			htmlText += "<td>답변완료</td>";
+           			htmlText += "<td>답변 완료</td>";
            		}
            		htmlText += "</tr>";
            		$("#msgBoxBody").append(htmlText);
@@ -236,6 +236,31 @@ var fn_msgDetail = function(message_num) {
 	});
 }
 
+
+// 문의취소버튼
+var deleteMsg = function(message_num){
+	if (confirm("정말 취소하시겠습니까?")==true){    //확인
+		$.ajax({
+			type:"POST",
+			url:"/deleteMsg",
+			data:{"message_num":message_num},
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				if(data == "good"){
+					alert('취소 완료');
+					setMsgBox(1);
+				}else{
+					alert('오류 발생, 잠시 후 다시 시도하세요.');
+				}
+			}
+		});
+	 }else{   //취소
+		return false;
+	 }
+}
 // 글쓰기 모달 불러오는 로직
 $("#msg_write").on("click", function(e){
 	boxmodal.style.display = "none";
