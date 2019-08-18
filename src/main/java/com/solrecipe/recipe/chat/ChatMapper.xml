@@ -96,34 +96,9 @@
 	
 	<!-- 상언 -->
 
-	<insert id="insertChangeChatRoom">
-		<selectKey keyProperty="chatroom_num" resultType="int" order="BEFORE">
-			select count(*)+1 from change_tb
-		</selectKey>
-		insert into change_tb(CHATROOM_NUM, CHAT_ADDRESS,CHAT_CURMEMBER,CHAT_MAXMEMBER, USER_NUM,CHAT_STATUS,CHAT_TITLE,FIRSTDATE)
-		values(#{chatroom_num}, #{chat_address},1, #{chat_maxmember},#{user_num},1, #{chat_title},sysdate)
-	</insert>
-	
-	<insert id="insertWithChatRoom">
-		<selectKey keyProperty="chatroom_num" resultType="int" order="BEFORE">
-			select count(*)+1 from with_tb
-		</selectKey>
-		insert into with_tb(CHATROOM_NUM, CHAT_ADDRESS,CHAT_CURMEMBER,CHAT_MAXMEMBER, USER_NUM,CHAT_STATUS,CHAT_TITLE,FIRSTDATE)
-		values(#{chatroom_num}, #{chat_address},1, #{chat_maxmember},#{user_num},1, #{chat_title},sysdate)
-	</insert>
-	
-	
 	<insert id="insertChatRoom">
 		<selectKey keyProperty="vo.chatroom_num" resultType="int" order="BEFORE">
-			select nvl(max(chatroom_num),0)+1 from 
-				<choose>
-					<when test="select==0">
-						change_tb
-					</when>
-					<otherwise>
-						with_tb
-					</otherwise>
-				</choose>
+			select chatroom_seq.nextval from dual
 		</selectKey>
 		insert into 
 			<choose>
@@ -137,19 +112,6 @@
 		values(#{vo.chatroom_num}, #{vo.chat_address},1, #{vo.chat_maxmember},#{vo.user_num},1, #{vo.chat_title},sysdate)
 	</insert>
 	
-	
-	
-	
-	<insert id="insertChangeUser">
-		insert into CHANGE_USER_TB(CHATROOM_NUM,USER_NUM)
-		values(#{chatroom_num},#{user_num})
-	</insert>
-	
-	
-	<insert id="insertWithUser">
-		insert into with_user_tb(CHATROOM_NUM,USER_NUM)
-		values(#{chatroom_num},#{user_num})
-	</insert>
 	
 	<insert id="insertUser">
 		insert into 
@@ -169,36 +131,9 @@
 		)
 	</insert>	
 	
-	
-	
-	<insert id="insertChangeChat">
-		<selectKey keyProperty="chat_num" resultType="int" order="BEFORE">
-			select nvl(MAX(CHAT_NUM),0)+1 from CHANGE_CHAT_TB
-		</selectKey> 
-		insert into CHANGE_CHAT_TB(CHAT_NUM,CHAT_CONTENT,CHATROOM_NUM,USER_NUM,FIRSTDATE)
-		values(#{chat_num},#{chat_content},#{chatroom_num},#{user_num},sysdate)
-	</insert>
-	
-	<insert id="insertWithChat">
-		<selectKey keyProperty="chat_num" resultType="int" order="BEFORE">
-			select nvl(MAX(chat_num,0))+1 from WITH_CHAT_TB
-		</selectKey>
-		insert into with_chat_tb(CHAT_NUM,CHAT_CONTENT,CHATROOM_NUM,USER_NUM,FIRSTDATE)
-		values(#{chat_num},#{chat_content},#{chatroom_num},#{user_num},sysdate)
-	</insert>
-	
-	
 	<insert id="insertChat">
 		<selectKey keyProperty="vo.chat_num" resultType="int" order="BEFORE">
-			select nvl(MAX(CHAT_NUM),0)+1 from 
-				<choose>
-					<when test="select == 0">
-						CHANGE_CHAT_TB
-					</when>
-					<otherwise>
-						WITH_CHAT_TB
-					</otherwise>
-				</choose>
+			select chat_seq.nextval from dual
 		</selectKey> 
 		insert into 
 			<choose>
@@ -238,22 +173,9 @@
 	
 	
 	<update id="plusChatUserNum">
-		
-		<!-- <choose>
-		<when test="select==0">
-			update change_tb set chat_curmember=chat_curmember+1 where 
-			chat_curmember <![CDATA[ < (select chat_maxmember from change_tb where chatroom_num =#{chatroom_num}) and chatroom_num = #{chatroom_num}]]>
-		</when>
-		<otherwise>
-			update with_tb set chat_curmember=chat_curmember+1 where 
-			chat_curmember <![CDATA[ < (select chat_maxmember from with_tb where chatroom_num =#{chatroom_num}) and chatroom_num = #{chatroom_num}]]>
-		</otherwise>
-		</choose> -->
-		
 		update <include refid="SELECT_TABLE" /> set chat_curmember=chat_curmember+1 where 
 		chat_curmember <![CDATA[ < ]]> (select chat_maxmember from  <include refid="SELECT_TABLE" /> 
 		where chatroom_num =#{chatroom_num}) and chatroom_num = #{chatroom_num}
-		
 	</update>
 	
 	
@@ -273,9 +195,6 @@
 		where chatroom_num = #{chatroom_num} and user_num = #{user_num}
 	</delete>
 	
-	<select id="">
-	
-	</select>
 	
 	
 </mapper>
