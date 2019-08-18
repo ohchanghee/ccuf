@@ -130,6 +130,7 @@ $(document).ready(function(){
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+
 /* Modal Content/Box */
 .modal-content {
 	background-color: #fefefe;
@@ -143,24 +144,6 @@ $(document).ready(function(){
 		margin: 2% 5%; /* 15% from the top and centered */
 		padding: 1%;
 		width: 93%;
-	}
-}
-
-/* 메시지함 관련 */
-.messageC{
-	letter-spacing: 1px;
-    word-spacing: 3px;
-    line-height: 35px;
-}
-@media (max-width:500px){
-	#message_tb{
-		font-size:5px;
-	}
-	#msg_write{
-		font-size:1rem;
-	}
-	.messageHeads{
-		font-size:1rem !important;
 	}
 }
 
@@ -178,6 +161,28 @@ $(document).ready(function(){
 	cursor: pointer;
 }
 
+/* 모달 스크롤바 다 지워버림 */
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+/* 메시지함 관련 */
+.messageC{
+	letter-spacing: 1px;
+    word-spacing: 3px;
+    line-heigh: 35px;
+}
+@media (max-width:500px){
+	#message_tb{
+		font-size:5px;
+	}
+	#msg_write{
+		font-size:1rem;
+	}
+	.messageHeads{
+		font-size:1rem !important;
+	}
+}
+
 </style>
 
 </head>
@@ -185,7 +190,10 @@ $(document).ready(function(){
 
 <body bgcolor="black">
 
+ <!-- 메시지 관련 -->
  <jsp:include page = "../message/message_write.jsp"/> 
+ <jsp:include page="../message/message_box.jsp"/>
+ 
 
 <div class="site-wrap"  id="home-section">
 
@@ -339,68 +347,110 @@ $(document).ready(function(){
 
     </div>
     
+<script src="https://kit.fontawesome.com/d2c6942021.js"></script>
+
 <script type="text/javascript">
 var csrfHeaderName ="${_csrf.headerName}"; 
 var csrfTokenValue="${_csrf.token}";
 
-
-	function black_click(userNum){
-		var black_cnt = document.getElementById('black_btn' + userNum).value;
-		console.log(black_cnt);
-		
-	 		$.ajax({
-				url:"/admin_black",
-				type:"POST",
-				dataType:"text",
-				data: {"user_num":userNum, "user_black":black_cnt, "user_username" : userName},
-			    beforeSend: function(xhr) {
-				          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success:function(data){
-					console.log(userNum);
-					console.log(typeof data);
-					console.log("aaaa: " +black_cnt);
-					
-				/* 	if(black_cnt == 0){
-						
-						var data_plus = parseInt(data)+1;
-						console.log(typeof data_plus);
-						console.log('result1 : ' + data_plus);
-						
-						document.getElementById('black_btn' + userNum).value = '1';
-						
-					}else{ */
-						/* var data_m = parseInt(data)-1;
-						console.log(typeof data_m);
-						console.log('result2 : ' + data_m); */
-					if(black_cnt == 1){	
-						document.getElementById('black_btn' + userNum).value = '0';
-						
-					}
-					
-				},
-				error:function(request, status, error){
-					console.log("code : " + request.status +"\n" + "message : " + request.responseText + "\n" + " error : " + error);
-					alert("실패" + userNum + "&" + black_cnt);
-				}
-			}); 
-			 
-	}
-
+	// 쪽지함(message_box)
+	var boxmodal = document.getElementById('msgboxModal');
 	// 쪽지 쓰기(message_write)
 	var writeMsgModal = document.getElementById("write_msg");
 	
-	
-	// x버튼 누르면 현재 모달 없어지는 로직
-	$('.close').on("click",function(){
+	// 메시지 박스 또는 특정 페이지를 누른 경우 message_box를 초기화 해서 띄우는 로직.
+	var setMsgBox = function(page){
+		// 해당 페이지의 리스트를 불러와서 모달창에 출력하는 로직
+		$.ajax({
+			type:"POST",
+			url:"/message.do",
+			data:{"page":page},
+			dataType:"json",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				// 모두 지우고 시작
+				$("#msgBoxBody").empty();
+				if(data.size==0){
+					$("#msgBoxBody").append("<td colspan='5'>메세지함이 비어 있습니다.</td>")
+				}
+				// 1. 메시지리스트 띄워줌
+				else{
+					$.each(data, function(index, item){
+					// 날짜변환
+					var d = new Date(item.sendDate);
+					var year = d.getFullYear();
+					var month = d.getMonth()+1
+					 if(month<10){
+						 month = "0"+(d.getMonth()+1);
+					 }
+					var day = d.getDate();
+					 if(day<10){
+						 day = "0"+(d.getDate());
+					 }
+					 var date = year+"-"+month+"-"+day;
+					 var htmlText;
+					 htmlText += "<tr onclick='fn_msgDetail("+item.message_num+")' style='cursor:pointer;'>";
+					 // 보낸사람이 관리자인 경우 색 입히기
+					 if(item.sender_nickname == '관리자'){
+						 htmlText += "<td class='msg' style='color : #FFC69F;'>"+item.sender_nickname+"</td>"
+					 }else{
+						 htmlText += "<td class='msg'>"+item.sender_nickname+"</td>"
+					 }
+					 htmlText += "<td class='msg'>"+item.recver_nickname+"</td>"
+					 htmlText += "<td >"+item.index_content+"</td>";
+					 htmlText += "<td>"+date+"</td>";
+	           		if (item.isRecvSend == 0){
+	           			if(item.sender_num == 1){ // 관리인에게 받은 것 중 처리가 되지 않은 쪽지 표시
+	           				htmlText += "<td style='color : #86D5FF;'>처리중</td>";
+	           			}else{
+		           			htmlText += "<td>처리중</td>";
+	           			}
+	           		}else{
+	           			htmlText += "<td>답변완료</td>";
+	           		}
+	           		htmlText += "</tr>";
+	           		$("#msgBoxBody").append(htmlText);
+				});
+				
+				}
+			}
+		});
 		
-	/* 	boxmodal.style.display = "block";
-		msgModal.style.display = "none"; */
-		writeMsgModal.style.display = "none";
-		// 작성했던 내용 지우기
-		$("#send").val("");
-		$("#recv").val("");
-	})
+		// 페이징 처리를 한 뒤 모달창에 표시하는 로직
+		$.ajax({
+			type:"POST",
+			url:"/getPaging",
+			data:{"page":page},
+			dataType:"json",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				// 모두 지우고 시작
+				$(".paginated").empty();
+				var pageHTML = "<tr>"; 
+				if(data.startPage != 1){
+					pageHTML += "<td><a href='javascript:setMsgBox("+(data.startPage-1)+")'><i class='fas fa-angle-left' style='color:#FFC69F;'></i></a></td>"
+				}
+				for(i=data.startPage; i<=data.endPage; i++){
+					if(i==data.page){
+						pageHTML += "<td style='color:#FFC69F;'>"+i+"</td>"
+					}
+					else{
+						pageHTML += "<td><a href='javascript:setMsgBox("+i+")'>"+i+"</a></td>"
+					}
+				}
+				if(data.endPage < data.totalPage){
+					pageHTML += "<td><a href='javascript:setMsgBox("+(data.endPage+1)+")'><i class='fas fa-angle-right' style='color:#FFC69F;'></i></td>"
+				}
+				pageHTML += "<tr>"; 
+				
+				$(".paginated").append(pageHTML);
+			}
+		});
+	}
 	
 	function warning_click(userNum){
 		
@@ -410,9 +460,6 @@ var csrfTokenValue="${_csrf.token}";
 		var warning_btn = document.getElementById('warning_btn' + userNum);
 		console.log(warning_cnt);
 
-	/* 	var black_name =  document.getElementById('black_name' + userNum).value;
-		console.log(black_name); */
-		
  		$.ajax({
 			url:"/admin_warning",
 			type:"POST",
@@ -428,34 +475,54 @@ var csrfTokenValue="${_csrf.token}";
 				
 				if(warning_cnt == 0){
 					
-					document.getElementById('warning_btn' + userNum).value = 1;
+					writeMsgModal.style.display="block";
 					
-					writeMsgModal.style.display = "block"; 
-					
-					
+					// x버튼 누르면 현재 모달 없어지는 로직
+					$('.close').on("click",function(){
+						
+						writeMsgModal.style.display = "none";
+						// 작성했던 내용 지우기
+						$("#send").val("");
+						$("#recv").val("");
+						//document.getElementById('warning_btn' + userNum).value = 0;	
+					})
+				 	 $('.closeMsgBox').on("click",function(){
+						boxmodal.style.display = "none";
+						document.getElementById('warning_btn' + userNum).value = 1;	
+						
+					})  
 
 				}else  if(warning_cnt==1){
 					
-					document.getElementById('warning_btn' + userNum).value = 2;
-					writeMsgModal.style.display = "block";
+					writeMsgModal.style.display="block";
 					
-					
+					// x버튼 누르면 현재 모달 없어지는 로직
+					$('.close').on("click",function(){
+						
+						writeMsgModal.style.display = "none";
+						// 작성했던 내용 지우기
+						$("#send").val("");
+						$("#recv").val("");
+					})
+					$('.closeMsgBox').on("click",function(){
+						boxmodal.style.display = "none";
+						document.getElementById('warning_btn' + userNum).value =2;	
+					})
+
 				}else if(warning_cnt==2){
-				
+					
 					document.getElementById('warning_btn' + userNum).value = 3;
 					document.getElementById('black_btn' + userNum).value = 1;
 					
-					writeMsgModal.style.display = "block"; 
-							
-			
-				}
+				}			
 				
 			},
 			error:function(request, status, error){
 				console.log("code : " + request.status +"\n" + "message : " + request.responseText + "\n" + " error : " + error);
 				alert("실패" + userNum + "&" + warning_cnt);
 			}
-		}); 
+		});
+ 		
 	}
 </script>
 
