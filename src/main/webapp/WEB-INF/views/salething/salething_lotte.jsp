@@ -48,7 +48,7 @@
 		
 		function page_emart(){
 			newin=window.open('about:blank');
-			newin.location.href="http://emart.ssg.com/sale/main.ssg?Egnb=sale";
+			newin.location.href="http://emart.ssg.com/best/main.ssg?Egnb=best";
 		}
 	</script>
 </head>

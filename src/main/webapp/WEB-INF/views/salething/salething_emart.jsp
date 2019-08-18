@@ -48,7 +48,7 @@ ArrayList<String> em_buy = (ArrayList<String>)request.getAttribute("em_buy");
 		
 		function page_emart(){
 			newin=window.open('about:blank');
-			newin.location.href="http://emart.ssg.com/sale/main.ssg?Egnb=sale";
+			newin.location.href="http://emart.ssg.com/best/main.ssg?Egnb=best";
 		}
 	</script>
 </head>
@@ -117,7 +117,7 @@ ArrayList<String> em_buy = (ArrayList<String>)request.getAttribute("em_buy");
         	<!-- 해당 링크로 이동  -->
         	
         <%
-        	for(int i=0; i<4; i++){
+        	for(int i=149; i<153; i++){
         %>
           <div class="col-lg-3 col-md-4 mb-4 mb-lg-0" data-aos="fade-up" >
             <div class="block-team-member-1 text-center rounded">
@@ -127,7 +127,7 @@ ArrayList<String> em_buy = (ArrayList<String>)request.getAttribute("em_buy");
 											alt="Image" class="img-fluid">
                
               <h3 class="font-size-18 text-center mb-4 mt-4"><%=em_title.get(i) %><br></h3>
-              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2">판매가: <%=em_cost.get(i) %></span>
+              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-13 mb-2"><%-- 판매가: <%=em_cost.get(i) %> --%></span>
               <p class="px-3 font-size-16 mb-3">할인가격 : <%=em_buy.get(i) %>원</p>
               
             </div>
