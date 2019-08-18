@@ -73,7 +73,7 @@ public class MainController {
 		
 		String url_hp = "http://www.homeplus.co.kr/app.exhibition.cheapershop.CheaperShop.ghs?comm=usr.cheapershop&WT.ac=Main_GNB_ssaday";
 		String url_lt = "http://www.lottemart.com/plan/planDetail.do?CategoryID=C20600090001&GroupCd=01";
-		String url_em = "http://emart.ssg.com/sale/main.ssg?Egnb=sale"; 
+		String url_em = "http://emart.ssg.com/best/main.ssg?Egnb=best"; 
 		
 		Document doc_hp = null;
 		Document doc_lt = null;
