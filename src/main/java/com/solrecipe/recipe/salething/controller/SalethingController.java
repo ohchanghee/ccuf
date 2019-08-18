@@ -114,7 +114,7 @@ public class SalethingController {
 	@RequestMapping(value="/salething_emart", method=RequestMethod.GET)
 	public ModelAndView emart_crawl(ModelAndView model) {
 		
-		String url = "http://emart.ssg.com/sale/main.ssg?Egnb=sale";
+		String url = "http://emart.ssg.com/best/main.ssg?Egnb=best";
 		Document doc = null;
 		
 		try {
