@@ -63,7 +63,7 @@ public class MessageController {
 	// 메시지 보냄.
 	@PostMapping(value = "/sendMsg", produces = "application/text;charset=UTF-8")
 	@ResponseBody
-	public String sendMessage(String message_content, Principal principal) throws Exception {
+	public String sendMessage(String message_content, int recver_num, Principal principal) throws Exception {
 		String username = principal.getName();
 		MemberVO vo = commonService.getMyVO(username);
 
@@ -71,7 +71,7 @@ public class MessageController {
 		MessageVO messageVO = new MessageVO();
 		messageVO.setSend_content(message_content);
 		messageVO.setSender_num(vo.getUser_num());
-		messageVO.setRecver_num(1);
+		messageVO.setRecver_num(recver_num);
 		int n = messageService.sendMsg(messageVO);
 		if (n == 1) {
 			return "good";

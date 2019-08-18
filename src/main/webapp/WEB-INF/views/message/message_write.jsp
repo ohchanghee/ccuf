@@ -65,7 +65,7 @@ $("#write_btn").click(function(){
 	$.ajax({
 		type:"POST",
 		url:"/sendMsg",
-		data:{"message_content": $('#recv').val()},
+		data:{"message_content": $('#recv').val(), "recver_num": 1},
 		dataType:"text",
 		beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
