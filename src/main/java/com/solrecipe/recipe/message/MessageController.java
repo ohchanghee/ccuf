@@ -27,7 +27,7 @@ public class MessageController {
 	@Autowired
 	private AdminServiceImpl adminService;
 	
-	// 최초에 메시지함 띄움
+	// 페이지를 입력받으면 해당하는 메시지를 담은 메시지함 띄움
 	@PostMapping(value = "/message.do", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public ArrayList<MessageVO> message(int page, Principal principal) throws Exception {
