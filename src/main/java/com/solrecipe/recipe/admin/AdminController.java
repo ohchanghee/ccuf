@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.message.MessageVO;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 import com.solrecipe.recipe.user.domain.MemberVO;
@@ -347,18 +348,28 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin_warning", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String admin_warning(int user_num, int user_warning, int user_black, String user_username, MemberVO memvo, Model model) {
+	public String admin_warning(int user_num, int user_warning, int user_black, String user_username, MemberVO memvo, MessageVO msgvo, Model model) {
+		
+		System.out.println("yayay: " + user_warning);
+		System.out.println(msgvo.getSender_num());
 		
 		if(user_warning != 3) {
-			user_warning++;
-			memvo.setUser_warning(user_warning);
-			model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
-		}
+			
+				user_warning++;
+				memvo.setUser_warning(user_warning);
+				model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
+			
+			}
+			System.out.println("user_warning이 3아닐떄: " + user_warning);
+		
+		System.out.println("lalala: " + user_warning);
 		
 		if(user_warning == 3){
+			
 			memvo.setUser_warning(user_warning);
 			model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
 			model.addAttribute("black", adminService.usersUpdate_black(memvo));
+			
 			System.out.println("컨트롤러" + user_username);
 			
 			model.addAttribute("blackName", adminService.user_blackOut(user_num));
