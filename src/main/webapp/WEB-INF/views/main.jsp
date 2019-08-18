@@ -10,7 +10,6 @@
 										"계란", "돼지고기", "오리고기", "닭고기", "어묵", "시금치", "배추"};
 	int ran = (int)(Math.random()* search_ph.length);
 	String ran_ph = search_ph[ran];
-
 	String kakao_userid = (String)session.getAttribute("userId");
 	String kakao_usernickname = (String)session.getAttribute("userNickname");
 %>
@@ -20,11 +19,9 @@ ArrayList<String> hp_img = (ArrayList<String>)request.getAttribute("hp_img");
 ArrayList<String> hp_title = (ArrayList<String>)request.getAttribute("hp_title");
 ArrayList<String> hp_cost = (ArrayList<String>)request.getAttribute("hp_cost");
 ArrayList<String> hp_buy = (ArrayList<String>)request.getAttribute("hp_buy");
-
 ArrayList<String> lt_img = (ArrayList<String>)request.getAttribute("lt_img");
 ArrayList<String> lt_title = (ArrayList<String>)request.getAttribute("lt_title");
 ArrayList<String> lt_buy = (ArrayList<String>)request.getAttribute("lt_buy");
-
 ArrayList<String> em_img = (ArrayList<String>)request.getAttribute("em_img");
 ArrayList<String> em_title = (ArrayList<String>)request.getAttribute("em_title");
 ArrayList<String> em_cost = (ArrayList<String>)request.getAttribute("em_cost");
@@ -62,16 +59,13 @@ ArrayList<String> em_buy = (ArrayList<String>)request.getAttribute("em_buy");
 
 
 <style>
-
 /*Font*/
 body {
 	font-family: 'Jua', sans-serif;
 }
-
 .search {
 	margin-top: -250px;
 }
-
 /* -webkit-border-radius: 5px;
   			-moz-border-radius: 5px;
   			두개는 테두리를 둥글게  */
@@ -97,20 +91,17 @@ body {
 		margin-left:3%;
 	}
 }
-
 /* 클릭 시 파란테두리 없애기  */
 .text-center input#recipe_search:focus, .text-center .icon #search_icon:focus, button#login, button#signup
 	{
 	outline: none;
 }
-
 /* placeholder */
 .text-center .placeholder {
 	padding-left: 20%;
 	font-size: 1.5rem;
 	color: #65737e;
 }
-
 /* z-index : 숫자가 적으면 뒤로 배치 크면 앞으로 배치 */
 .text-center .icon {
 	position: absolute;
@@ -126,14 +117,11 @@ body {
 		margin-left:42%;
 	}
 }
-
 .text-center .icon #search_icon {
 	height: 50px;
 	width: 50px;
 	opacity: 0.6;
 }
-
-
 /* The Modal (background) */
 .modal {
 	display: none; /* Hidden by default */
@@ -147,8 +135,6 @@ body {
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
-
-
 /* Modal Content/Box */
 .modal-content {
 	background-color: #fefefe;
@@ -178,9 +164,6 @@ body {
 		width: 93%;
 	}
 }
-
-
-
 .new-modal-content {
 	background-color: #fefefe;
 	margin: 8% auto; /* 15% from the top and centered */
@@ -208,7 +191,6 @@ body {
 		width: 93%;
 	}
 }
-
 .sign_up_content {
 	background-color: #fefefe;
 	margin: 1% auto; /* 15% from the top and centered */
@@ -222,7 +204,6 @@ body {
 		width: 93%;
 	}
 }
-
 .kakao_sign_up_content {
 	background-color: #fefefe;
 	margin: 8% auto; /* 15% from the top and centered */
@@ -237,7 +218,6 @@ body {
 		width: 93%;
 	}
 }
-
 /* The Close Button */
 .close {
 	color: #aaa;
@@ -245,30 +225,25 @@ body {
 	font-size: 28px;
 	font-weight: bold;
 }
-
 .close:hover, .close:focus {
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
 }
-
 /*로그인 상태 유지*/
 .checkbox {
 	clear: both;
 	overflow: hidden;
 }
-
 .checkbox label {
 	width: 100%;
 	border-radius: 3px;
 	border: 1px solid #D1D3D4;
 	font-weight: normal;
 }
-
 .checkbox input[type="checkbox"]:empty {
 	display: none;
 }
-
 .checkbox input[type="checkbox"]:empty ~ label {
 	position: relative;
 	line-height: 2.5em;
@@ -280,7 +255,6 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 }
-
 .checkbox input[type="checkbox"]:empty ~ label:before {
 	position: absolute;
 	display: block;
@@ -292,32 +266,26 @@ body {
 	background: #D1D3D4;
 	border-radius: 3px 0 0 3px;
 }
-
 .checkbox input[type="checkbox"]:hover:not (:checked ) ~ label {
 	color: #888;
 }
-
 .checkbox input[type="checkbox"]:hover:not (:checked ) ~ label:before {
 	content: '\2714';
 	text-indent: .9em;
 	color: #C2C2C2;
 }
-
 .checkbox input[type="checkbox"]:checked ~ label {
 	color: #777;
 }
-
 .checkbox input[type="checkbox"]:checked ~ label:before {
 	content: '\2714';
 	text-indent: .9em;
 	color: #333;
 	background-color: #ccc;
 }
-
 .checkbox input[type="checkbox"]:focus ~ label:before {
 	box-shadow: 0 0 0 3px #999;
 }
-
 .checkbox input[type="checkbox"]:checked ~ label:before {
 	color: #fff;
 	background-color: #FFC69F;
@@ -333,16 +301,13 @@ body {
 	z-index: -1000;
 	overflow: hidden;
 }
-
 label#menu_label, #menu{
 	display:none;
 }
-
 #nav{
 	background-color:rgba(255, 255, 255, 0.7);
 	padding-left:0;
 }
-
 @media (max-width:991.98px){
 	#nav {position:absolute;  right:-12em; width:5.5em;}
 	ul>li{
@@ -356,33 +321,26 @@ label#menu_label, #menu{
 	#menu:checked ~ #recipe-section{margin-right:8.5em; margin-left:-8.5em;}
 	
 }
-
 /*LoginModal 투명도*/
 /* #loginModal {
 	opacity: 0.9;
 }
-
 #email_signupModal{
 	opacity: 0.9;
 } */
-
 .videoAtag{
 	color: #939393;
 }
-
 .videoAtag:hover{
 	color: #FFC69F;
 }
-
 .preview_img{
 	width:100%;
 }
-
 /* 모달 스크롤바 다 지워버림 */
 .modal::-webkit-scrollbar { 
     display: none; 
 }
-
 /* 메시지함 관련 */
 .messageC{
 	letter-spacing: 1px;
@@ -400,7 +358,6 @@ label#menu_label, #menu{
 		font-size:1rem !important;
 	}
 }
-
 </style>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -435,7 +392,6 @@ label#menu_label, #menu{
 				$(this).addClass("placeholder").val(searchLabel);
 			}
 		});
-
 		/* 아무것도 입력하지 않았을 때 submit버튼 누르면 넘어가는 값이 공백.. */
 		$(".text-center form#searchText").submit(function(){
 			if($(".text-center input#recipe_search").val() == searchLabel) {
@@ -445,7 +401,6 @@ label#menu_label, #menu{
 		
 			  
 	});
-
 </script>
     <jsp:include page = "customLogin.jsp"/>
 		
@@ -633,7 +588,6 @@ label#menu_label, #menu{
             </div>
           </div>
         </div>
-
       </div> -->
 
     </div>
@@ -718,7 +672,6 @@ label#menu_label, #menu{
               
             </div>
           </div>
-
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
             <div class="block-team-member-1 text-center rounded">
         
@@ -795,11 +748,11 @@ label#menu_label, #menu{
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
             <div class="block-team-member-1 text-center rounded">
             
-                <img src=<%=em_img.get(0) %> alt="Image" class="img-fluid" style="height:227px;">
+                <img src=<%=em_img.get(149) %> alt="Image" class="img-fluid" style="height:227px;">
                 
-              <h3 class="font-size-20 text-center mb-4 mt-4"><%= em_title.get(0)%></h3>
-              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-14 mb-2">판매가 : <%=em_cost.get(0) %>원</span>
-              <p class="px-3 font-size-17 mb-3">할인가격 :<%=em_buy.get(0) %>원</p>
+              <h3 class="font-size-20 text-center mb-4 mt-4"><%= em_title.get(149)%></h3>
+              <span class="d-block font-gray-5 letter-spacing-1 text-uppercase font-size-14 mb-2"><%-- 판매가 : <%=em_cost.get(0) %>원 --%></span>
+              <p class="px-3 font-size-17 mb-3">할인가격 :<%=em_buy.get(149) %>원</p>
               
             </div>
           </div>
@@ -814,7 +767,6 @@ label#menu_label, #menu{
 	<jsp:include page = "headNfoot/footer.jsp"/> 
 	
 <script type="text/javascript">
-
 	var csrfHeaderName ="${_csrf.headerName}"; 
 	var csrfTokenValue="${_csrf.token}";
 	
@@ -848,7 +800,6 @@ label#menu_label, #menu{
 </script>
 	
 <script type="text/javascript">
-
 	var csrfHeaderName ="${_csrf.headerName}"; 
 	var csrfTokenValue="${_csrf.token}";
 	
@@ -891,41 +842,30 @@ label#menu_label, #menu{
 </script>
 
 <script>
-
 //메인에서 요리영상 썸네일 클릭 시 detail로 이동
 function goDetail(video_num){
 	location.href="foodvideo_detail?video_num="+video_num;
 }
-
 var modal = document.getElementById('loginModal');
 var modal_email = document.getElementById('email_signupModal');
 var modal_sign_up = document.getElementById('sign_up_Modal');
 var modal_findPW = document.getElementById('findPWModal');
 var modal_newPW = document.getElementById('newPWModal');
 var modal_kakao_sign_up = document.getElementById('kakao_sign_up_Modal');
-
-
-
 var span1 = document.getElementsByClassName("close")[0];
 var span2 = document.getElementsByClassName("close")[1];
 var span3 = document.getElementsByClassName("close")[2];
 var span4 = document.getElementsByClassName("close")[3];
 var span5 = document.getElementsByClassName("close")[4];
 var span6 = document.getElementsByClassName("close")[5];
-
 //카카오톡 로그인   ... 
 var chkKakao = document.getElementById('chkKakao').value;
 console.log("chk kakao : " + chkKakao);
 if(chkKakao == "-1"){
 	console.log("if chk kakao : " + chkKakao);
-
 	modal_kakao_sign_up.style.display = "block";
 }
-
-
-
 $('#login').click(function() {
-
 	  modal.style.display = "block";
 	 /*  $(this).css('z-index', 3000); */
    
@@ -934,25 +874,17 @@ $('#login').click(function() {
 $('#signup').click(function() {
    modal.style.display = "none";
    modal_email.style.display = "block";
-
 });
-
 //비밀번호 찾 
 $('#findPW_btn').click(function() {
-
    modal.style.display = "none";
    modal_findPW.style.display = "block";
-
 });
-
 //비밀번호 찾기 다음 
 /* $('#find_btn').click(function() {
-
 	modal_findPW.style.display = "none";
    modal_newPW.style.display = "block";
-
 }); */
-
 span1.onclick = function() {
 	   modal.style.display = "none";
 	   }
@@ -986,32 +918,22 @@ span1.onclick = function() {
 		   modal_kakao_sign_up.style.display = "none";
 	   }
 	}
-
 $("#login_button").on("click", function(e){
-
 	e.preventDefault();
 	$("#login_form").submit();
 });
-
-
 //로그인 페이지에 있는 회원가입 버튼 - 이메일 인증 페이지로 이동
 $("#sign_up_btn").on("click", function(e){
-
 	modal.style.display = "none";
 	
 	modal_email.style.display = "block";
 });
-
 /* //회원가입 페이지에서 이메일 인증 페이지로 이동
 $("#move_email").on("click", function(e){
-
 	modal_sign_up.style.display = "none";
 	
 	modal_email.style.display = "block";
 }); */
-
-
-
 //이메일 인증 페이지에 있는 다음 버튼 - 회원가입이지로 이동 
 $("#signup_btn").on("click", function(e){
 	var cnt =0;
@@ -1080,8 +1002,6 @@ $("#signup_btn").on("click", function(e){
             			}
         
             			
-
-
             		
             		 }); 
             		 
@@ -1095,10 +1015,6 @@ $("#signup_btn").on("click", function(e){
 	modal_sign_up.style.display = "block"; */
     
 });
-
-
-
-
 $('#recipe_link').tooltip({title:"레시피",placement:"bottom"});
 $('#video_link').tooltip({title:"요리 영상",placement:"bottom"});
 $('#recipegram_link').tooltip({title:"레시피그램",placement:"bottom"});
