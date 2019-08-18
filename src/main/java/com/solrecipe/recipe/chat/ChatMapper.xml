@@ -54,9 +54,9 @@
 					    </otherwise>
 			  		</choose>
                 where c.user_num = u.user_num and
-					u.user_num = d.user_num
+					u.user_num = d.user_num  and chat_status = 1
                 order by firstdate desc)
-            where rownum <![CDATA[< ]]> #{startNum}+15
+            where rownum <![CDATA[< ]]> #{startNum}+15 
             )
 		where
 			r >= #{startNum} 
