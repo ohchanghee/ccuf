@@ -49,7 +49,7 @@
 	
 	</script>
 	<style>
-	input:focus, div:focus, button:focus {
+	input:focus, div:focus, button:focus, textarea:focus {
 	outline: none;
 }
 #mob_timer{
@@ -73,7 +73,7 @@
 	cursor:pointer;
 }
 	</style>
-<title>Home</title>
+<title>레시피</title>
 </head>
 <body>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
@@ -92,6 +92,7 @@
 	<script src="/resources/js/slick.min.js"></script>
 	<script src="/resources/js/typed.js"></script>
 	<script src="/resources/js/bootstrap.min.js"></script>
+
 		<jsp:include page="../headNfoot/header.jsp"></jsp:include>
 		<%-- <%@include file="../headNfoot/header.jsp" %> 이상하게 에러 걸림;;;--%>
 	<div class="subsite-section bg-light" style="padding-bottom: 2%;padding-top:1.5em; font-family: 'Jua', sans-serif;">
@@ -115,7 +116,7 @@
 		
 		
 		<div class="container pt-3 " >
-		<div class="row col-md-8 col-sm-12 col-xs-12 font-size-28" style=" border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975); margin-left:15%;">
+		<div class="row col-md-8 col-sm-12 col-xs-12 font-size-28" style=" border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975);margin-left: auto; margin-right: auto; ">
 			<input type="text" class="pt-3 pb-3" style="background:none; border:none; text-align:center; width:100%; font-family: 'Jua', sans-serif;" value="${basic.recipe_title}"/>
 					
 					
@@ -125,19 +126,19 @@
 		
 		
 		<div class="container pt-5 ">			
-		<div class="row col-md-11 col-sm-12 col-xs-12" style="margin-left:15%; height:50%; ">
+		<div class="row col-md-12 col-sm-12 col-xs-12" style=" height:50%; ">
 
 			<!-- 대표 이미지 -->
-
-				<img src="${basic .recipe_img}" class="img-fluid rounded" style="float: center; height:100%;">
-	
+			
+				<img src="${basic .recipe_img}" class="img-fluid rounded" style=" height:100%;margin-left: auto; margin-right: auto; display: block;">
+			
 			
 			
 		</div>
 		
-		<div class="container mt-5 ml-5">
+		<div class="container pt-3">
 		<!-- 레시피 이름, 주재료, 부재료,  -->
-			<div class="row col-md-8 col-sm-12 col-xs-12" style="border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975); margin-left:5%;">
+			<div class="row col-md-8 col-sm-12 col-xs-12" style="border-top:1px solid rgba(0,0,0,.0975); border-bottom:1px solid rgba(0,0,0,.0975); margin-left: auto; margin-right: auto; ">
 				<div class="col-md-12 col-sm-12 col-xs-12 pt-2 pb-2 font-size-22">
 				 주재료 리스트
 				
@@ -145,7 +146,7 @@
 				
 				<c:forEach items="${fn:split(basic.recipe_food_main,',')}" var="recipe_food_main">
 
-				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-20" style="color:#65737e;">
+				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-18" style="color:#65737e;">
 					
 					${recipe_food_main}
 				</div>
@@ -159,7 +160,7 @@
 				
 				<c:forEach items="${fn:split(basic.recipe_food_suv,',')}" var="recipe_food_suv">
 
-				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-20" style="color:#939393;">
+				<div class="col-md-3 col-sm-12 col-xs-12 pt-2 pb-2 font-size-18" style="color:#939393;">
 					
 					${recipe_food_suv}
 				</div>
@@ -172,9 +173,9 @@
 		</div>
 		
 		<br>
-		<div class="row mb-2 col-md-10 col-sm-12 col-xs-12 ml-5 " contentEditable="true" style="clear: both; padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border:1px solid rgba(0,0,0,.0975);table-layout: fixed; background-color:#fff;"">
+		<div class="row mb-2 col-md-10 col-sm-12 col-xs-12 " contentEditable="true" style="clear: both; padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border:1px solid rgba(0,0,0,.0975);table-layout: fixed; background-color:#fff;margin-left: auto; margin-right: auto; ">
 		<!-- 	<div class="col-sm-11 " contentEditable="true" style="padding-left:10px; padding-bottom:10px; width: 100%; border: 1; overflow: visible; text-overflow: ellipsis; border:1px solid rgba(0,0,0,.0975);table-layout: fixed; background-color:#fff;">
-			 --><div class=" text-center mt-3" id="mob_timer" >
+			 --><div class=" text-center col-md-12 mt-3" id="mob_timer" >
         
 				        <!-- Timer -->
 				
@@ -196,12 +197,13 @@
 				<c:forEach var="item" items="${cooking_list}" varStatus="index">
 				<div class="col-md-12" style="height:100%;">
 					<br>
-					<div  class="col-md-6 font-size-20" >
-						${item.cooking_num}.&nbsp;${item.cooking_content}
-					</div>
+					<textarea rows="10" class="col-md-7 font-size-20" style="border:none;resize: none; font-family: 'Jua', sans-serif;" readonly>${item.cooking_num}.&nbsp;${item.cooking_content}
+					</textarea>
 					
+
+	
 					<c:if test="${ item.cooking_img != null}">
-					
+				
 						<img src="${item.cooking_img}" class="col-md-5"style="width: 100%; float:right; padding-top:0;"/>
 					
 					</c:if>
