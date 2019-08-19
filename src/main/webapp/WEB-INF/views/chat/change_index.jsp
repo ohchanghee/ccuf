@@ -705,7 +705,7 @@ label {
 									} else if (recv['type']==='JOIN' || recv['type']==='EXIT') {//인원이 늘거나 줄어드는 경우 인원수를 다시 써준다.
 										let curNum = recv['userList'].length;
 										let tmp = document.getElementById('ChattingRoomTitle');
-										tmp.innerText = tmp.innerText.replace(sss.innerText.indexOf("/")-1,curNum.toString());
+										tmp.innerText = tmp.innerText.replace(tmp.innerText.indexOf("/")-1,curNum.toString());
 									} /* else if (recv['type']==='EXIT') {
 										
 									} */
