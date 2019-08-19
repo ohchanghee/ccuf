@@ -1,6 +1,7 @@
 package com.solrecipe.recipe.admin;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,16 +274,6 @@ public class AdminController {
 	 * "/admin/admin_chatting"; }
 	 */
 
-	@GetMapping("/admin_message")
-	public String admin_message() {
-		return "/admin/admin_message";
-	}
-
-	@GetMapping("/admin_msg")
-	public String admin_msg() {
-		return "/admin/admin_msg";
-	}
-
 	@RequestMapping(value = "/admin_users", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	// @ResponseBody
 	// @GetMapping("/admin_users")
@@ -421,5 +412,84 @@ public class AdminController {
 
 		return result;
 	}
+	
+	
+	// admin_message관련
+	
+	// 관리자가 받은 메시지
+	@GetMapping("/admin_receiveMsg")
+	public String admin_receiveMsg(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		
+		int totalCnt = adminService.getTotalCnt("receiveMsg");
+		Paging paging = new Paging(15, 10, page, totalCnt);
+		ArrayList<MessageVO> msgList = (ArrayList<MessageVO>) adminService.getReceiveMsg(paging.page);
 
+		model.addAttribute("msgList", msgList);
+		model.addAttribute("totalPosts", totalCnt);
+		model.addAttribute("page", paging.page);
+		model.addAttribute("startPage", paging.startPage);
+		model.addAttribute("endPage", paging.endPage);
+		model.addAttribute("totalPage", paging.totalPage);
+		return "/admin/admin_receiveMsg";
+	}
+
+	@GetMapping("/admin_searchReceiveMsg")
+	public String admin_searchReceiveMsg(@RequestParam(value = "page", defaultValue = "1") int page, String search,
+			Model model) {
+		
+		int totalCnt = adminService.getSearchedCnt("receiveMsg", search);
+		// 페이징
+		Paging paging = new Paging(15, 10, page, totalCnt);
+		
+		ArrayList<MessageVO> msgList = (ArrayList<MessageVO>) adminService.getSearchedReceiveMsg(paging.page, search);
+		model.addAttribute("totalPosts", paging.totalPosts);
+		model.addAttribute("msgList", msgList);
+		model.addAttribute("page", paging.page);
+		model.addAttribute("startPage", paging.startPage);
+		model.addAttribute("endPage", paging.endPage);
+		model.addAttribute("totalPage", paging.totalPage);
+		// 검색 내용을 추가.
+		model.addAttribute("search", search);
+
+		return "/admin/admin_receiveMsg";
+	}
+	
+	// 관리자가 보낸 메시지
+		@GetMapping("/admin_sendMsg")
+		public String admin_sendMsg(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+			
+			int totalCnt = adminService.getTotalCnt("sendMsg");
+			Paging paging = new Paging(15, 10, page, totalCnt);
+			ArrayList<MessageVO> msgList = (ArrayList<MessageVO>) adminService.getSendMsg(paging.page);
+
+			model.addAttribute("msgList", msgList);
+			model.addAttribute("totalPosts", totalCnt);
+			model.addAttribute("page", paging.page);
+			model.addAttribute("startPage", paging.startPage);
+			model.addAttribute("endPage", paging.endPage);
+			model.addAttribute("totalPage", paging.totalPage);
+			return "/admin/admin_sendMsg";
+		}
+
+		@GetMapping("/admin_searchSendMsg")
+		public String admin_searchSendMsg(@RequestParam(value = "page", defaultValue = "1") int page, String search,
+				Model model) {
+			
+			int totalCnt = adminService.getSearchedCnt("sendMsg", search);
+			// 페이징
+			Paging paging = new Paging(15, 10, page, totalCnt);
+			
+			ArrayList<MessageVO> msgList = (ArrayList<MessageVO>) adminService.getSearchedSendMsg(paging.page, search);
+			model.addAttribute("totalPosts", paging.totalPosts);
+			model.addAttribute("msgList", msgList);
+			model.addAttribute("page", paging.page);
+			model.addAttribute("startPage", paging.startPage);
+			model.addAttribute("endPage", paging.endPage);
+			model.addAttribute("totalPage", paging.totalPage);
+			// 검색 내용을 추가.
+			model.addAttribute("search", search);
+
+			return "/admin/admin_sendMsg";
+		}
+		
 }

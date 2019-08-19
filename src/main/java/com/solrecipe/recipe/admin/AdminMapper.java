@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.message.MessageVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
 import com.solrecipe.recipe.user.domain.MemberVO;
 
@@ -47,4 +48,10 @@ public interface AdminMapper {
 	int userUpdate_warning(MemberVO memVo);
 	String user_blackOut_trg(@Param(value="user_username")String user_username, @Param(value="user_num")int user_num);
 	int user_blackOut(int user_num);
+	
+	//메시지 관리
+	List<MessageVO> getReceiveMsg(@Param("startNum") int startNum, @Param("endNum") int endNum);
+	List<MessageVO> getSearchedReceiveMsg(@Param("startNum") int startNum, @Param("endNum") int endNum, @Param("keyword") String keyword);
+	List<MessageVO> getSendMsg(@Param("startNum") int startNum, @Param("endNum") int endNum);
+	List<MessageVO> getSearchedSendMsg(@Param("startNum") int startNum, @Param("endNum") int endNum, @Param("keyword") String keyword);
 }

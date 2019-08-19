@@ -33,6 +33,17 @@
 		<result property="user_num" column="user_num" />
 		<result property="user_nickname" column="user_nickname" />
 	</resultMap>
+	
+	<resultMap type="MessageVO" id="messageResultMap">
+		<result property="message_num" column="message_num" />
+		<result property="sender_num" column="sender_num" />
+		<result property="recver_num" column="recver_num" />
+		<result property="send_content" column="send_content" />
+		<result property="recv_content" column="recv_content" />
+		<result property="sendDate" column="sendDate" />
+		<result property="recvSendDate" column="recvSendDate" />
+		<result property="isRecvSend" column="isRecvSend" />
+	</resultMap>
 
 	<sql id="SELECT_COOKING_TB">
 		<choose>
@@ -62,6 +73,12 @@
 			<when test='whichPage.equals("message")'>
 				message_tb
 			</when>
+			<when test='whichPage.equals("receiveMsg")'>
+				message_tb where recver_num = 1
+			</when>
+			<when test='whichPage.equals("sendMsg")'>
+				message_tb where sender_num = 1
+			</when>
 		</choose>
 	</select>
 
@@ -90,6 +107,24 @@
 				'%'||#{keyword}||'%' or user_name
 				like '%'||#{keyword}||'%' or
 				user_nickname like '%'||#{keyword}||'%'
+			</when>
+			<when test='whichPage.equals("receiveMsg")'>
+			(select * from
+				(select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as sender_nickname
+					from message_tb m, user_detail_tb u
+					where m.recver_num = 1 and m.sender_num = u.user_num)
+			where message_num like '%'||#{keyword}||'%' or send_content like '%'||#{keyword}||'%' or
+			sender_nickname like '%'||#{keyword}||'%' )
+			</when>
+			<when test='whichPage.equals("sendMsg")'>
+			(select * from
+				(select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as recver_nickname
+					from message_tb m, user_detail_tb u
+					where m.sender_num = 1 and m.recver_num = u.user_num)
+			where message_num like '%'||#{keyword}||'%' or send_content like '%'||#{keyword}||'%' or
+			recver_nickname like '%'||#{keyword}||'%' )
 			</when>
 		</choose>
 	</select>
@@ -392,4 +427,60 @@
 		update user_tb set user_pw='null' where user_num = #{user_num}
 	</update>
 	
+	<select id="getReceiveMsg" resultMap="messageResultMap">
+		select * from(
+			select message_num, sender_num, recver_num, send_content, recv_content, sendDate, recvSendDate, isRecvSend, sender_nickname, rownum r 
+			from(
+				select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as sender_nickname
+				from message_tb m, user_detail_tb u
+				where m.recver_num = 1 and m.sender_num = u.user_num
+				order by sendDate desc)
+			)
+		where r >= #{startNum} and r <![CDATA[<=]]> #{endNum}
+	</select>
+	<select id="getSearchedReceiveMsg" resultMap="messageResultMap">
+		select * from(
+			select message_num, sender_num, recver_num, send_content, recv_content, sendDate, recvSendDate, isRecvSend, sender_nickname, rownum r 
+			from(
+				select * from(
+					select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as sender_nickname
+					from message_tb m, user_detail_tb u
+					where m.recver_num = 1 and m.sender_num = u.user_num
+					order by sendDate desc)
+				where message_num like '%'||#{keyword}||'%' or send_content like '%'||#{keyword}||'%' or
+				sender_nickname like '%'||#{keyword}||'%' 
+				)
+			)
+		where r >= #{startNum} and r <![CDATA[<=]]> #{endNum}
+	</select>
+	<select id="getSendMsg" resultMap="messageResultMap">
+		select * from(
+			select message_num, sender_num, recver_num, send_content, recv_content, sendDate, recvSendDate, isRecvSend, recver_nickname, rownum r 
+			from(
+				select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as recver_nickname
+				from message_tb m, user_detail_tb u
+				where m.sender_num = 1 and m.recver_num = u.user_num
+				order by sendDate desc)
+			)
+		where r >= #{startNum} and r <![CDATA[<=]]> #{endNum}
+	</select>
+	<select id="getSearchedSendMsg" resultMap="messageResultMap">
+		select * from(
+			select message_num, sender_num, recver_num, send_content, recv_content, sendDate, recvSendDate, isRecvSend, recver_nickname, rownum r 
+			from(
+				select * from(
+					select m.message_num, m.sender_num, m.recver_num, m.send_content, m.recv_content,
+					m.sendDate, m.recvSendDate, m.isRecvSend, u.user_nickname as recver_nickname
+					from message_tb m, user_detail_tb u
+					where m.sender_num = 1 and m.recver_num = u.user_num
+					order by sendDate desc)
+				where message_num like '%'||#{keyword}||'%' or send_content like '%'||#{keyword}||'%' or
+				recver_nickname like '%'||#{keyword}||'%' 
+				)
+			)
+		where r >= #{startNum} and r <![CDATA[<=]]> #{endNum}
+	</select>
 </mapper>

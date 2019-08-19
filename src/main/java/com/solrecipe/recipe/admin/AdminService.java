@@ -5,6 +5,7 @@ import java.util.List;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.message.MessageVO;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_MarkVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
@@ -63,4 +64,10 @@ public interface AdminService {
 	boolean usersUpdate_warning(MemberVO memVo);
 	//String user_blackOut_trg(String user_username, int user_num);
 	int user_blackOut(int user_num);
+	
+	// 메시지 관리
+	List<MessageVO> getReceiveMsg(int page);
+	List<MessageVO> getSearchedReceiveMsg(int page, String keyword);
+	List<MessageVO> getSendMsg(int page);
+	List<MessageVO> getSearchedSendMsg(int page, String keyword);
 }

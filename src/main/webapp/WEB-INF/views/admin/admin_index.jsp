@@ -78,7 +78,7 @@
 	var colorData = ["red", "orange", "green", "#5ED1D4", "blue", "purple"];
 	var textData = ["회원관리", "레시피관리", "영상관리", "레시피그램관리", "채팅방관리", "메시지관리"];
 	//이동할 페이지 
-	var pathData = ["/admin_users", "/admin_recipe", "/admin_foodvideo", "/recipegram_index", "/admin_chat", "/admin_message"];
+	var pathData = ["/admin_users", "/admin_recipe", "/admin_foodvideo", "/recipegram_index", "/admin_chat", "/admin_receiveMsg"];
 	var pie = d3.pie();
 	var arc = d3.arc().innerRadius(200).outerRadius(300); 
 	 

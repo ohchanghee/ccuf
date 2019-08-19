@@ -261,6 +261,7 @@ var deleteMsg = function(message_num){
 		return false;
 	 }
 }
+
 // 글쓰기 모달 불러오는 로직
 $("#msg_write").on("click", function(e){
 	boxmodal.style.display = "none";

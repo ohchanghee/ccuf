@@ -1,5 +1,6 @@
 package com.solrecipe.recipe.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.message.MessageMapper;
+import com.solrecipe.recipe.message.MessageVO;
 import com.solrecipe.recipe.recipe.RecipeMapper;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_MarkVO;
@@ -219,10 +222,87 @@ public class AdminServiceImpl implements AdminService {
 		return adminMapper.userUpdate_warning(memVo)==1;
 	}
 
+	@Override
+	public List<MessageVO> getReceiveMsg(int page) {
+		int startNum = ((page-1)*15+1);
+		int endNum = page*15;
+		ArrayList<MessageVO> list = (ArrayList<MessageVO>)adminMapper.getReceiveMsg(startNum, endNum);
+		for(int i=0; i<list.size(); i++) {
+			MessageVO vo = list.get(i);
+			// 작게 띄워줄 내용(제목대신)
+			String content;
+			if(vo.getSend_content().length()>25) {
+				content = vo.getSend_content().substring(0, 25) + ".....";
+			}else {
+				content = vo.getSend_content();
+			}
+			vo.setIndex_content(content);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MessageVO> getSearchedReceiveMsg(int page, String keyword) {
+		int startNum = ((page-1)*15+1);
+		int endNum = page*15;
+		ArrayList<MessageVO> list = (ArrayList<MessageVO>)adminMapper.getSearchedReceiveMsg(startNum, endNum, keyword);
+		for(int i=0; i<list.size(); i++) {
+			MessageVO vo = list.get(i);
+			// 작게 띄워줄 내용(제목대신)
+			String content;
+			if(vo.getSend_content().length()>25) {
+				content = vo.getSend_content().substring(0, 25) + ".....";
+			}else {
+				content = vo.getSend_content();
+			}
+			vo.setIndex_content(content);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MessageVO> getSendMsg(int page) {
+		int startNum = ((page-1)*15+1);
+		int endNum = page*15;
+		ArrayList<MessageVO> list = (ArrayList<MessageVO>)adminMapper.getSendMsg(startNum, endNum);
+		for(int i=0; i<list.size(); i++) {
+			MessageVO vo = list.get(i);
+			// 작게 띄워줄 내용(제목대신)
+			String content;
+			if(vo.getSend_content().length()>25) {
+				content = vo.getSend_content().substring(0, 25) + ".....";
+			}else {
+				content = vo.getSend_content();
+			}
+			vo.setIndex_content(content);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MessageVO> getSearchedSendMsg(int page, String keyword) {
+		int startNum = ((page-1)*15+1);
+		int endNum = page*15;
+		ArrayList<MessageVO> list = (ArrayList<MessageVO>)adminMapper.getSearchedSendMsg(startNum, endNum, keyword);
+		for(int i=0; i<list.size(); i++) {
+			MessageVO vo = list.get(i);
+			// 작게 띄워줄 내용(제목대신)
+			String content;
+			if(vo.getSend_content().length()>25) {
+				content = vo.getSend_content().substring(0, 25) + ".....";
+			}else {
+				content = vo.getSend_content();
+			}
+			vo.setIndex_content(content);
+		}
+		return list;
+	}
+
 //	@Override
 //	public String user_blackOut_trg(String user_username, int user_num) {
 //		System.out.println("트리거서비스: " + user_username);
 //		return adminMapper.user_blackOut_trg(user_username);
 //	}
 
+	
 }

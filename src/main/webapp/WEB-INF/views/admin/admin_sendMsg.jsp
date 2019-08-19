@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
+<%
+	int startPage = (int)request.getAttribute("startPage");
+	int endPage = (int)request.getAttribute("endPage");
+	int totalPage = (int)request.getAttribute("totalPage");
+	int curPage = (int)request.getAttribute("page");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +15,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>메시지관리</title>
+<title>보낸 쪽지</title>
 
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/magnific-popup.css">
@@ -47,6 +55,7 @@
 	<script src="../resources/js/sb-admin-2.js"></script>
 <!-- <script src="../resources/js/jquery-3.3.1.min.js"></script> -->
 <script src="../resources/js/jquery-ui.js"></script>
+<script src="https://kit.fontawesome.com/d2c6942021.js"></script>
 <script>
 
 $(document).ready(function(){ 
@@ -55,6 +64,72 @@ $(document).ready(function(){
 
 </script>
 <style>
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 8% auto; /* 15% from the top and centered */
+	padding: 2%;
+	border: 1px solid #888;
+	width: 50%; /* Could be more or less, depending on screen size */
+}@media (max-width:500px){
+	.modal-content{
+		margin: 2% 5%; /* 15% from the top and centered */
+		padding: 1%;
+		width: 93%;
+	}
+}
+
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+/* 모달 스크롤바 다 지워버림 */
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* 메시지함 관련 */
+.messageC{
+	letter-spacing: 1px;
+    word-spacing: 3px;
+    line-heigh: 35px;
+}
+@media (max-width:500px){
+	#message_tb{
+		font-size:5px;
+	}
+	#msg_write{
+		font-size:1rem;
+	}
+	.messageHeads{
+		font-size:1rem !important;
+	}
+}
 
 
 .search {
@@ -181,9 +256,6 @@ $(document).ready(function(){
 
 </head>
 
-<jsp:include page="admin_msg.jsp"/>
-
-
 <body bgcolor="black" data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 <div class="site-wrap"  id="home-section">
 
@@ -204,7 +276,7 @@ $(document).ready(function(){
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="admin_index.jsp" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
+              <a href="/admin_index" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
             </div>
          </div>
        </div>
@@ -219,12 +291,12 @@ $(document).ready(function(){
             <div class="col-md-12 col-lg-7 text-center search">
       
                 
-				<form id="searchText" method="post">
-					
+				<form id="searchText" action="/admin_searchSendMsg" method="get">
+					<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
 					<span class="icon">
-						<input  TYPE="IMAGE" id="search_icon" src="../img/main/search.png" value="Submit" >
+						<input  TYPE="IMAGE" id="search_icon" src="../img/main/search.png" type="submit" value="Submit" >
 					</span>
-					<input id="search" name="search">
+					<input type="text" id="search" name="search" value="${search }">
 				</form>
             </div>
           </div>
@@ -238,8 +310,28 @@ $(document).ready(function(){
         
           <div class="col-12 text-left">
            <div class="block-heading-1">
-              <h4>- 메 시 지 관 리 -</h4>
+              <h4>- 쪽 지 관 리 -</h4>
             </div>
+			<div class="row rwd_top">
+				<div class="col-md-4 col-lg-3 mb-1 text-center">
+					<div class="block-heading-1">
+
+						<a href="/admin_receiveMsg"><h4 class="my">받은 쪽지</h4></a>
+
+					</div>
+				</div>
+
+				<div class="col-md-4 col-lg-3 mb-1 text-center">
+					<div class="block-heading-1">
+						<a href="/admin_sendMsg"><h4 class="clickmy">보낸 쪽지</h4></a>
+					</div>
+				</div>
+	          <div class="col-md-6 text-right">
+	          	<div class="block-heading-1" style="color:#FFC69F;">
+	             	${totalPosts }
+	          	</div>
+	          </div>
+			</div>
           </div>
         </div>
          <div class="row mb-5">
@@ -260,12 +352,37 @@ $(document).ready(function(){
 				 			날 짜
 				 		</th>
 				 		<th>
-				 			읽음여부
+				 			답변여부
 				 		</th>
 				 	</tr>
 				 </thead>
 				 <tbody>
-			 		<tr>
+				 	<c:forEach var="vo" items="${msgList}">
+				 		<tr>
+					 		<td>
+					 			${vo.message_num }
+					 		</td>
+					 		<td>
+					 			<a href='javascript:sendMsg(${vo.recver_num})'>${vo.recver_nickname }</a>
+					 		</td>
+					 		<td>
+					 			<a href='javascript:fn_msgDetail(${vo.message_num })'>${vo.index_content }</a>
+					 		</td>
+					 		<td>
+					 			${vo.sendDate }
+					 		</td>
+					 		
+				 			<c:choose>
+				 				<c:when test="${vo.isRecvSend == 0 }">
+				 					<td>답변 대기중</td>
+				 				</c:when>
+				 				<c:when test="${vo.isRecvSend == 1 }">
+				 					<td style='color : #86D5FF;'>완료됨</td>
+				 				</c:when>
+				 			</c:choose>
+				 		</tr>
+					</c:forEach> 
+			 		<!-- <tr>
 				 		<td>
 				 			1
 				 		</td>
@@ -359,41 +476,165 @@ $(document).ready(function(){
 				 		<td>
 				 			읽음
 				 		</td>
-				 	</tr>
+				 	</tr> -->
 				 </tbody>
 				 
 			 </table>
 		
 		</div>
 		</div>
+      <!-- 페이징 -->
+		<div class="row" style="font-size:23px;">
+			<div class="col-12 text-center">
+				<%if(startPage != 1){ %>
+				<a href='javascript:movePage("${startPage-10 }")'><i class="fas fa-angle-left" style="color:#FFC69F;"></i></a>
+				&nbsp;
+				&nbsp;
+				<%}%>
+				<%for(int i=startPage; i<=endPage; i++){
+					if (i==curPage){
+				%>
+					<a href='javascript:movePage(<%=i %>)' style="color:white;"><%=i %></a>
+					&nbsp;
+					&nbsp;
+				<%}else{ %>
+					<a href='javascript:movePage(<%=i %>)'><%=i %></a>
+					&nbsp;
+					&nbsp;
+				<%}} %>
+				<%if(endPage != totalPage){ %>
+				<a href='javascript:movePage("${endPage+1 }")'><i class="fas fa-angle-right"  style="color:#FFC69F;"></i></a>
+				<%} %>
+			</div>	
+		</div>
+		<div class="row" style="margin-top:5%;"></div>
 	</div>
-      
-
     </div>
     
+<jsp:include page="admin_message_detail.jsp"/>
+<jsp:include page="admin_message_write.jsp"/>
       
             	
 <script>
-var modal = document.getElementById('msgModal');
-/* var span1 = document.getElementByClassName("close");
- */
-$('.msg').click(function() {
+var csrfHeaderName ="${_csrf.headerName}"; 
+var csrfTokenValue="${_csrf.token}";
 
-	  modal.style.display = "block";
-	 /*  $(this).css('z-index', 3000); */
-   
-});
+var boxmodal = document.getElementById('msgboxModal');
 
+var msgModal = document.getElementById('msgModal');
 
-/*  span1.onclick = function() {
-   modal.style.display = "none";
-   }
- */
-window.onclick = function(event) {
-   if (event.target == modal) {
-      modal.style.display = "none";
-   } 
+var writeMsgModal = document.getElementById("write_msg");
+
+//페이지 이동 함수
+var search = "${search}"
+function movePage(page){
+	// 검색 안한 경우
+	if(search==""){
+		location.href="admin_sendMsg?page="+page;	
+	}
+	// 검색한 경우
+	else{
+		location.href="admin_searchSendMsg?page="+page+"&search="+search;
+	}
 }
+
+//특정 쪽지 행을 누르면 message_detail 모달을 불러오는 로직
+var fn_msgDetail = function(message_num) {
+	$.ajax({
+		type:"POST",
+		url:"/detailMsg",
+		data:{"message_num":message_num},
+		dataType:"json",
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+        },
+		success: function(data){
+			$("#send_content").val(data.send_content);
+			// value 초기화(message_num으로)
+			$("#message_num").val(data.message_num);
+			
+			// 보낸 쪽지이므로 답변칸 필요 없음.
+			$("#answerMsgFrm").hide();
+			
+			// 색칠
+			$("#answer_area").css('background-color','#e9ecef');
+			$("#send_content").css('background-color','#FFD7BE');
+			
+			// 답변 완료된 경우에만 답변칸 보임
+			if(data.isRecvSend == 1){
+				$("#answer_div").css("display", "block");
+				$("#answer_area").val(data.recv_content);
+			}
+			else{
+				$("#answer_div").css("display", "none");
+			}
+
+			msgModal.style.display = "block";
+		},
+	});
+}
+//글쓰기 모달 불러오는 로직
+var sendMsg = function(recver_num){
+	writeMsgModal.style.display = "block";
+	
+	// 보내기버튼 누르면
+	$("#write_btn").click(function(){
+		if($('#recv').val() == ""){
+			alert("메시지를 작성하세요!");
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"/sendMsg",
+			data:{"message_content": $('#recv').val(), "recver_num": recver_num},
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				if(data == "good"){
+					alert("메시지 발송 완료");
+					
+					var search = "${search}";
+					var page = ${page};
+					// 검색 안 한 경우 이동하는 위치
+					if(search==""){
+						window.location="admin_sendMsg?page="+page;	
+					}
+					// 검색한 경우
+					else{
+						window.location="admin_searchSendMsg?page="+page+"&search="+search;
+					}
+					
+				}else{
+					alert("메시지 발송 실패! 잠시 후 다시 시도하세요.");
+				}
+			}
+		});	
+	});
+	
+}
+
+//배경 누르면 종료되는 로직 (여기선 됨)
+window.onclick = function(event) {
+   if (event.target == boxmodal) {
+      boxmodal.style.display = "none";
+   } else if (event.target == msgModal) {
+	   msgModal.style.display = "none";
+   }else if (event.target == writeMsgModal){
+	   writeMsgModal.style.display ="none";
+   }
+}
+
+// x버튼 누르면 현재 모달 없어지는 로직
+$('.closeMsg').on("click",function(){
+	
+	msgModal.style.display = "none";
+	writeMsgModal.style.display = "none";
+	// 작성했던 내용 지우기
+	$("#send").val("");
+	$("#recv").val("");
+})
 
 </script>
            
