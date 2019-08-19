@@ -588,7 +588,8 @@ label {
 	<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
 	<script>
-
+	var csrfHeaderName ="${_csrf.headerName}"; 
+	var csrfTokenValue="${_csrf.token}";
 	
 		// 페이지 이동 함수
 		function movePage(page){
@@ -695,13 +696,14 @@ label {
 								isError = false;
 								outputs(recv['sender'], recv['message']);
 								
-								//방을 새로 개설했거나 채팅방에 새로운 인원이 새로 들어왔을 때만 아래 if문을 행한다.
+								//방을 새로 개설했거나 채팅방에 새로운 인원이 새로 들어왔을 때 + 인원이 나갔을 때만 아래 if문을 행한다.
 								if(recv['userList']) {
 									$('table#userList').empty();// 새로들어온 거면 userList를 다시 지웠다가 넣어준다.
 									appendUserList(recv['userList']);
 									//recv['chatroomDetail']['chat_title']
 									//console.log(recv);
-									chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
+									//chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
+									//chatRoomTitle.innerText = '('+recv['userList'].length +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
 								}
 							}
 						}
@@ -770,6 +772,7 @@ label {
 				stompClient.send("/pub/chat/message/change", {}, JSON.stringify({type:'EXIT', roomId: roomNum, sender:"${nickname}", userNum : "${userNum}",message:"byError"}));
 			} else {
 				stompClient.send("/pub/chat/message/change", {}, JSON.stringify({type:'EXIT', roomId: roomNum, sender:"${nickname}", userNum : "${userNum}"}));
+				
 			}
 			subscription.unsubscribe()
 			stompClient.disconnect()

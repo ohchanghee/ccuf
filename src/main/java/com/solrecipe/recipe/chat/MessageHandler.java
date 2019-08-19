@@ -150,7 +150,9 @@ public class MessageHandler {
 		    	try {
 			    	service.deleteChatUser(chatroom_num, userNum, selectNum);
 			    	service.minusChatUserNum(chatroom_num, selectNum);
-			    	
+			    	//190819 추가 , 회원이 나가면 그에 따라 채팅자 명단에도 동적으로 변화를 줌
+			    	List<MemberVO> userList = service.getChatRoomUsers(chatroom_num, selectNum);
+			    	message.setUserList(userList);
 		    	} 
 		    	catch (Exception e) { /* ignore - just for wrapping to one transaction */	} 
 		    	finally {
