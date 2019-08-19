@@ -11,11 +11,11 @@
             <div class="row">
               <div class="col-md-8">
                 <h2 class="footer-heading mb-4">About Us</h2>
-                <p>김관수 &nbsp; &nbsp; worldkks7@gmail.com</p>
+                <p>김관수 &nbsp; &nbsp; worldkks7@naver.com</p>
                 <p>양아람 &nbsp; &nbsp; crying25i87@gmail.com</p>
-                <p>최연정 &nbsp; &nbsp; crying25i87@gmail.com</p>
+                <p>최연정 &nbsp; &nbsp; cyjeong0208@gmail.com</p>
                 <p>박상언 &nbsp; &nbsp; sampark1234@naver.com</p>
-                <p>오창희 &nbsp; &nbsp; </p>
+                <p>오창희 &nbsp; &nbsp; su2281@naver.com</p>
               </div>
 <!--               <div class="col-md-4 ml-auto">
                 <h2 class="footer-heading mb-4">Features</h2>
