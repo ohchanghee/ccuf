@@ -387,7 +387,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 		         		<div class="text-center rounded">
 			    				
 			    				<div id="mainimg_1" class="mb-5" style="height:25.0rem;border:1px dashed #65737e; text-align:center">
-			           				<img src = "${basic.recipe_img}" id="img"style="width:100%; height:100%; border:none;" onclick="document.getElementById('mainimg').click();"> <!-- 이미지버튼으로 파일첨부  -->
+			           				<img src = "${basic.recipe_img}" id="img"style="width:100%; height:100%; border:none;"> <!-- 이미지버튼으로 파일첨부  -->
 			          			</div>
 			           			
 			           			<!-- 변경: name="mainimg" -->
@@ -399,13 +399,14 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 		         	<!-- 제목,주재료,추가재료 -->
 		           	<div class="col-lg-6 col-md-6 mb-4 mb-lg-0 mt-5">
 						<div class="rounded">
-						<sec:authorize access="isAuthenticated()">
+						<%-- <sec:authorize access="isAuthenticated()">
 			    			<input type="hidden" name="user_num" value='<sec:authentication property="principal.member.user_num"/>'>
-			           	</sec:authorize> 
+			           	</sec:authorize>  --%>
+			    			<input type="hidden" name="user_num" value='1'><!-- 운영자이므로 user_num은 항상 1 -->
 			           		<input id="cooking_title" name="recipe_title" value="${basic.recipe_title}" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
 			           		<textarea id="cooking_main" name="recipe_food_main"  placeholder="주 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_main},</textarea>
 			           		<textarea id="cooking_sub" name="recipe_food_suv"  placeholder="추가 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_suv},</textarea>
-			           		<input type="hidden" name="excel" value='0'>
+			           		<input type="hidden" name="excel" value='${basic.excel}'>
 			           		<input type="hidden" name="recipe_img" value="">
 			           		<input type ="hidden" name = "recipe_num" value = "${basic.recipe_num}"/>
 						</div>
