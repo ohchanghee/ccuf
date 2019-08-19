@@ -297,7 +297,7 @@ $(document).ready(function(){
             <div class="col-md-12 col-lg-7 text-center search">
       
                 
-				<form id="searchText" method="post">
+				<form id="searchText" method="get">
 					<span class="icon">
 						<input TYPE="IMAGE" id="search_icon" src="../img/main/search.png" value="Submit" >
 					</span>
@@ -607,11 +607,11 @@ var sendMsg = function(recver_num){
 					var page = ${page};
 					// 검색 안 한 경우 이동하는 위치
 					if(search==""){
-						window.location="admin_recipe?page="+page;	
+						window.location="admin_chat?page="+page;	
 					}
 					// 검색한 경우
 					else{
-						window.location="admin_searchrecipe?page="+page+"&search="+search;
+						window.location="admin_chat?page="+page+"&search="+search;
 					}
 					
 				}else{
