@@ -213,7 +213,7 @@ $(document).ready(function(){
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="admin_index.jsp" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
+              <a href="/admin_index" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
             </div>
          </div>
        </div>
