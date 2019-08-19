@@ -427,7 +427,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 			           		<input id="cooking_title" name="recipe_title" value="${basic.recipe_title}" class="mb-4" type="text" placeholder="제목을 입력하세요 ..." style="width:100%;">
 			           		<textarea id="cooking_main" name="recipe_food_main"  placeholder="주 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_main},</textarea>
 			           		<textarea id="cooking_sub" name="recipe_food_suv"  placeholder="추가 재료를 입력하세요 ..."style="width:100%;">${basic.recipe_food_suv},</textarea>
-			           		<input type="hidden" name="excel" value='0'>
+			           		<input type="hidden" name="excel" value='${basic.excel}'>
 			           		<input type="hidden" name="recipe_img" value="">
 			           		<input type ="hidden" name = "recipe_num" value = "${basic.recipe_num}"/>
 						</div>
