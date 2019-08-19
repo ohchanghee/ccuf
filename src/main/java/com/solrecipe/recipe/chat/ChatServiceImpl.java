@@ -1,5 +1,6 @@
 package com.solrecipe.recipe.chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class ChatServiceImpl implements ChatService {
 	public List<ChatRoomVO> getChatList(int type, int page,String localSearch, String titleSearch) {
 		if("".equals(localSearch)) {localSearch=null;}
 		if("".equals(titleSearch)) {titleSearch=null;}
-		System.out.println("ChatServiceImpl=>getChatList()=> localSearch: "+localSearch+" / titleSearch: "+titleSearch);
 		int startNum = (page-1)*15;
+		
 		return mapper.getChatList(type, startNum,localSearch,titleSearch);
 	}
 	

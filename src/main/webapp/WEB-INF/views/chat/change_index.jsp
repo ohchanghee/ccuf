@@ -700,19 +700,15 @@ label {
 									$('table#userList').empty();// 새로들어온 거면 userList를 다시 지웠다가 넣어준다.
 									appendUserList(recv['userList']);
 									 
-									if(recv['type'] === 'NEW') {
+									if(recv['type'] === 'NEW') {	//새로운 방을 만들었을 때 소켓으로부터 받는 메시지 받으면
 										chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
-									} else if (recv['type']==='JOIN' || recv['type']==='EXIT') {//인원이 늘거나 줄어드는 경우 인원수를 다시 써준다.
+									} else if (recv['type']==='JOIN') { //이미 만들어진 방에 참여했을 때 소켓으로부터 메시지를 받으면
+										chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
+									}  else if (recv['type']==='EXIT') { //방에서 인원이 나갈때...
 										let curNum = recv['userList'].length;
-										let tmp = document.getElementById('ChattingRoomTitle');
-										tmp.innerText = tmp.innerText.replace(tmp.innerText.indexOf("/")-1,curNum.toString());
-									} /* else if (recv['type']==='EXIT') {
-										
-									} */
-									//recv['chatroomDetail']['chat_title']
-									//console.log(recv);
-									//chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
-									//chatRoomTitle.innerText = '('+recv['userList'].length +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
+										var tmp = document.getElementById('ChattingRoomTitle');
+										tmp.innerText = tmp.innerText.replace(tmp.innerText.indexOf("/"),curNum.toString());
+									} 
 								}
 							}
 						}

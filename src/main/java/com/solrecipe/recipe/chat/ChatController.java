@@ -32,8 +32,8 @@ public class ChatController {
 							 @RequestParam(value = "localSearch",required = false) String localSearch,
 							 @RequestParam(value = "titleSearch",required = false) String titleSearch) {
 		
-		System.out.println("localSearch: "+localSearch);
-		System.out.println("titleSearch: "+titleSearch);
+		//System.out.println("localSearch: "+localSearch);
+		//System.out.println("titleSearch: "+titleSearch);
 		
 		
 		MemberVO myVO;
@@ -51,7 +51,7 @@ public class ChatController {
 //		System.out.println("select : " + select);
 		
 		
-		if(select != null)	System.out.println("chat_index() -> 현재 select 값: "+select);
+		//if(select != null)	System.out.println("chat_index() -> 현재 select 값: "+select);
 		int listCnt = 15;
 		int pageCnt = 5;
 		int totalCnt = service.getTotalCnt(0);
@@ -72,10 +72,7 @@ public class ChatController {
 		if(select == null || select == 0 ) { chatList = (ArrayList<ChatRoomVO>) service.getChatList(0, page,localSearch,titleSearch);  }
 		else {  chatList = (ArrayList<ChatRoomVO>) service.getChatList(1, page,localSearch,titleSearch);  }
 		
-		
-		System.out.println("나오는 값들");
-		
-		chatList.forEach(s->System.out.println(s));
+//		chatList.forEach(s->System.out.println(s));
 		//채팅방 어디에서나 user_nickname과 user_num을 쓸 수 있다.
 		model.addAttribute("nickname", myVO.getUser_nickname());
 		model.addAttribute("userNum", myVO.getUser_num());

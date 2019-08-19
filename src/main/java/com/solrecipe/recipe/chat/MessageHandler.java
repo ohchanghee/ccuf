@@ -97,18 +97,8 @@ public class MessageHandler {
 			ChatRoomVO chatroomDetail=null;
 			
 			try {
-				/*
-				chatroomDetail = service.getChatRoomDetail(chatroom_num, selectNum);
 				
-				// 접속도중 채팅방이 없어진 상태거나, 채팅방의 진행상태가 "마감"일 때 못들어오게 막는다.
-				if(chatroomDetail == null || chatroomDetail.getChat_status() == 0) {
-					message.setMessage("없어진 채팅방이거나 마감이된 채팅방입니다. 다른 채팅방을 이용해주세요");
-					message.setSender("ERROR");
-					throw new Exception("없어진 채팅방이거나 마감이된 채팅방입니다");
-				}
 				
-				message.setChatroomDetail(chatroomDetail);
-				*/
 				int insertUser = service.insertUser(new ChatUserVO(chatroom_num, userNum), selectNum);
 				
 				if(insertUser==1) {	//만약에 채팅방에 없던 회원이면 들어가는데에 문제가 없습니다.
@@ -126,6 +116,18 @@ public class MessageHandler {
 						message.setUserList(userList);
 						message.setMessage(message.getSender() + " 님이 입장하셨습니다.");
 				    	message.setSender("SERVER");
+				    	
+				    	chatroomDetail = service.getChatRoomDetail(chatroom_num, selectNum);
+						
+						// 접속도중 채팅방이 없어진 상태거나, 채팅방의 진행상태가 "마감"일 때 못들어오게 막는다.
+						if(chatroomDetail == null || chatroomDetail.getChat_status() == 0) {
+							message.setMessage("없어진 채팅방이거나 마감이된 채팅방입니다. 다른 채팅방을 이용해주세요");
+							message.setSender("ERROR");
+							throw new Exception("없어진 채팅방이거나 마감이된 채팅방입니다");
+						}
+						
+						message.setChatroomDetail(chatroomDetail);
+						
 					}
 				} else {			//insert의 반환값이 0이라는 것은 채팅방에 이미 회원번호가 존재할 때입니다. 이것은 불가능한 일입니다.
 					message.setSender("ERROR");
@@ -152,6 +154,7 @@ public class MessageHandler {
 			    	service.minusChatUserNum(chatroom_num, selectNum);
 			    	//190819 추가 , 회원이 나가면 그에 따라 채팅자 명단에도 동적으로 변화를 줌
 			    	List<MemberVO> userList = service.getChatRoomUsers(chatroom_num, selectNum);
+			    	System.out.println(userList.size());
 			    	message.setUserList(userList);
 		    	} 
 		    	catch (Exception e) { /* ignore - just for wrapping to one transaction */	} 
