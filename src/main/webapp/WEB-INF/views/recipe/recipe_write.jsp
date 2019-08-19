@@ -37,22 +37,33 @@
 // 수정: ajax 추가
 // --> 테스트 용
 
+//추가
+
 
 //확장자 체크
 var checkExtension = new RegExp("\.(zip|ZIP|jpg|JPG|png|PNG|jpeg|JPEG)");
 
 function getThumbnailPrivew(html, $target) {
+
+	var checking_file_valid = true;
 	//이미지 파일인지 검사
 	if((html.files[0])['type'].split("/")[0]!=="image") {
 		alert("이미지 파일이 아닙니다.")
-		return;
+		checking_file_valid = false;
 	}  else if ((html.files[0]).size >= 10485760) {
 		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
-		return;
+		checking_file_valid = false;
 	} else if (!checkExtension.test((html.files[0]).name)) {
 		alert("이미지 파일의 확장자는 \"zip,jpg,jpeg,png\"만 가능합니다");
-		return;
+		checking_file_valid = false;
 	}
+
+	if(!checking_file_valid) {
+		//document.getElementById('mainimg').value=""; 와 같은 코드가 아래 html.value ="" 이다.
+		html.value = "";	//파일을 초기화하는 방법이다, 단 IE에서는 안된다.
+		return;	
+	}
+	
 	var name = (html.files[0]).name;
 
 	$('[name~="recipe_img"]').val(location.origin+"/Recipe_IMG/Main_IMG/."+name.split(".")[1]);
@@ -197,19 +208,25 @@ function frmCheck()
 	
  }
 
-
 function cooking_getThumbnailPrivew(html, $target) {
 	
+	var checking_file_valid = true;
+	//html.files[0].value
 	if((html.files[0])['type'].split("/")[0]!=="image") {
 		alert("이미지 파일이 아닙니다.")
-		return;
+		checking_file_valid = false;
 	}  else if ((html.files[0]).size >= 10485760) {
 		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
-		return;
+		checking_file_valid = false;
 	} else if (!checkExtension.test((html.files[0]).name)) {
 		alert("이미지 파일의 확장자는 \"zip,jpg,jpeg,png\"만 가능합니다");
-		return;
+		checking_file_valid = false;
 	}
+	
+	if(!checking_file_valid) {
+		html.value = "";	//파일 초기화
+		return;
+	} 
 	
     if (html.files && html.files[0]) {
         var reader = new FileReader();
