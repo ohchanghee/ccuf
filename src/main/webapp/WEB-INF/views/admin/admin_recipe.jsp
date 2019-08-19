@@ -54,7 +54,71 @@ if ("${isModified}" != null && "${isModified}" > 1)
 	alert("수정 완료");
 </script>
 <style>
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
 
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 8% auto; /* 15% from the top and centered */
+	padding: 2%;
+	border: 1px solid #888;
+	width: 50%; /* Could be more or less, depending on screen size */
+}@media (max-width:500px){
+	.modal-content{
+		margin: 2% 5%; /* 15% from the top and centered */
+		padding: 1%;
+		width: 93%;
+	}
+}
+
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+/* 모달 스크롤바 다 지워버림 */
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* 메시지함 관련 */
+.messageC{
+	letter-spacing: 1px;
+    word-spacing: 3px;
+    line-heigh: 35px;
+}
+@media (max-width:500px){
+	#message_tb{
+		font-size:5px;
+	}
+	#msg_write{
+		font-size:1rem;
+	}
+	.messageHeads{
+		font-size:1rem !important;
+	}
+}
 
 .search {
 	/* margin-top: -250px; */
@@ -222,7 +286,7 @@ if ("${isModified}" != null && "${isModified}" > 1)
 							 				${recipeVO.user_nickname}
 							 			</c:when>
 							 			<c:otherwise>
-							 				<a href="#">${recipeVO.user_nickname}</a>
+							 				<a href='javascript:sendMsg(${recipeVO.user_num})'>${recipeVO.user_nickname}</a>
 							 			</c:otherwise>
 							 		</c:choose>
 						 		</td>
@@ -358,8 +422,15 @@ if ("${isModified}" != null && "${isModified}" > 1)
       
 
     </div>
-    
+    <!-- 쪽지모달 -->
+<jsp:include page="admin_message_write.jsp"/>
+
 <script>
+var csrfHeaderName ="${_csrf.headerName}"; 
+var csrfTokenValue="${_csrf.token}";
+// 쪽지모달
+var writeMsgModal = document.getElementById("write_msg");
+
 // 페이지 이동 함수
 var search = "${search}"
 function movePage(page){
@@ -386,6 +457,63 @@ function deleteRecipe(excel, recipe_num) {
 function modifyRecipe(excel, recipe_num){
 	location.href="admin_recipe_modify?excel="+excel+"&recipe_num="+recipe_num;
 }
+
+// 쪽지보내기
+var sendMsg = function(recver_num){
+	writeMsgModal.style.display = "block";
+	
+	// 보내기버튼 누르면
+	$("#write_btn").click(function(){
+		if($('#recv').val() == ""){
+			alert("메시지를 작성하세요!");
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"/sendMsg",
+			data:{"message_content": $('#recv').val(), "recver_num": recver_num},
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				if(data == "good"){
+					alert("메시지 발송 완료");
+					
+					var search = "${search}";
+					var page = ${page};
+					// 검색 안 한 경우 이동하는 위치
+					if(search==""){
+						window.location="admin_recipe?page="+page;	
+					}
+					// 검색한 경우
+					else{
+						window.location="admin_searchrecipe?page="+page+"&search="+search;
+					}
+					
+				}else{
+					alert("메시지 발송 실패! 잠시 후 다시 시도하세요.");
+				}
+			}
+		});	
+	});
+	
+}
+
+//쪽지모딜 종료
+window.onclick = function(event) {
+   if (event.target == writeMsgModal){
+	   writeMsgModal.style.display ="none";
+   }
+}
+// x버튼 누르면 현재 모달 없어지는 로직
+$('.closeMsg').on("click",function(){
+	
+	writeMsgModal.style.display = "none";
+	// 작성했던 내용 지우기
+	$("#send").val("");
+	$("#recv").val("");
+})
 
 </script>      
 
