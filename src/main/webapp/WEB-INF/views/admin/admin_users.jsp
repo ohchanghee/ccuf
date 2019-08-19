@@ -190,10 +190,6 @@ $(document).ready(function(){
 
 <body bgcolor="black">
 
- <!-- 메시지 관련 -->
- <jsp:include page = "../message/message_write.jsp"/> 
- <jsp:include page="../message/message_box.jsp"/>
- 
 
 <div class="site-wrap"  id="home-section">
 
@@ -214,7 +210,7 @@ $(document).ready(function(){
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="admin_index.jsp" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
+              <a href="/admin_index" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
             </div>
          </div>
        </div>
@@ -290,7 +286,7 @@ $(document).ready(function(){
 				 		   <%-- <%=userlist.get(i).getUser_num() %> --%>
 				 		</td>
 				 		<td>
-				 		   ${userList.user_username } 
+				 		   <a href='javascript:sendNewMsg(${userList.user_num})'>${userList.user_username }</a> 
 				 		 	<%-- <%=userlist.get(i).getUser_username() %> --%>
 				 		</td>
 				 		<td>
@@ -302,7 +298,7 @@ $(document).ready(function(){
 				 			<%--  <%=userlist.get(i).getUser_nickname() %> --%>
 				 		</td>
 				 		<td>
-				 			<input type="button" class="btns" id="warning_btn${userList.user_num }" onclick="warning_click(${userList.user_num});" value="${userList.user_warning }"/>
+				 			<input type="button" class="btns" id="warning_btn${userList.user_num }" name="warning_btn${userList.user_num }" onclick="warning_click(${userList.user_num});" value="${userList.user_warning }"/>
 				 		</td>
 				 		<td>
 				 			<input type="button" class="btns" id="black_btn${userList.user_num }" <%-- onclick="black_click(${userList.user_num});" --%> value="${userList.user_black }"/> 
@@ -353,178 +349,196 @@ $(document).ready(function(){
 var csrfHeaderName ="${_csrf.headerName}"; 
 var csrfTokenValue="${_csrf.token}";
 
-	// 쪽지함(message_box)
-	var boxmodal = document.getElementById('msgboxModal');
-	// 쪽지 쓰기(message_write)
-	var writeMsgModal = document.getElementById("write_msg");
-	
-	// 메시지 박스 또는 특정 페이지를 누른 경우 message_box를 초기화 해서 띄우는 로직.
-	var setMsgBox = function(page){
-		// 해당 페이지의 리스트를 불러와서 모달창에 출력하는 로직
-		$.ajax({
-			type:"POST",
-			url:"/message.do",
-			data:{"page":page},
-			dataType:"json",
-			beforeSend: function(xhr) {
-	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	        },
-			success: function(data){
-				// 모두 지우고 시작
-				$("#msgBoxBody").empty();
-				if(data.size==0){
-					$("#msgBoxBody").append("<td colspan='5'>메세지함이 비어 있습니다.</td>")
-				}
-				// 1. 메시지리스트 띄워줌
-				else{
-					$.each(data, function(index, item){
-					// 날짜변환
-					var d = new Date(item.sendDate);
-					var year = d.getFullYear();
-					var month = d.getMonth()+1
-					 if(month<10){
-						 month = "0"+(d.getMonth()+1);
-					 }
-					var day = d.getDate();
-					 if(day<10){
-						 day = "0"+(d.getDate());
-					 }
-					 var date = year+"-"+month+"-"+day;
-					 var htmlText;
-					 htmlText += "<tr onclick='fn_msgDetail("+item.message_num+")' style='cursor:pointer;'>";
-					 // 보낸사람이 관리자인 경우 색 입히기
-					 if(item.sender_nickname == '관리자'){
-						 htmlText += "<td class='msg' style='color : #FFC69F;'>"+item.sender_nickname+"</td>"
-					 }else{
-						 htmlText += "<td class='msg'>"+item.sender_nickname+"</td>"
-					 }
-					 htmlText += "<td class='msg'>"+item.recver_nickname+"</td>"
-					 htmlText += "<td >"+item.index_content+"</td>";
-					 htmlText += "<td>"+date+"</td>";
-	           		if (item.isRecvSend == 0){
-	           			if(item.sender_num == 1){ // 관리인에게 받은 것 중 처리가 되지 않은 쪽지 표시
-	           				htmlText += "<td style='color : #86D5FF;'>처리중</td>";
-	           			}else{
-		           			htmlText += "<td>처리중</td>";
-	           			}
-	           		}else{
-	           			htmlText += "<td>답변완료</td>";
-	           		}
-	           		htmlText += "</tr>";
-	           		$("#msgBoxBody").append(htmlText);
-				});
-				
-				}
-			}
-		});
-		
-		// 페이징 처리를 한 뒤 모달창에 표시하는 로직
-		$.ajax({
-			type:"POST",
-			url:"/getPaging",
-			data:{"page":page},
-			dataType:"json",
-			beforeSend: function(xhr) {
-	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	        },
-			success: function(data){
-				// 모두 지우고 시작
-				$(".paginated").empty();
-				var pageHTML = "<tr>"; 
-				if(data.startPage != 1){
-					pageHTML += "<td><a href='javascript:setMsgBox("+(data.startPage-1)+")'><i class='fas fa-angle-left' style='color:#FFC69F;'></i></a></td>"
-				}
-				for(i=data.startPage; i<=data.endPage; i++){
-					if(i==data.page){
-						pageHTML += "<td style='color:#FFC69F;'>"+i+"</td>"
-					}
-					else{
-						pageHTML += "<td><a href='javascript:setMsgBox("+i+")'>"+i+"</a></td>"
-					}
-				}
-				if(data.endPage < data.totalPage){
-					pageHTML += "<td><a href='javascript:setMsgBox("+(data.endPage+1)+")'><i class='fas fa-angle-right' style='color:#FFC69F;'></i></td>"
-				}
-				pageHTML += "<tr>"; 
-				
-				$(".paginated").append(pageHTML);
-			}
-		});
-	}
+
+// 쪽지 쓰기(message_write)
+var writeMsgModal = document.getElementById("write_msg");
+
 	
 	function warning_click(userNum){
 		
 		var warning_cnt = document.getElementById('warning_btn' + userNum).value;
 		var black_cnt = document.getElementById('black_btn' + userNum).value;
-		
 		var warning_btn = document.getElementById('warning_btn' + userNum);
-		console.log(warning_cnt);
-
- 		$.ajax({
-			url:"/admin_warning",
-			type:"POST",
-			dataType:"text",
-			data: {"user_num":userNum, "user_warning":warning_cnt, "user_black": black_cnt},
-		    beforeSend: function(xhr) {
-			          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},
-			success:function(data){
-				console.log(userNum);
-				console.log(typeof data);
-				console.log("warning: " + warning_cnt);
+		
+		
+	if(warning_cnt==2){
+		
+		if (confirm("블랙리스트 명단에 올라갑니다.")==true){//확인
+			document.getElementById('warning_btn' + userNum).value = 3;
+			document.getElementById('black_btn' + userNum).value = 1;
+			$.ajax({
+				url:"/admin_warning",
+				type:"POST",
+				dataType:"text",
+				data: {"user_num":userNum, "user_warning":warning_cnt, "user_black": black_cnt},
+			    beforeSend: function(xhr) {
+				          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success:function(data){
+					console.log(userNum);
+					console.log(typeof data);
+					console.log("warning: " + warning_cnt);
+					
+				},
+				error:function(request, status, error){
+					console.log("code : " + request.status +"\n" + "message : " + request.responseText + "\n" + " error : " + error);
+					alert("실패" + userNum + "&" + warning_cnt);
+				}
+			});
+		 }else{   //취소
+			return false;
+		 }
+		
+	}else if(warning_cnt<=2){	
 				
-				if(warning_cnt == 0){
-					
-					writeMsgModal.style.display="block";
-					
-					// x버튼 누르면 현재 모달 없어지는 로직
-					$('.close').on("click",function(){
-						
-						writeMsgModal.style.display = "none";
-						// 작성했던 내용 지우기
-						$("#send").val("");
-						$("#recv").val("");
-						//document.getElementById('warning_btn' + userNum).value = 0;	
-					})
-				 	 $('.closeMsgBox').on("click",function(){
-						boxmodal.style.display = "none";
-						document.getElementById('warning_btn' + userNum).value = 1;	
-						
-					})  
-
-				}else  if(warning_cnt==1){
-					
-					writeMsgModal.style.display="block";
-					
-					// x버튼 누르면 현재 모달 없어지는 로직
-					$('.close').on("click",function(){
-						
-						writeMsgModal.style.display = "none";
-						// 작성했던 내용 지우기
-						$("#send").val("");
-						$("#recv").val("");
-					})
-					$('.closeMsgBox').on("click",function(){
-						boxmodal.style.display = "none";
-						document.getElementById('warning_btn' + userNum).value =2;	
-					})
-
-				}else if(warning_cnt==2){
-					
-					document.getElementById('warning_btn' + userNum).value = 3;
-					document.getElementById('black_btn' + userNum).value = 1;
-					
-				}			
-				
-			},
-			error:function(request, status, error){
-				console.log("code : " + request.status +"\n" + "message : " + request.responseText + "\n" + " error : " + error);
-				alert("실패" + userNum + "&" + warning_cnt);
+				sendMsg(userNum);
 			}
-		});
- 		
 	}
+	
+	var sendMsg = function(userNum){
+		// 쪽지 쓰기(message_write)
+		var writeMsgModal = document.getElementById("write_msg");
+		
+		var warning_cnt = document.getElementById('warning_btn' + userNum).value;
+		var black_cnt = document.getElementById('black_btn' + userNum).value;
+		var warning_btn = document.getElementById('warning_btn' + userNum);
+	
+		   writeMsgModal.style.display = "block";
+		   
+		   // 보내기버튼 누르면
+		   $("#write_btn").click(function(){
+		      if($('#recv').val() == ""){
+		         alert("메시지를 작성하세요!");
+		         return false;
+		      }
+		      $.ajax({
+		         type:"POST",
+		         url:"/admin_warning",
+		         data:{"message_content": $('#recv').val(), "user_num":userNum, "user_warning":warning_cnt, "user_black": black_cnt},
+		         dataType:"text",
+		         beforeSend: function(xhr) {
+		               xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		           },
+		         success: function(data){
+		            if(data == "good"){
+		               alert("메시지 발송 완료");
+		               
+		               var search = "${search}";
+		               var page = "${page}";
+		               // 검색 안 한 경우 이동하는 위치
+		               if(search==""){
+		                  window.location="admin_users?page="+page;
+		                  
+		                  if(warning_cnt == 0){
+								document.getElementById('warning_btn' + userNum).value =1;
+								return false;
+						/* 		//쪽지모딜 종료
+							      window.onclick = function(event) {
+							         if (event.target == writeMsgModal){
+							            writeMsgModal.style.display ="none";
+							         }
+							      } */
+							}else  if(warning_cnt==1){
+								document.getElementById('warning_btn' + userNum).value =2;
+								return false;
+						/* 		//쪽지모딜 종료
+							      window.onclick = function(event) {
+							         if (event.target == writeMsgModal){
+							            writeMsgModal.style.display ="none";
+							         }
+							      } */
+							}
+		               }
+		               // 검색한 경우
+		               else{
+		                  window.location="admin_searchuserlist?page="+page+"&search="+search;
+		               }
+		               
+		            }else{
+		               alert("메시지 발송 실패! 잠시 후 다시 시도하세요.");
+		            }
+		         }
+		      });   
+
+		   }); 
+		 //쪽지모딜 종료
+		    window.onclick = function(event) {
+		       if (event.target == writeMsgModal){
+		          writeMsgModal.style.display ="none";
+		       }
+		    }	
+		      // x버튼 누르면 현재 모달 없어지는 로직
+		      $('.closeMsg').on("click",function(){
+		         
+		         writeMsgModal.style.display = "none";
+		         // 작성했던 내용 지우기
+		         $("#send").val("");
+		         $("#recv").val("");
+		      }) 
+	}
+	
+//이메일 눌러서 쪽지 보내는 로직
+// 쪽지보내기
+var sendNewMsg = function(recver_num){
+	var writeMsgModal = document.getElementById("write_msg");
+	
+	writeMsgModal.style.display = "block";
+	
+	// 보내기버튼 누르면
+	$("#write_btn").click(function(){
+		if($('#recv').val() == ""){
+			alert("메시지를 작성하세요!");
+			return false;
+		}
+		$.ajax({
+			type:"POST",
+			url:"/sendMsg",
+			data:{"message_content": $('#recv').val(), "recver_num": recver_num},
+			dataType:"text",
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	        },
+			success: function(data){
+				if(data == "good"){
+					alert("메시지 발송 완료");
+					
+					var search = "${search}";
+					var page = ${page};
+					// 검색 안 한 경우 이동하는 위치
+					if(search==""){
+						window.location="admin_users?page="+page;	
+					}
+					// 검색한 경우
+					else{
+						window.location="admin_searchuserlist?page="+page+"&search="+search;
+					}
+					
+				}else{
+					alert("메시지 발송 실패! 잠시 후 다시 시도하세요.");
+				}
+			}
+		});	
+	});
+	//쪽지모딜 종료
+	window.onclick = function(event) {
+	   if (event.target == writeMsgModal){
+		   writeMsgModal.style.display ="none";
+	   }
+	}
+	// x버튼 누르면 현재 모달 없어지는 로직
+	$('.closeMsg').on("click",function(){
+		
+		writeMsgModal.style.display = "none";
+		// 작성했던 내용 지우기
+		$("#send").val("");
+		$("#recv").val("");
+	})
+}
+	
+
 </script>
+
+
 
 
 <script type="text/javascript">
@@ -541,8 +555,9 @@ var csrfTokenValue="${_csrf.token}";
 		}
 	}
 </script>
-    
-          
+
+ <!-- 메시지 관련 -->
+<jsp:include page = "admin_message_write.jsp"/> 
            
 </body>
 </html>

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.solrecipe.recipe.chat.AdminChatRoomVO;
 import com.solrecipe.recipe.chat.AdminChatVO;
 import com.solrecipe.recipe.foodvideo.FoodVideoVO;
+import com.solrecipe.recipe.message.MessageServiceImpl;
 import com.solrecipe.recipe.message.MessageVO;
 import com.solrecipe.recipe.recipe.Recipe_CookingVO;
 import com.solrecipe.recipe.recipe.Recipe_basicVO;
@@ -35,7 +36,10 @@ public class AdminController {
 
 	@Autowired
 	AdminServiceImpl adminService;
-
+	
+	@Autowired
+	MessageServiceImpl messageService;
+	
 	@GetMapping("/admin_index")
 	public String admin_index() {
 		return "/admin/admin_index";
@@ -339,24 +343,38 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin_warning", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String admin_warning(int user_num, int user_warning, int user_black, String user_username, MemberVO memvo, MessageVO msgvo, Model model) {
+	public String admin_warning(String message_content, int user_num, int user_warning, int user_black, String user_username, MemberVO memvo, Model model) {
 		
-		System.out.println("yayay: " + user_warning);
-		System.out.println(msgvo.getSender_num());
-		
-		if(user_warning != 3) {
+		if(user_warning != 2) {
 			
-				user_warning++;
-				memvo.setUser_warning(user_warning);
-				model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
+			user_warning++;
+				// 보내는 유저 번호와, 내용을 초기화
+				MessageVO messageVO = new MessageVO();
+				messageVO.setSend_content(message_content);
+				messageVO.setSender_num(user_num);
+				messageVO.setRecver_num(1);
+				
+				System.out.println("메세지: " + message_content);
+				int n = messageService.sendMsg(messageVO);
+				
+				if (n == 1) {
+					memvo.setUser_warning(user_warning);
+					model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
+					return "good";
+					
+				} else {
+					
+					return "bad";
+
+				}
 			
 			}
 			System.out.println("user_warning이 3아닐떄: " + user_warning);
 		
 		System.out.println("lalala: " + user_warning);
 		
-		if(user_warning == 3){
-			
+		if(user_warning == 2){
+			user_warning++;
 			memvo.setUser_warning(user_warning);
 			model.addAttribute("warning", adminService.usersUpdate_warning(memvo));
 			model.addAttribute("black", adminService.usersUpdate_black(memvo));

@@ -88,7 +88,7 @@ var page;
 $('.message').click(function() {
 	// 관리자라면 admin_message로 이동
 	if("${user_num}" == 1){
-		location.href = '/admin_message';
+		location.href = '/admin_receiveMsg';
 	}else{	// 아닌 경우, messageBox를 초기화하고 모달창을 띄운다.
 		page = 1;
 		setMsgBox(page);

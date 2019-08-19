@@ -33,13 +33,11 @@
 		<h4 align="center">쪽지 보내기</h4>
 		<div  class="modal-body" style="padding: 10px 10px;">
 			<h4 class="messageHeads">내용</h4>
-			<fieldset>
 			<div class="form-group">
 				<textarea rows="7" class="form-control ml-4 mb-2 messageC" id="recv" name = "message_content" style="width:90%; border: 1px solid; resize: none; max-height:400px;" onkeyup="writeTextHeight();"></textarea>
 			</div>
 			
 			
-			</fieldset>
 			<Button type="button" id="write_btn" class="btn btn-success btn-block" style="float:right;">보내기</Button> 
 		</div>
         </div>

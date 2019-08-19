@@ -484,11 +484,11 @@ var sendMsg = function(recver_num){
 					var page = ${page};
 					// 검색 안 한 경우 이동하는 위치
 					if(search==""){
-						window.location="admin_chat?page="+page;	
+						window.location="admin_recipe?page="+page;	
 					}
 					// 검색한 경우
 					else{
-						window.location="admin_searchchat?page="+page+"&search="+search;
+						window.location="admin_searchrecipe?page="+page+"&search="+search;
 					}
 					
 				}else{
