@@ -673,7 +673,6 @@ label {
 			stompClient = Stomp.over(sock); //stompClient에 socket을 넣어준다.
 			
 			stompClient.connect({}, function() { // 접속
-				// change(with)_user_tb에 본인 추가하는 ajax 추가.
 				
 				// subscribe(구독주소 , 콜백함수(메시지 받을 때 작동할 함수))                 //숫자 0 추가
 				subscription = stompClient.subscribe("/sub/chat/room/"+roomNum+"/select/change", function(message) {
@@ -700,6 +699,16 @@ label {
 								if(recv['userList']) {
 									$('table#userList').empty();// 새로들어온 거면 userList를 다시 지웠다가 넣어준다.
 									appendUserList(recv['userList']);
+									 
+									if(recv['type'] === 'NEW') {
+										chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
+									} else if (recv['type']==='JOIN' || recv['type']==='EXIT') {//인원이 늘거나 줄어드는 경우 인원수를 다시 써준다.
+										let curNum = recv['userList'].length;
+										let tmp = document.getElementById('ChattingRoomTitle');
+										tmp.innerText = tmp.innerText.replace(sss.innerText.indexOf("/")-1,curNum.toString());
+									} /* else if (recv['type']==='EXIT') {
+										
+									} */
 									//recv['chatroomDetail']['chat_title']
 									//console.log(recv);
 									//chatRoomTitle.innerText = '('+recv['chatroomDetail']['chat_curmember'] +'/'+recv['chatroomDetail']['chat_maxmember']+') '+recv['chatroomDetail']['chat_title'];
@@ -715,6 +724,8 @@ label {
 			    
 			    if(newRoom){
 			    	stompClient.send("/pub/chat/message/change", {}, JSON.stringify({type:'NEW', roomId: roomNum, sender:"${nickname}",userNum:"${userNum}"}));
+			    	//190819 추가 , 방을 만들고 나갔다가 다시 들어오면 "방이 개설되었습니다" 라는 메시지가 떠서 그것을 방지.
+			    	newRoom = false;
 			    } else {
 					stompClient.send("/pub/chat/message/change", {}, JSON.stringify({type:'JOIN', roomId: roomNum, sender:"${nickname}",userNum:"${userNum}"}));
 			    }

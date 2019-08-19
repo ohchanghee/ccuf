@@ -97,7 +97,7 @@ public class MessageHandler {
 			ChatRoomVO chatroomDetail=null;
 			
 			try {
-				
+				/*
 				chatroomDetail = service.getChatRoomDetail(chatroom_num, selectNum);
 				
 				// 접속도중 채팅방이 없어진 상태거나, 채팅방의 진행상태가 "마감"일 때 못들어오게 막는다.
@@ -108,7 +108,7 @@ public class MessageHandler {
 				}
 				
 				message.setChatroomDetail(chatroomDetail);
-				
+				*/
 				int insertUser = service.insertUser(new ChatUserVO(chatroom_num, userNum), selectNum);
 				
 				if(insertUser==1) {	//만약에 채팅방에 없던 회원이면 들어가는데에 문제가 없습니다.
@@ -166,7 +166,7 @@ public class MessageHandler {
 			try {
 				ChatVO vo = new ChatVO(null,message.getMessage(),chatroom_num,userNum,null);
 				service.insertChat(vo, selectNum);
-				System.out.println("welldone");
+//				System.out.println("welldone");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
