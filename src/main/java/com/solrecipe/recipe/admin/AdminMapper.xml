@@ -70,9 +70,6 @@
 				on mem_dt.user_num = mem.user_num
 				left outer join user_blackList_tb bl on mem_dt.user_num = bl.user_num)
 			</when>
-			<when test='whichPage.equals("message")'>
-				message_tb
-			</when>
 			<when test='whichPage.equals("receiveMsg")'>
 				message_tb where recver_num = 1
 			</when>
@@ -80,6 +77,10 @@
 				message_tb where sender_num = 1
 			</when>
 		</choose>
+	</select>
+	
+	<select id="getMyTotalMsgCnt" resultType="int">
+		select count(*) from message_tb where sender_num = #{userNum} or recver_num = #{userNum}
 	</select>
 
 	<select id="getSearchedCnt" resultType="int">

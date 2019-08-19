@@ -40,7 +40,12 @@ public class AdminServiceImpl implements AdminService {
 	public int getTotalCnt(String whichPage) {
 		return adminMapper.getTotalCnt(whichPage);
 	}
-
+	
+	@Override
+	public int myTotalMsgCnt(int user_num) {
+		return adminMapper.getMyTotalMsgCnt(user_num);
+	}
+	
 	@Override
 	public int getSearchedCnt(String whichPage, String keyword) {
 		return adminMapper.getSearchedCnt(whichPage, keyword);

@@ -13,7 +13,8 @@ import com.solrecipe.recipe.user.domain.MemberVO;
 
 public interface AdminMapper {
 	int getTotalCnt(@Param("whichPage") String whichPage);
-
+	int getMyTotalMsgCnt(@Param("userNum")int userNum);
+	
 	int getSearchedCnt(@Param("whichPage") String whichPage, @Param("keyword") String keyword);
 
 	List<Recipe_basicVO> getRecipeList(@Param("startNum") int startNum);

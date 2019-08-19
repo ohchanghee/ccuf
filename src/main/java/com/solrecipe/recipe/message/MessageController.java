@@ -43,9 +43,15 @@ public class MessageController {
 //	메시지함에서 페이징처리를 위한 페이징 객체를 얻는 콜
 	@PostMapping(value = "/getPaging", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public Paging returnPaging(int page){
+	public Paging returnPaging(int page, Principal principal){
 //		전체 메시지 개수를 구한다(페이징 처리를 위해)
-		int totalPosts = adminService.getTotalCnt("message");
+		String username = principal.getName();
+
+		MemberVO vo = commonService.getMyVO(username);
+		
+		int totalPosts = adminService.myTotalMsgCnt(vo.getUser_num());
+		
+		
 		Paging paging = new Paging(10,5,page,totalPosts);
 		
 		return paging;

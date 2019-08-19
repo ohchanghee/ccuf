@@ -13,7 +13,8 @@ import com.solrecipe.recipe.user.domain.MemberVO;
 
 public interface AdminService {
 	int getTotalCnt(String whichPage);
-
+	int myTotalMsgCnt(int user_num);
+	
 	int getSearchedCnt(String whichPage, String keyword);
 
 	List<Recipe_basicVO> getRecipeList(int page);
