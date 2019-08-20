@@ -780,6 +780,7 @@ label{
 			subscription.unsubscribe()
 			stompClient.disconnect()
 			chatModal.style.display = "none";
+			location.reload();
 		};
 		closeWriteSpan.onclick = function() {
 			writeModal.style.display = "none";
