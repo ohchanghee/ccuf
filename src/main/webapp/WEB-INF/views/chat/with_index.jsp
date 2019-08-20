@@ -519,7 +519,6 @@ label{
 								<th>지 역</th>
 								<th>제 목</th>
 								<th>방 장</th>
-								<th>진행 / 마감</th>
 								<th>날 짜</th>
 							</tr>
 						</thead>
@@ -535,7 +534,6 @@ label{
 										</button>
 									</td>
 									<td>${chatRoomVO.memberVO.user_nickname }</td>
-									<td>${chatRoomVO.chat_status==1? "진행":"마감"}</td>
 									<td><fmt:formatDate value="${chatRoomVO.firstdate}" pattern="yyyy-MM-dd"/></td>
 									
 								</tr>
