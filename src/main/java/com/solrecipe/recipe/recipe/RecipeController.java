@@ -188,14 +188,20 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe_delete/{excel}/{recipe_num}")
-	public String recipe_detail(@PathVariable("excel") Integer excel, @PathVariable("recipe_num") Long recipe_num,RedirectAttributes rttr, Principal principal) {
+	public String recipe_detail(@PathVariable("excel") Integer excel, @PathVariable("recipe_num") Long recipe_num
+			,@RequestParam(value = "from", required = false) String from
+			,RedirectAttributes rttr, Principal principal) {
 		
 		int result = service.deleteRecipe(excel, recipe_num.intValue());
 		if(result>0 && excel == 0) {new AdminController().deleteFile(recipe_num.intValue()); }
 		
 		rttr.addFlashAttribute("isDeleted",excel==0? recipe_num+" 번 ":"관리자가 올린 ");
 		
-		return "redirect:/recipe_index";
+		if(from != null && from.equals("myPage_recipe")) {
+			return "redirect:/myPage_recipe";
+		} else {
+			return "redirect:/recipe_index";
+		}
 	}
 	
 	

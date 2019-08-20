@@ -188,7 +188,7 @@ input.cooking_txt:focus, .cooking_btn:focus, #cooking_title:focus, #cooking_sub:
 				<div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
 		           	<div class="col-12 text-right">
 						<img src="../img/user/recipegram_update.png" class="mr-2 recipe_update" onclick="location.href = '/recipe_modify/${recipe.excel}/${recipe.recipe_num}?from=myPage_recipe'" style="width:5%; margin-top:-4%; cursor:pointer;"/>
-						<i class="fas fa-times fa-2x recipe_delete" style="cursor:pointer;" onclick="location.href = '/recipe_delete/${recipe.excel}/${recipe.recipe_num}'"></i>
+						<i class="fas fa-times fa-2x recipe_delete" style="cursor:pointer;" onclick="location.href = '/recipe_delete/${recipe.excel}/${recipe.recipe_num}?from=myPage_recipe'"></i>
 					</div>
 		           	<div class="rounded text-center">
 		           		<span class="cooking_title recipe_title">${recipe.recipe_title}</span>  
