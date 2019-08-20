@@ -68,7 +68,7 @@ public class MainController {
 		return rgList;
 	}
 	
-	@RequestMapping(value="/main", method=RequestMethod.GET)
+	@RequestMapping(value= {"/main","/"}, method=RequestMethod.GET)
 	public ModelAndView main_crawl(ModelAndView model) {
 		
 		String url_hp = "http://www.homeplus.co.kr/app.exhibition.cheapershop.CheaperShop.ghs?comm=usr.cheapershop&WT.ac=Main_GNB_ssaday";
