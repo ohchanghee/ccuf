@@ -328,7 +328,7 @@ textarea {
 							게시물 &nbsp;
 							<input type="text" class="font-size-20" style="border:none; color:#65737e; background:none;" id="userlistcnt" value="${rgcnt }"/>
 							<br>	
-								<input type="text" id="user_info" class="font-size-17" contenteditable="true" style="border:none; color:#65737e; background:none;" value="${userlist.user_intro }" readonly/>
+								<input type="text" id="user_info" class="font-size-17" contenteditable="true" style="border:none; color:#65737e; background:none; width:100%; padding-left:20%;" value="${userlist.user_intro }" readonly/>
 							<%-- </c:otherwise>
 							</c:choose> --%>
 						</div>
