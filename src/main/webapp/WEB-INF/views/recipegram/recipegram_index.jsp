@@ -833,7 +833,7 @@ function insertReply(code){
 	    },
         success : function(data){
         	
-           getReplyList();
+           getReplyList(recipegram_num);
            $("#reply"+recipegram_num).val("");
             
         },
@@ -920,7 +920,7 @@ function insertRereply(code, num){
 	    },
         success : function(data){
         	
-           getReplyList();
+           getReplyList(recipegram_num);
            $("#reply"+recipegram_num).val("");
             
         },
@@ -936,22 +936,23 @@ function insertRereply(code, num){
 // 초기 페이지 로딩시 댓글 불러오기
 
 $(function(){
-    
-	getReplyList();
+	<c:forEach items="${list}" var="rglist" >
 	
+	getReplyList( ${rglist.recipegram_num });
+	</c:forEach>
 });
  
 
 //댓글 불러오기(Ajax)
 		
-function getReplyList(){
+function getReplyList(recipegram_num){
 	<c:forEach items="${list}" var="rglist" >
 	var user_nickname = "${rglist.user_nickname }";
 
 	var user_num = document.getElementById('user_num').value;
 
-	var recipegram_num = ${rglist.recipegram_num };
-	
+	/* var recipegram_num = ${rglist.recipegram_num }; */
+
 	$.ajax({
         type:'GET',
         url : '/replyList',
@@ -1353,9 +1354,8 @@ function deleteRereply(num){
 							+"</div>"
 						);
 					
-					
 					getLikeSt(item.recipegram_num);
-					 getReplyList();
+					 getReplyList(item.recipegram_num);
 					 
 						}
 		             });
