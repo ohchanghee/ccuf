@@ -173,7 +173,6 @@ public class RecipeController {
 			 */
 		
 		
-		System.out.println(principal.toString());
 		List<Recipe_CookingVO> cooking_list = service.getCookingDetail(recipe_num, excel);
 		
 		//System.out.println(basic);
