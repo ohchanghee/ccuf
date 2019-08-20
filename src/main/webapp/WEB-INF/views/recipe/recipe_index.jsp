@@ -259,7 +259,9 @@
 <!-- 	<script src="/resources/js/jquery-migrate-3.0.1.min.js"></script> -->
 	
 	<script>
-	
+	if(history.state) {
+		document.querySelectorAll('[name="searching_Ing"]').forEach(function(i,j){i.value = "";})
+	}
 	//레시피 한개를 추가할 때 생기는 일이 함축되어 있는 
 	function recipe_add(recipe_num,recipe_title,recipe_img,recipe_food_main,recipe_food_suv,excel,user_nickname) {
 		//recipe_num: 레시피 번호
@@ -380,6 +382,10 @@
 	//=========================================== 문서가 모두 준비되면 ===========================================//
 	
 	$(document).ready(function() {
+		
+		
+		
+		
 		var ings=$('input[name="searching_Ing"]');	//메모란에 있는 재료들의 값을 읽어오기 해당 DOM을 가져오는 선언 및 초기화, ings 는 ingredients의 함축어다.
 		var deleteBtns = $('button.btn.btn-danger');//메모란 옆에 있는 X 버튼을 DOM을 읽어오기 위한 선언 및 초기화
 	    //var exist_ings = ['감자','양파','김','밥'];	
@@ -392,26 +398,40 @@
 		//jsp의 $를 사용해서 model에 저장된 값을 읽어 올 것이다. $(document).ready 밖에 둔다.
 		
 		//만약 검색을 해서 가져온 데이터면 잠시 모든 데이터를 가져오는 것을 멈춘다.
-		$.ajax({
-               type      : 'GET',
-               url:'/rest/getAllRecipe',
-               dataType:"json",
-               success     : function(data) {
-                 var MainSearch = '${MainSearch}';
-                 if(MainSearch) {
-                    $('#search_icon').click();
-                 } else {
-                      console.log(data);   
-                      search_result = data;
-                      Show = recipe_loop(data);
-                      Show();
-                 }
-               },
-               error       : function(request, status, error) {
-                   alert(error);
-               }
-		});
-			
+	
+			$.ajax({
+	               type      : 'GET',
+	               url:'/rest/getAllRecipe',
+	               dataType:"json",
+	               success     : function(data) {
+	            	 if(!history.state) {
+		                 var MainSearch = '${MainSearch}';
+		                 if(MainSearch) {
+		                    $('#search_icon').click();
+		                 } else {
+		                      console.log(data);   
+		                      search_result = data;
+		                      Show = recipe_loop(data);
+		                      Show();
+		                      
+		                 }
+		                 
+		                 history.replaceState({},null,null);
+		                 
+	            	 } else {
+	            		 console.log(data);   
+	                     search_result = data;
+	                     Show = recipe_loop(data);
+	                     Show();
+	            	 }
+	               },
+	               error       : function(request, status, error) {
+	                   alert(error);
+	               }
+			});
+		
+		
+		
 		//=================================== 맨 위의 헤더 아이콘에 마우스 대면 툴팁이 뜬다 ====================================//
 		
 		 
@@ -568,8 +588,6 @@
 	
 		
 	});
-	
-	
 	
   </script>
 </body>
