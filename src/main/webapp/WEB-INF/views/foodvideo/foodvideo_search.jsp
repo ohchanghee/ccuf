@@ -187,11 +187,11 @@ input:focus::-ms-input-placeholder {
                      <a class='videoAtag' href='javascript:goDetail("${fvideo.video_num }")'>
                      <span class="play_button2"></span>
                      <img class="thumbnail" src="${fvideo.video_thumbnail}" style="height:220px;">
-                     <br><div style="margin-top:2%;">${fvVO.video_title }</div></a>
+                     <br><div style="margin-top:2%;">${fvideo.video_title }</div></a>
                      <br>
-                     <div style="text-align:center; font-size:0.8rem;">찜횟수 ${fvVO.video_mark_cnt}
+                     <div style="text-align:center; font-size:0.8rem;">찜횟수 ${fvideo.video_mark_cnt}
 					 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-					 ${fvVO.firstdate }</div>
+					 ${fvideo.firstdate }</div>
                   </div>
                </div>
             </c:forEach>
