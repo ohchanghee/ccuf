@@ -237,9 +237,6 @@ public class RecipeController {
 		Long recipe_num = basic.getRecipe_num();
 		int excel= basic.getExcel();
 		
-		System.out.println(basic);
-		System.out.println(basic.getRecipe_title()+" / "+basic.getRecipe_food_main()+" / "+basic.getRecipe_food_suv());
-		
 		
 		service.updateRecipeBasic(basic);
 		
@@ -256,12 +253,9 @@ public class RecipeController {
 			cooking.setRecipe_num(recipe_num);
 			cooking.setCooking_num((i+1L));
 			cooking.setCooking_content(add_txt[i]);
-			
 			service.updateRecipeCooking(cooking,excel);
 			
 		}
-		
-	
 		
 		return recipe_num.toString();
 		

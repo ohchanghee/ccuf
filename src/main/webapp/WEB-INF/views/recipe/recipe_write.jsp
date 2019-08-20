@@ -50,7 +50,7 @@ function getThumbnailPrivew(html, $target) {
 	if((html.files[0])['type'].split("/")[0]!=="image") {
 		alert("이미지 파일이 아닙니다.")
 		checking_file_valid = false;
-	}  else if ((html.files[0]).size >= 10485760) {
+	}  else if (html.files[0].size >= 10480000) {
 		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
 		checking_file_valid = false;
 	} else if (!checkExtension.test((html.files[0]).name)) {
@@ -215,7 +215,7 @@ function cooking_getThumbnailPrivew(html, $target) {
 	if((html.files[0])['type'].split("/")[0]!=="image") {
 		alert("이미지 파일이 아닙니다.")
 		checking_file_valid = false;
-	}  else if ((html.files[0]).size >= 10485760) {
+	}  else if (html.files[0].size >= 10480000) {
 		alert("대표 이미지 파일 용량이 너무 큽니다.10MB 이하만 가능합니다. ");
 		checking_file_valid = false;
 	} else if (!checkExtension.test((html.files[0]).name)) {

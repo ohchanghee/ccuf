@@ -185,7 +185,7 @@
 		when MATCHED THEN
 		update set cooking_content = #{vo.cooking_content}
 		where 0 = (select count(*) from <include refid="SELECT_COOKING_TB" /> where cooking_num = #{vo.cooking_num} and recipe_num = #{vo.recipe_num} and to_char(cooking_content) = #{vo.cooking_content})
-		when not matched then 
+		<!-- when not matched then 
 		<choose>
 			<when test="vo.cooking_img != null and !vo.cooking_img.equals('')">
 				insert values(#{vo.recipe_num},#{vo.cooking_num}, #{vo.cooking_content} ,#{vo.cooking_img})
@@ -193,7 +193,7 @@
 			<otherwise>
 				insert values(#{vo.recipe_num},#{vo.cooking_num}, #{vo.cooking_content} ,NULL)
 			</otherwise>
-		</choose>
+		</choose> -->
 	</update>
 	
 	

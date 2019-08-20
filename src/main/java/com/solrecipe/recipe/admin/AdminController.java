@@ -125,16 +125,12 @@ public class AdminController {
 		Long recipe_num = basic.getRecipe_num();
 		int excel = basic.getExcel();
 
-		System.out.println(basic);
-		System.out.println(
-				basic.getRecipe_title() + " / " + basic.getRecipe_food_main() + " / " + basic.getRecipe_food_suv());
-
 		adminService.updateRecipeBasic(basic);
 
 		Recipe_CookingVO cooking = null;
 
 		String[] add_txt = request.getParameterValues("add_txt");
-
+		
 		for (int i = 0; i < add_txt.length; i++) {
 
 			System.out.println(add_txt[i]);
