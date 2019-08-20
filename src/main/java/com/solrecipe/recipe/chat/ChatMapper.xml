@@ -84,6 +84,7 @@
 		      with_tb
 		    </otherwise>
   		</choose>
+  		where chat_status = 1
 	</select>
 	
 	

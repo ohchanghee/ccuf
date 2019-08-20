@@ -55,7 +55,7 @@ public class ChatController {
 		int listCnt = 15;
 		int pageCnt = 5;
 		int totalCnt = service.getTotalCnt(0);
-		int totalPage = totalCnt/listCnt+1;
+		int totalPage = (totalCnt-1)/listCnt+1;
 		
 		if (page > totalPage){
 			page = totalPage;
@@ -66,7 +66,6 @@ public class ChatController {
 		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
-		
 		// 0 -> change_tb   1 -> with_tb 호출 테이블 선택
 		 ArrayList<ChatRoomVO> chatList;
 		if(select == null || select == 0 ) { chatList = (ArrayList<ChatRoomVO>) service.getChatList(0, page,localSearch,titleSearch);  }
