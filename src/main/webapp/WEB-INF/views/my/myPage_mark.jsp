@@ -350,7 +350,7 @@ $(".mainRow").scroll(function() {
 	};
 });
 
-function deleteMarkedVideo(recipe_num){
+function deleteMarkedVideo(video_num){
 	if (confirm("찜 목록에서 제거하시겠습니까?")==true){    //확인
 		location.href="/deleteMarkedVideo?video_num="+video_num;
 	 }else{   //취소

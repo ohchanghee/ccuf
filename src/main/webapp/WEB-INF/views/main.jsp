@@ -434,7 +434,7 @@ label#menu_label, #menu{
           <!-- 로고 -->
                 
          	 <div class="site-logo">
-              <a href="main.jsp" class="text-black nav-link"><span class="text-primary">자취방 레시피</span></a>
+              <a href="/main" class="text-black nav-link"><span class="text-primary">자취방 레시피</span></a>
             </div>
 			
 			
@@ -463,8 +463,9 @@ label#menu_label, #menu{
 						
 						<!-- 관리자시...  -->                  
                    		<sec:authorize access="hasRole('ROLE_ADMIN')">
+                   			
 							<li>
-								<a href="/admin_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
 									<sec:authentication property="principal.member.user_nickname"/> 
 									
 								</a>
@@ -475,6 +476,12 @@ label#menu_label, #menu{
 	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
 	                  			</form>
 	                  		</li>
+	                  		<li>
+								<a href="/admin_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
+									<img src ="img/admin/admin.png" height="30px">
+									
+								</a>
+							</li>
 						</sec:authorize> 
 						
 						<!-- 일반 user -->

@@ -651,7 +651,7 @@ textarea {
 		    },
 	        success : function(data){
 	        	alert("레시피그램 삭제완료!");
-	        	location.href="/recipegram_index";
+	        	location.href="/myPage_recipegram";
 	        },
 	        error:function(request,status,error){
 	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

@@ -252,7 +252,7 @@ label#menu_label, #menu{
 						<!-- 관리자시...  -->                  
                    		<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li>
-								<a href="/admin_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
 									<sec:authentication property="principal.member.user_nickname"/> 
 									
 									
@@ -264,6 +264,12 @@ label#menu_label, #menu{
 	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
 	                  			</form>
 	                  		</li>
+	                  		<li>
+								<a href="/admin_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
+									<img src ="img/admin/admin.png" height="30px">
+									
+								</a>
+							</li>
 						</sec:authorize> 
 						
 						<!-- 일반 user -->
@@ -529,4 +535,3 @@ $('#recipegram_link').tooltip({title:"레시피그램",placement:"bottom"});
 $('#sale_link').tooltip({title:"할인정보",placement:"bottom"});
 $('#chat_link').tooltip({title:"채팅방",placement:"bottom"});
 </script>
-    
