@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -8,144 +8,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>My Page</title>
-
-<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/magnific-popup.css">
-<link rel="stylesheet" href="../resources/css/jquery-ui.css">
-<link rel="stylesheet" href="../resources/css/owl.carousel.min.css">
-<link rel="stylesheet" href="../resources/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="../resources/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="../resources/css/aos.css">
-<link rel="stylesheet" href="../resources/css/style.css">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/magnific-popup.css">
+<link rel="stylesheet" href="resources/css/jquery-ui.css">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="resources/css/aos.css">
+<link rel="stylesheet" href="resources/css/style.css">
 <!-- MetisMenu CSS -->
-<link href="../resources/css/metisMenu.min.css" rel="stylesheet">
+<link href="resources/css/metisMenu.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Jua&display=swap"
 	rel="stylesheet">
-<script src="https://kit.fontawesome.com/d2c6942021.js"></script>
+
+<title>레시피그램</title>
 
 <style>
-
-.new_like {
-	position: static;
-	float: right;
-	margin-top: -18%;
+body {
+	font-family: 'Jua', sans-serif;
 }
-
-.btn-default {
-	background: white;
-	border: solid 1px #FFC69F;
-	color: #FFC69F;
-}
-
-.foodImg {
-	width: 100%;
-	height: 370px;
-}
-
-.mainview {
-	margin-bottom: 5%;
-}
-
-.reply {
-	border: solid 1px;
-	border-radius: 30px;
-	background: white;
-	padding: 4px;
-}
-
-@media ( max-width :400px) {
-	.reply {
-		width: 100%;
-	}
-}
-
-.replycont {
-	border: none;
-	border-radius: 35px;
-	width: 80%;
-	outline: none;
-	padding-left: 13px;
-	margin-right: 20px;
-}
-
-.replybtn {
-	border: none;
-	border-radius: 30px;
-	background: white;
-	outline: none;
-	float: right;
-	color: #FFD7BE;
-}
-
-.info {
-	ovreflow: hidden;
-}
-
-.info .info_data.hiddenCom {
-	white-space: nowrap;
-	word-wrap: normal;
-	width: 89%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	float: left;
-}
-
-.btn-moreInfo {
-	/* display: none; */
-	/* white-space: nowrap; */
-	float: right;
-}
-
-@media screen and (min-width: 400px) {
-	.info .info_data.hiddenCom {
-		width: 70%;
-	}
-}
-
-.carousel-inner>.carousel-item>img {
-	width: 100%;
-	min-height: 300px;
-	max-height: 400px;
-}
-
-@media ( max-width :400px) {
-	.favorite {
-		margin-top: 5%;
-	}
-}
-/* 클릭 시 파란테두리 없애기  */
-.user .row input#user_info
-	button#login, button#signup {
-	outline: none;
-}
-
-.user{
-	-webkit-border-radius: 10px;
-  	-moz-border-radius: 10px;
-}
-@media ( max-width :500px) {
-	.user{
-		margin-left:0.5%;
-		
-	}
-	
-}
-
-.user #user_img{
-	width:100%;
-}@media ( max-width :500px) {
-	.user #user_img{
-		width:40%;
-	}
-}
-
-	
-
-
 
 .text-center input#recipe_search {
 	margin-top: 6%;
@@ -168,7 +52,7 @@
 }
 
 /* 클릭 시 파란테두리 없애기  */
-.text-center input#recipe_search:focus, .text-center .icon #search_icon:focus, #user_nickname:focus,#user_info:focus,
+.text-center input#recipe_search:focus, .text-center .icon #search_icon:focus, #sel_user_nickname:focus, #user_info:focus,
 	button#login, button#signup {
 	outline: none;
 }
@@ -233,7 +117,6 @@ input:focus::-ms-input-placeholder {
 .mainview {
 	margin-bottom: 5%;
 }
-
 .reply {
 	border: solid 1px rgba(0,0,0,.15);
 	border-radius: 30px;
@@ -241,7 +124,7 @@ input:focus::-ms-input-placeholder {
 	padding: 4px;
 }
 
-@media ( max-width :400px) {
+@media ( max-width :500px) {
 	.reply {
 		width: 100%;
 	}
@@ -286,7 +169,7 @@ input:focus::-ms-input-placeholder {
 	float: right;
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 500px) {
 	.info .info_data.hidden {
 		width: 70%;
 	}
@@ -298,7 +181,7 @@ input:focus::-ms-input-placeholder {
 
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
 	.carousel-inner>.carousel-item>img {
 		width: 100%;
 		height:40%;
@@ -311,14 +194,14 @@ input:focus::-ms-input-placeholder {
 
 }
 
- @media (max-width: 400px) {
+ @media (max-width: 500px) {
 	.info_data {
 		width: 100%;
 		height:100px;
 	}
 } 
 
-@media ( max-width :400px) {
+@media ( max-width :500px) {
 	.favorite {
 		margin-top: 5%;
 	}
@@ -338,6 +221,8 @@ textarea {
 }
 
 
+
+
 .rereplybtn {
 	border: none;
 	border-radius: 30px;
@@ -350,12 +235,13 @@ textarea {
 
 .con{
    width:100%;
-   height: 210px;
+   height: 265px;
    overflow-y:scroll;
    -ms-overflow-style:none;
    padding-top:2%;
    margin-top:2%;
 }
+
 .con::-webkit-scrollbar{
    display:none;
 }
@@ -382,66 +268,83 @@ textarea {
 }
 } 
 
+#user_img{
+
+  	width: 140%;
+  	height: 100%;
+    border-radius: 50%; /* 이미지 반크기만큼 반경을 잡기*/
+
+}
+
 </style>
 
-
 </head>
+<body>
+
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
+	<script src="resources/js/jquery-ui.js"></script>
+	<script src="resources/js/popper.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/owl.carousel.min.js"></script>
+	<script src="resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="resources/js/jquery.sticky.js"></script>
+	<script src="resources/js/jquery.waypoints.min.js"></script>
+	<script src="resources/js/jquery.animateNumber.min.js"></script>
+	<script src="resources/js/aos.js"></script>
+
+	<script src="resources/js/main.js"></script>
+
+	<!-- <script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ -->
+
+<jsp:include page="../headNfoot/header.jsp" />
+	<!--user 정보   -->
+<div class="subsite-section bg-light pt-1" style="padding-bottom: 2%;">
+<c:if test = "${userlist.isopen eq 0 }">
+	<div class="container pb-4">
+		<div class="row align-items-center justify-content-center">
+			<div class="col-md-12 col-lg-7 text-center ">
+
+				<div class="row col-md-12 text-center mt-5 user"
+					style="float: center; margin-right: -20%; height:180px;">
+					<c:choose>
+					
+					<c:when test="${userlist.isopen eq 0 }">
+						<div class="col-lg-3 col-md-3 mt-2 mb-2">
+						
+								<img src="${userlist.user_img }" id="user_img" />
+								
+							
+						</div>
+						<div class="col-lg-9 col-md-9 mt-4 mb-2">
+							<input type="text" class=" font-size-23" id="sel_user_nickname" style="border:none; color:#65737e; background:none;" value="${userlist.user_nickname }"readonly/>
+							<%-- <c:choose>
+							<c:when test = "${userlist.user_intro eq '' || userlist.user_intro eq null}">
+								<div id="user_info" class="mt-3" contenteditable="true" style="border:none; color:#65737e; ">등록된 소개가 없습니다...  </div>
+							</c:when>
+							<c:otherwise> --%>
+							<br>
+							게시물 &nbsp;
+							<input type="text" class="font-size-20" style="border:none; color:#65737e; background:none;" id="userlistcnt" value="${rgcnt }"/>
+							<br>	
+								<input type="text" id="user_info" class="font-size-17" contenteditable="true" style="border:none; color:#65737e; background:none;" value="${userlist.user_intro }" readonly/>
+							<%-- </c:otherwise>
+							</c:choose> --%>
+						</div>
+					</c:when>	
+					<c:otherwise>
+						<div class="font-size-20"style="align:center;"> 비공개 회원입니다... </div>
+					</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</div>
+	</div>
+</c:if>
 
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-<script src="../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../resources/js/jquery-ui.js"></script>
-<script src="../resources/js/popper.min.js"></script>
-<script src="../resources/js/bootstrap.min.js"></script>
-<script src="../resources/js/owl.carousel.min.js"></script>
-<script src="../resources/js/jquery.magnific-popup.min.js"></script>
-<script src="../resources/js/jquery.sticky.js"></script>
-<script src="../resources/js/jquery.waypoints.min.js"></script>
-<script src="../resources/js/jquery.animateNumber.min.js"></script>
-<script src="../resources/js/aos.js"></script>
-<script src="../resources/js/main.js"></script>
-
-<jsp:include page = "../headNfoot/header.jsp"/>   
-			
-		<div class="subsite-section">
-		      <div class="container">
-		        <div class="row">
-		          <div class="col-md-3 col-lg-2 mb-1 text-center">
-		            <div class="block-heading-1">
-		            
-		              <a href="/myPage_index" id="mypage"><h4 class="my">회원정보</h4></a>
-		              
-		            </div>
-		          </div>
-		          
-		          <div class="col-md-3 col-lg-2 mb-1 text-center">
-		            <div class="block-heading-1">
-		            	<a href="#table2">	
-		              <a href="/myPage_recipegram" id="myrecipegram"><h4 class="clickmy">레시피그램</h4></a>
-		              </a>
-		            </div>
-		          </div>
-		          <div class="col-md-3 col-lg-2 mb-1 text-center">
-		            <div class="block-heading-1">
-		            
-		              <a href="/myPage_recipe" id="myrecipe"><h4 class="my">레시피</h4></a>
-		              
-		            </div>
-		          </div>
-		          <div class="col-md-3 col-lg-2 mb-1 text-center">
-		            <div class="block-heading-1">
-		            
-		              <a href="/myPage_mark" id="mymark"><h4 class="my">찜</h4></a>
-		              
-		            </div>
-		          </div>
-		        </div>
-		       </div>
-		     </div>
-		     
-		     
-	<div class="subsite-section bg-light" style="padding-bottom: 2%;">
 <!-- 로그인 시   -->
 		<sec:authorize access="isAuthenticated()">
 		<sec:authentication var="user_num" property="principal.member.user_num"/>
@@ -459,7 +362,7 @@ textarea {
 		</sec:authorize>
 		
 		
-	<div class="container mainview " id="mainview" >
+	<div class="container mainview pt-5" id="mainview" style="border-top: 1px solid #efefef;">
 		<c:forEach items="${list}" var="rglist" > 
 		<!-- 나만보기가 아닐 경우...  -->
 		<c:if test="${rglist.recipegram_secret eq 0}">
@@ -626,6 +529,8 @@ textarea {
 	<jsp:include page="../headNfoot/footer.jsp" />
 
 	<script>
+	
+	
 	function modify(recipegram_num){
 		window.location.href="getmodifyRecipegram?recipegram_num=" + recipegram_num;
 	}
@@ -651,7 +556,7 @@ textarea {
 		    },
 	        success : function(data){
 	        	alert("레시피그램 삭제완료!");
-	        	location.href="/myPage_recipegram";
+	        	location.href="/recipegram_index";
 	        },
 	        error:function(request,status,error){
 	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -1304,7 +1209,7 @@ function deleteRereply(num){
 		var maxHeight = $(document).height()-$(".site-footer").outerHeight();
 		var currentScroll = $(window).scrollTop() + $(window).height();
 		
-var user_nickname=document.getElementById('login_nickname').value;
+var user_nickname=document.getElementById('sel_user_nickname').value;
 		
 		console.log("user : " + user_nickname );
 		
@@ -1483,4 +1388,4 @@ $('.recipegram_delete').tooltip({title:"삭제",placement:"bottom"});
 </script>  
 
 </body>
-</html></html>
+</html>
