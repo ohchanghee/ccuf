@@ -200,11 +200,20 @@ if ("${isModified}" != null && "${isModified}" > 1)
    <!-- Header -->
     <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 		<div class="container">
-        <div class="row align-items-center position-relative">
+        <div class="row align-items-center position-relative mb-5">
           
             <!-- 로고 -->
             <div class="site-logo">
-              <a href="/admin_index" ><img src="../img/admin/admin_logo.png" width="10%"/></a>
+              <a href="/admin_index" ><img src="../img/admin/admin_logo.png" width="6%"/></a>
+              
+              <img src="../img/admin/admin_menu.png" style="width:85%; padding-top:5%;"/>
+              <a href="/admin_users"><font style="position: absolute;top: 79%;left: 13%; font-size:60%; color:#fff;"> 회원 </font></a>
+              <a href="/admin_recipe"><font style="position: absolute;top: 79%;left: 26%; font-size:60%; color:#fff;"> 레시피 </font></a>
+              <a href="/admin_foodvideo"><font style="position: absolute;top: 79%;left: 39%; font-size:60%; color:#fff;"> 요리영상 </font></a>
+              <a href="/recipegram_index"><font style="position: absolute;top: 79%;left: 52%; font-size:60%; color:#fff;"> 레시피그램 </font></a>
+              <a href="/admin_chat"><font style="position: absolute;top: 79%;left: 67.5%; font-size:60%; color:#fff;"> 채팅방 </font></a>
+              <a href="/admin_receiveMsg"><font style="position: absolute;top: 79%;left: 82%; font-size:60%; color:#fff;"> 메시지 </font></a>
+             
             </div>
          </div>
        </div>
@@ -484,11 +493,11 @@ var sendMsg = function(recver_num){
 					var page = ${page};
 					// 검색 안 한 경우 이동하는 위치
 					if(search==""){
-						window.location="admin_recipe?page="+page;	
+						window.location="admin_chat?page="+page;	
 					}
 					// 검색한 경우
 					else{
-						window.location="admin_searchrecipe?page="+page+"&search="+search;
+						window.location="admin_searchchat?page="+page+"&search="+search;
 					}
 					
 				}else{

@@ -252,7 +252,7 @@ label#menu_label, #menu{
 						<!-- 관리자시...  -->                  
                    		<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li>
-								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
+								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none"> 
 									<sec:authentication property="principal.member.user_nickname"/> 
 									
 									
@@ -261,7 +261,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
+	                  				<button class="nav-link font-size-20" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
 	                  			</form>
 	                  		</li>
 	                  		<li>
@@ -275,7 +275,7 @@ label#menu_label, #menu{
 						<!-- 일반 user -->
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 											<li>
-								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
+								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none">
 									<sec:authentication property="principal.member.user_nickname"/>
 									
 								</a>
@@ -283,7 +283,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
+	                  				<button class="nav-link font-size-20" id="logout" style="border:none; color:#65737e; background:none; font-family: 'Jua', sans-serif;">로그아웃</button>
 	                  			</form>
 	                  		</li>
 						</sec:authorize>
@@ -298,7 +298,7 @@ label#menu_label, #menu{
 							if(kakao_userid != null){
 						%>
 						<li>
-								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
+								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none">
 									<%=kakao_usernickname %>
 									
 								</a>
@@ -306,13 +306,13 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/kakao_logout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link font-size-20" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
 	                  			</form>
 	                  		</li>
 	                  		
 	                  	<%}else{ %>
-							<li><button class="nav-link" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
-	                  		<li><button class="nav-link" id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
+							<li><button class="nav-link font-size-20" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
+	                  		<li><button class="nav-link font-size-20"  id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
 	                	<%} %>
 					</sec:authorize>
                   </ul>

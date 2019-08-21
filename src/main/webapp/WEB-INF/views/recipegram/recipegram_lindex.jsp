@@ -359,7 +359,7 @@ textarea {
 		<c:if test="${rglist.recipegram_secret eq 0}">
 			<c:set var="recipegram_num" value="${rglist.recipegram_num }"/>
 			
-				<div class="row col-md-10 col-sm-12 col-xs-12 rg_con" style="background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:4rem;padding-left:0; ">
+				<div class="row col-md-12 col-sm-12 col-xs-12 rg_con" style="background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:4rem;padding-left:0; ">
 					<!-- carousel -->
 							<div id="demo${rglist.recipegram_num }" class="col-md-7 carousel" style="padding-left:0;"data-ride="carousel" data-interval="false" >
 								<!-- Indicators -->
@@ -407,7 +407,7 @@ textarea {
 							<div style="border-bottom:1px solid rgba(0,0,0,.0975); margin-top:3%; padding-bottom:3%;" >
 								<input type="hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>
 								<input type="hidden" id="user_nickname" name="user_nickname" value="${rglist.user_nickname }">
-								<span id="nckname" class=" font-size-17 " style="color: #65737e ;" onclick="user_list(${rglist.recipegram_num });"><c:out value="${rglist.user_nickname }"/></span>
+								<span id="nckname" class=" font-size-19 " style="color: #65737e ;" onclick="user_list(${rglist.recipegram_num });"><c:out value="${rglist.user_nickname }"/></span>
 					
 								
 						<!-- 관리자시...  -->                  
@@ -445,10 +445,10 @@ textarea {
 								<div class=" col-sm-12 col-xs-12">
 									<!-- <input type="text" value="" readonly style="width: 100%;"> -->
 									<%-- <div class="info " style="" id="info_data${rglist.recipegram_num }"> --%>
-										<div class="info_data " id="btn_info${rglist.recipegram_num }" class="font-size-17" >
+										<div class="info_data  font-size-19" id="btn_info${rglist.recipegram_num }" >
 											${rglist.recipegram_content  }
 										</div>
-										<span class="col-sm-12 rgdate font-size-13" style="float:right;color: #d2d2d2;padding-top:1%;">  
+										<span class="col-sm-12 rgdate font-size-16" style="float:right;color: #d2d2d2;padding-top:1%;">  
 										 	${fn:split(rglist.firstdate,'-')[0]}년 ${fn:split(rglist.firstdate,'-')[1]}월 ${fn:split(rglist.firstdate,'-')[2]}일 
 												
 										</span> 
@@ -486,7 +486,7 @@ textarea {
 							
 						
 						</div>
-			<span class="col-md-10 rgdate font-size-13" style="float:left;color: #65737e;padding-top:1%;">  
+			<span class="col-md-10 rgdate font-size-16" style="float:left;color: #65737e;padding-top:1%;">  
 							 	<input type="text" name="cnt_like${rglist.recipegram_num }" value="${rglist.recipegram_like_cnt }" style="background:none; border:none;color: #65737e;width:5%;">명이 좋아합니다.
 							</span> 
 			
@@ -989,11 +989,11 @@ function getReplyList(){
 						if(user_num == item.user_num){
 							
 							$("#reply_list"+item.recipegram_num).append("<div class='col-md-12 rrr' id='reply_content"+item.recipegram_reply_num+"'>"
-									+"<span class='font-size-17 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
-									+"<span class='info_re font-size-16 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span>"
-									+"<span class='font-size-13'style='float:right' onclick='deleteReply("+item.recipegram_reply_num+")'>삭제</span><br>"
+									+"<span class='font-size-19 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
+									+"<span class='info_re font-size-18 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span>"
+									+"<span class='font-size-16'style='float:right' onclick='deleteReply("+item.recipegram_reply_num+")'>삭제</span><br>"
 									
-									+"<span class='font-size-13 pl-3'style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+									+"<span class='font-size-16 pl-3'style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
 									+"<input class='rereplybtn pl-3'  type='button' onclick='Rereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
 
 									+"<br><span id='more-hide"+item.recipegram_reply_num+"' class='pl-5' onclick ='rereplyDisplay("+item.recipegram_reply_num+")'style='display:none'>ㅡ 답글 보기</span>"
@@ -1002,9 +1002,9 @@ function getReplyList(){
 						}else{
 							
 							$("#reply_list"+item.recipegram_num).append("<div class='col-md-12 rrr' id='reply_content"+item.recipegram_reply_num+"'>"
-									+"<span class='font-size-17 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
-									+"<span class='info_re font-size-16 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span><br>"
-									+"<span class='font-size-13 pl-3' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+									+"<span class='font-size-19 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
+									+"<span class='info_re font-size-18 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span><br>"
+									+"<span class='font-size-16 pl-3' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
 									+"<input class='rereplybtn pl-3'  type='button' onclick='Rereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
 
 									+"<br><span id='more-hide"+item.recipegram_reply_num+"' class='pl-5' onclick ='rereplyDisplay("+item.recipegram_reply_num+")'style='display:none'>ㅡ 답글 보기</span>"
@@ -1019,9 +1019,9 @@ function getReplyList(){
 						 $("#reply_list"+item.recipegram_num).append("<sec:authorize access='isAnonymous()'>"
 						 
 								 +"<div class='col-md-12 rrr' id='reply_content"+item.recipegram_reply_num+"'>"
-									+"<span class='font-size-17 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
-									+"<span class='info_re font-size-16 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span><br>"
-									+"<span class='font-size-13 pl-3' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+									+"<span class='font-size-19 ' id='reply_user"+item.recipegram_reply_num+"' style='color: #65737e;'>"+item.user_nickname+"</span>&nbsp"
+									+"<span class='info_re font-size-18 pl-3' style='color: black;'>"+item.recipegram_reply_content+"</span><br>"
+									+"<span class='font-size-16 pl-3' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
 
 									+"<br><span id='more-hide"+item.recipegram_reply_num+"' class='pl-5' onclick ='rereplyDisplay("+item.recipegram_reply_num+")'style='display:none'>ㅡ 답글 보기</span>"
 									+"  </div> "
@@ -1057,11 +1057,11 @@ function getReplyList(){
   								if(user_num == val2.rere_user_num){
   									
   									$("#reply_content"+item.recipegram_reply_num).append("<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
-  			  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span>"
-  			  								+"<span class='font-size-13'style='float:right'onclick='deleteRereply("+val2.recipegram_rereply_num+")'>삭제</span><br>"
+  			  								+"<span class='font-size-19 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  			  								+"<span class='info_rere font-size-18 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span>"
+  			  								+"<span class='font-size-16'style='float:right'onclick='deleteRereply("+val2.recipegram_rereply_num+")'>삭제</span><br>"
 			  								
-  			  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+  			  								+"<span class='font-size-16 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
   			  								+"<input class='rereplybtn pl-3'  type='button' onclick='Rerereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
 
   			  								
@@ -1070,9 +1070,9 @@ function getReplyList(){
   								}else{
   									
   									$("#reply_content"+item.recipegram_reply_num).append("<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  			  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
-  			  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
-  			  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+  			  								+"<span class='font-size-19 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  			  								+"<span class='info_rere font-size-18 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
+  			  								+"<span class='font-size-16 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
   			  								+"<input class='rereplybtn pl-3'  type='button' onclick='Rerereply("+item.recipegram_num+", "+item.recipegram_reply_num+")' value='답글 달기' >"
 
   			  								+"</div>");
@@ -1085,9 +1085,9 @@ function getReplyList(){
   								 $("#reply_content"+item.recipegram_reply_num).append("<sec:authorize access='isAnonymous()'>"
   								 
   										+"<div class='col-md-12 rrr rereply_content"+item.recipegram_reply_num+"' id='rereply_content"+val2.recipegram_rereply_num+"' style='display:none;'>"
-  		  								+"<span class='font-size-17 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
-  		  								+"<span class='info_rere font-size-16 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
-  		  								+"<span class='font-size-13 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
+  		  								+"<span class='font-size-19 pl-4' id='rereply_user"+val2.recipegram_rereply_num+"' style='color: #65737e;'>"+val2.rere_user_nickname+"</span>&nbsp"
+  		  								+"<span class='info_rere font-size-18 pl-3' style='color: black;'>"+val2.recipegram_rereply_content+"</span><br>"
+  		  								+"<span class='font-size-16 pl-5' style='color: #d2d2d2;'>"+year+"년 " +month + "월 " + day + "일 </span>"
   		  								
   		  								+"</div></sec:authorize>");
   							 
@@ -1240,7 +1240,7 @@ function deleteRereply(num){
 						if(item.recipegram_secret == 0){	
 						
 					 		
-						$("#mainview").append("<div class='row col-md-10 col-sm-12 col-xs-12 rg_con' id='row"+item.recipegram_num+"' style='background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:5rem;padding-left:0;'>"
+						$("#mainview").append("<div class='row col-md-12 col-sm-12 col-xs-12 rg_con' id='row"+item.recipegram_num+"' style='background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:5rem;padding-left:0;'>"
 							+"<div id='demo"+item.recipegram_num +"' class='col-md-7 carousel' style='padding-left:0;'data-ride='carousel' data-interval='false' >"
 							+"<ul class='carousel-indicators' id='indi"+item.recipegram_num +"'>");
 						
@@ -1307,7 +1307,7 @@ function deleteRereply(num){
 										
 							+"<input type='hidden' name = '${_csrf.parameterName }' value = '${_csrf.token }'/>"
 							+"<input type='hidden' id='user_nickname' name='user_nickname' value='"+item.user_nickname +"'>"
-							+"<span id='nckname' class='font-size-17' style='color: #65737e;'  onclick='user_list("+item.recipegram_num+")'> "
+							+"<span id='nckname' class='font-size-19' style='color: #65737e;'  onclick='user_list("+item.recipegram_num+")'> "
 							+item.user_nickname 
 					 		+"</span>");
 					
@@ -1321,10 +1321,10 @@ function deleteRereply(num){
 							
 					$("#cont_"+item.recipegram_num).append("<div class='con'>"
 							+"<div class='col-sm-12 col-xs-12'>"
-							+"<div class='info_data ' id='btn_info"+item.recipegram_num +"' class='font-size-17' >"
+							+"<div class='info_data  font-size-19' id='btn_info"+item.recipegram_num +"'>"
 							+item.recipegram_content
 							+"</div>"
-							+"<span class='col-sm-12 rgdate font-size-13' style='float:right;color: #d2d2d2;padding-top:1%;'> " 
+							+"<span class='col-sm-12 rgdate font-size-18' style='float:right;color: #d2d2d2;padding-top:1%;'> " 
 							+year+"년 " + month +"월 " +day +"일 "
 							
 							+"</span> "
@@ -1338,7 +1338,7 @@ function deleteRereply(num){
 							+"<img src='img/recipegram/favorite.png' style='width: 1.8rem;' onclick='ChangeImage("+item.recipegram_num+")' name='favorite'  id='favorite"+item.recipegram_num +"'>"
 							+"<img src='img/recipegram/hearts.png' style='width: 1.8rem;display:none;' onclick='ChangeImage("+item.recipegram_num+")' name='hearts' id='hearts"+item.recipegram_num +"'>&nbsp;"
 							+"</div>"
-							+"<span class='col-md-10 rgdate font-size-13' style='float:left;color: #65737e;padding-top:1%;'>"  
+							+"<span class='col-md-10 rgdate font-size-16' style='float:left;color: #65737e;padding-top:1%;'>"  
 							+"<input type='text' name='cnt_like"+item.recipegram_num +"' value='"+item.recipegram_like_cnt +"' style='background:none; border:none;color: #65737e;width:5%;'>명이 좋아합니다."
 							+"</span> "
 							+"<sec:authorize access='isAuthenticated()'>"

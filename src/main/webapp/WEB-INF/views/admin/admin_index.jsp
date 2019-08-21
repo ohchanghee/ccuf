@@ -73,7 +73,7 @@
 <!-- 메뉴를 위한 도넛차트 -->
 <script>
 	/* 위치  */
-	var w =1850, h = 900;
+	var w =2150, h = 950;
 	var graphData = [16, 16, 16, 16, 16, 16];
 	var colorData = ["red", "orange", "green", "#5ED1D4", "blue", "purple"];
 	var textData = ["회원관리", "레시피관리", "영상관리", "레시피그램관리", "채팅방관리", "메시지관리"];
