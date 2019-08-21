@@ -462,7 +462,7 @@ textarea {
 	<div class="container mainview " id="mainview" >
 		<c:forEach items="${list}" var="rglist" > 
 		<!-- 나만보기가 아닐 경우...  -->
-		<c:if test="${rglist.recipegram_secret eq 0}">
+		
 			<c:set var="recipegram_num" value="${rglist.recipegram_num }"/>
 			
 				<div class="row col-md-10 col-sm-12 col-xs-12 rg_con" style="background-color : white; border:1px solid rgba(0,0,0,.0975); margin-bottom:4rem;padding-left:0; ">
@@ -618,7 +618,7 @@ textarea {
 		</div>
 	<!-- </div> -->
 
-</c:if>
+
 	 </c:forEach>
 	 </div>
 	</div>
@@ -1483,4 +1483,4 @@ $('.recipegram_delete').tooltip({title:"삭제",placement:"bottom"});
 </script>  
 
 </body>
-</html></html>
+</html>
