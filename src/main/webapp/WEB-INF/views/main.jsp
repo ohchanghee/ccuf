@@ -434,7 +434,7 @@ label#menu_label, #menu{
           <!-- 로고 -->
                 
          	 <div class="site-logo">
-              <a href="/main" class="text-black nav-link "><span class="text-primary ">자취방 레시피</span></a>
+              <a href="main.jsp" class="text-black nav-link"><span class="text-primary">자취방 레시피</span></a>
             </div>
 			
 			
@@ -465,7 +465,7 @@ label#menu_label, #menu{
                    		<sec:authorize access="hasRole('ROLE_ADMIN')">
                    			
 							<li>
-								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none"> 
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none"> 
 									<sec:authentication property="principal.member.user_nickname"/> 
 									
 								</a>
@@ -473,7 +473,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link font-size-20"  id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
 	                  			</form>
 	                  		</li>
 	                  		<li>
@@ -487,7 +487,7 @@ label#menu_label, #menu{
 						<!-- 일반 user -->
 						<sec:authorize access="!hasRole('ROLE_ADMIN')">
 							<li>
-								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none">
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
 									<sec:authentication property="principal.member.user_nickname"/>
 									
 								</a>
@@ -495,7 +495,7 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/customLogout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link font-size-20" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
 	                  			</form>
 	                  		</li>
 						</sec:authorize>
@@ -509,7 +509,7 @@ label#menu_label, #menu{
 							if(kakao_userid != null){
 						%>
 						<li>
-								<a href="/myPage_index"class="nav-link font-size-20" id="nickname" style="border:none; color:#65737e; background:none">
+								<a href="/myPage_index"class="nav-link" id="nickname" style="border:none; color:#65737e; background:none">
 									<%=kakao_usernickname %>
 									
 								</a>
@@ -517,13 +517,13 @@ label#menu_label, #menu{
 	                  		<li>
 								<form action = "/kakao_logout" method = "post">   
 									<input type = "hidden" name = "${_csrf.parameterName }" value = "${_csrf.token }"/>               		
-	                  				<button class="nav-link font-size-20"  id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
+	                  				<button class="nav-link" id="logout" style="border:none; color:#65737e; background:none">로그아웃</button>
 	                  			</form>
 	                  		</li>
 	                  		
 	                  	<%}else{ %>
-							<li><button class="nav-link font-size-20" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
-	                  		<li><button class="nav-link font-size-20" id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
+							<li><button class="nav-link" id="login" style="border:none; color:#65737e; background:none">로그인</button></li>
+	                  		<li><button class="nav-link" id="signup" style="border:none; color:#65737e; background:none">회원가입</button></li>
 	                	<%} %>
 					</sec:authorize>
                   </ul>
@@ -716,16 +716,7 @@ label#menu_label, #menu{
             <hr/>
            
           </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <span class="icon-anchor d-block mb-3 display-3 text-secondary"></span>
-            <h3 class="text-primary h4 mb-2">롯데마트</h3>
-			<hr/>
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4">
-            <span class="icon-magnet d-block mb-3 display-3 text-secondary"></span>
-            <h3 class="text-primary h4 mb-2">이마트</h3>
-            <hr/>
-          </div>
+         
 		
 			<!-- 해당 링크로 이동  -->
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" >
@@ -740,6 +731,13 @@ label#menu_label, #menu{
             </div>
           </div>
           
+          <div class="col-md-6 col-lg-4 mb-4">
+            <span class="icon-anchor d-block mb-3 display-3 text-secondary"></span>
+            <h3 class="text-primary h4 mb-2">롯데마트</h3>
+			<hr/>
+          </div>
+         
+          
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
             <div class="block-team-member-1 text-center rounded">
             
@@ -750,6 +748,12 @@ label#menu_label, #menu{
               <p class="px-3 font-size-17 mb-3">할인가격 : <%=lt_buy.get(0) %>원</p>
               
             </div>
+          </div>
+          
+           <div class="col-md-6 col-lg-4 mb-4">
+            <span class="icon-magnet d-block mb-3 display-3 text-secondary"></span>
+            <h3 class="text-primary h4 mb-2">이마트</h3>
+            <hr/>
           </div>
           
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
