@@ -308,11 +308,6 @@ body {
 label#menu_label, #menu{
 	display:none;
 }
-@media(max-width:500px){
-	#menu_label{
-		width:50px;
-	}
-}
 #nav{
 	background-color:rgba(255, 255, 255, 0.7);
 	padding-left:0;
