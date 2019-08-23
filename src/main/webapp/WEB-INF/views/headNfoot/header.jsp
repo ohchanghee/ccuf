@@ -157,6 +157,10 @@ String kakao_usernickname = (String)session.getAttribute("userNickname");
 
 label#menu_label, #menu{
 	display:none;
+}@media(max-width:500px){
+	#menu_label{
+		width:50px;
+	}
 }
 
 #nav{

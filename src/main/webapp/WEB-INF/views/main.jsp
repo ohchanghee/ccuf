@@ -101,6 +101,10 @@ body {
 	padding-left: 20%;
 	font-size: 1.5rem;
 	color: #65737e;
+}@media (max-width:500px){
+	.text-center .placeholder {
+		font-size: 1rem !important;
+	}
 }
 /* z-index : 숫자가 적으면 뒤로 배치 크면 앞으로 배치 */
 .text-center .icon {
@@ -304,6 +308,11 @@ body {
 label#menu_label, #menu{
 	display:none;
 }
+@media(max-width:500px){
+	#menu_label{
+		width:50px;
+	}
+}
 #nav{
 	background-color:rgba(255, 255, 255, 0.7);
 	padding-left:0;
@@ -434,7 +443,7 @@ label#menu_label, #menu{
           <!-- 로고 -->
                 
          	 <div class="site-logo">
-              <a href="main.jsp" class="text-black nav-link"><span class="text-primary">자취방 레시피</span></a>
+              <a href="/main" class="text-black nav-link"><span class="text-primary">자취방 레시피</span></a>
             </div>
 			
 			
